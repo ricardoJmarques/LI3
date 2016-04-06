@@ -8,9 +8,9 @@ int main () {
 	int grow=0;
 	BTree new;
 	char nova[] = "FD1083";
+	char nova1[] = "AF1146";
 	new = insertAVL (NULL, nova, &grow);
 	printf("%s\n", new->string );
-	char nova1[] = "AF1146";
 	new = insertAVL (new, nova1, &grow);
 	printf("%s\n", (new->left)->string );
 
@@ -18,8 +18,9 @@ int main () {
 
 BTree insertAVL(BTree t, char *str, int *grow) { 
 	if (t==NULL) { 
+	int n;
+	n = strlen(str);
 	t = (BTree)malloc(sizeof(struct btree));
-	int n = strlen(str);
 	t->string = malloc(sizeof(char) * n);
 	strcpy(t->string , str);
 	t->right = t->left = NULL;
