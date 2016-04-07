@@ -144,3 +144,20 @@ BTree rotateLeft(BTree t) { /* rotação simples a esquerda      t->(3)			 t->(4
 return t;
 }
 
+int exists (BTree t, char *str) {
+	int n;
+	BTree aux;
+	aux = t;
+	while(aux!=NULL){
+		n = strcmp(aux->string , str);
+		if(n == 0)
+			return 1;
+		else{
+			if (n > 0)
+				aux = aux->left;
+			else aux = aux->right;
+		}
+	}
+	return 0;
+}
+

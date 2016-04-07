@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef AVL_STRINGS_H
+#define AVL_STRINGS_H
+
 typedef struct btree {
 	int balance; 
 	char *string;
@@ -17,4 +20,6 @@ BTree balanceRight(BTree t);
 BTree balanceLeft(BTree t);
 BTree rotateRight(BTree t);
 BTree rotateLeft(BTree t);
+int exists(BTree t, char *str);
 
+#endif

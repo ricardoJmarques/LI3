@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "avl-strings.h"
+#include "API-Utils.h"
 
 #define TAMCAT 26 /* numero de arvores do catalogo */
 #define MINCLIENTE 1000
@@ -35,9 +36,13 @@ catClientes insereCliente(catClientes ccs, char *cliente){
   return ccs;
 }
 
-/*Boolean existeProduto(catClientes ccs, Cliente c){
-  return true;
-}*/
+Boolean existeCliente(catClientes ccs, char *cliente){
+  Boolean b = FALSE;
+  if (verificaAlpha(cliente[0]))
+    if (exists(ccs[cliente[0]-'A'].lista, cliente))
+      b = TRUE;
+  return b;
+}
 
 int totalClientes(catClientes ccs){
   int total = 0;

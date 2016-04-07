@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "avl-strings.h"
+#include "API-Utils.h"
 
 #define TAMCAT 26 /* numero de arvores do catalogo */
 #define MINPRODUTO 1000
@@ -35,9 +36,15 @@ catProdutos insereProduto(catProdutos prod, char *produto){
   return prod;
 }
 
-/*Boolean existeProduto(catClientes ccs, Cliente c){
-  return true;
-}*/
+Boolean existeProduto(catProdutos prod, char *produto){
+  Boolean b = FALSE;
+  if (verificaAlpha(produto[0])){
+    if (exists(prod[produto[0]-'A'].lista, produto)){
+      b = TRUE;
+    }
+  }
+  return b;
+}
 
 int totalProdutos(catProdutos prod){
   int total = 0;
