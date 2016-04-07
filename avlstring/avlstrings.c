@@ -3,20 +3,26 @@
 #include <string.h>
 #include "avlstrings.h"
 
-
 int main () {
 	int grow=0;
 	BTree new;
-	char nova[] = "FD1083";
-	char nova1[] = "AF1146";
+	char nova[]= "FD1083";
+	char nova1[]="AF1146";
+	char nova2[]="DV1294";
+	char nova3[]="FZ1089";
+	char nova4[]="ZZ0459";
 	new = insertAVL (NULL, nova, &grow);
-	printf("%s\n", new->string );
 	new = insertAVL (new, nova1, &grow);
-	printf("%s\n", (new->left)->string );
+	new = insertAVL (new, nova2, &grow);
+	new = insertAVL (new, nova3, &grow);
 
+	printf("new->string = %s\n", new->string );
+	printf("new->left->string = %s\n", (new->left)->string );
+	printf("new->right->string = %s\n", (new->right)->string );
+	printf ("%d \n",exists(new, nova4));
 }
 
-BTree insertAVL(BTree t, char *str, int *grow) { 
+BTree insertAVL(BTree t, char* str, int *grow) { 
 	if (t==NULL) { 
 	int n;
 	n = strlen(str);
@@ -159,4 +165,23 @@ return t;
 
 void gdbbreak (BTree t) {
 	printf("cyka blyat\n");
+}
+
+/*--------------FUNCOES PROCURA REMOCAO ETC...--------------*/
+
+int exists (BTree t, char *str) {
+	int n;
+	BTree aux;
+	aux = t;
+	while(aux!=NULL){
+		n = strcmp(aux->string , str);
+		if(n == 0)
+			return 1;
+		else{
+			if (n > 0)
+				aux = aux->left;
+			else aux = aux->right;
+		}
+	}
+	return 0;
 }
