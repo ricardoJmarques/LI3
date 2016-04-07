@@ -19,7 +19,10 @@ int main () {
 	printf("new->string = %s\n", new->string );
 	printf("new->left->string = %s\n", (new->left)->string );
 	printf("new->right->string = %s\n", (new->right)->string );
-	printf ("%d \n",exists(new, nova4));
+	printf("new->right->right->string = %s\n", ((new->right)->right)->string );
+	printf ("exists = %d \n",exists(new, nova4));
+
+	/*new = removeAvl(new , nova4);*/
 }
 
 BTree insertAVL(BTree t, char* str, int *grow) { 
@@ -185,3 +188,22 @@ int exists (BTree t, char *str) {
 	}
 	return 0;
 }
+/*
+BTree removeAvl (BTree t, char *str){
+	if(exists(t , str)){
+		while(aux!=NULL){
+			n = strcmp(aux->string , str);
+			if(n == 0)
+			else{
+				if (n > 0)
+					aux = aux->left;
+				else aux = aux->right;
+			}
+		}
+	return 0;
+		
+	}
+	return t;
+}
+
+*/

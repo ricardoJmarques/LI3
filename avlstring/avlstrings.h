@@ -15,3 +15,5 @@ BTree balanceLeft(BTree t);
 BTree rotateRight(BTree t);
 BTree rotateLeft(BTree t);
 void gdbbreak(BTree t);
+int exists (BTree t, char *str);
+BTree removeAvl (BTree t, char *str);
