@@ -1,36 +1,58 @@
-#include <string.h>
+#include <stdlib.h>
+#include "avl-strings.h"
 
-#define TAMPL 200000/*tamanho das linhas produto*/
-#define TAMPC 10 /*tamanho das colunas produto*/
+#define TAMCAT 26 /* numero de arvores do catalogo */
+#define MINPRODUTO 1000
+#define MAXPRODUTO 1999
 
-typedef struct {
-   char  letra1; /* AA1234 - [A-Z][A-Z][1000-1999] */
-   char letra2;
-   int numero;
-} Produto;
+/* listaLetra é uma AVL onde constam os   */
+/* clientes iniciados por determinada letra */
+typedef struct listaProdutos{
+  BTree lista;
+  int tamanho;
+  int crescimento;
+} listaLetraProdutos;
 
-int retornaCodProduto(char *codigo){
+/* catalogo de clientes */
+typedef listaLetraProdutos *catProdutos;
+
+catProdutos iniciaCatProdutos(){
   int i;
-  int fst = 0;
-  int snd = 0;
-  int trd = 0;
-
-  fst = codigo[0] - 'A';
-  snd = codigo[1] - 'A';
-  for (i=2; i<6; i++){
-    trd = ((trd * 10) + (codigo[i]-'0'));
+  catProdutos prod = (catProdutos) malloc(sizeof(struct listaProdutos) * TAMCAT);
+  for (i=0; i<TAMCAT; i++){
+    prod[i].lista = NULL;
+    prod[i].tamanho = 0;
+    prod[i].crescimento = 0;
   }
-  return (fst*26*1000)+(snd*1000)+(trd%1000);
+  return prod;
 }
 
-void criaMapaProduto(char *mapa, char *listaProduto, int tam){
-  int i = 0;
-  char codigo[TAMPC];
- 
-  for (i=0; i<tam; i++){
-    strcpy(codigo, &listaProduto[i * TAMPC]);
-    mapa[retornaCodProduto(codigo)] = 0x01;
+catProdutos insereProduto(catProdutos prod, char *produto){
+  if (verificaAlpha(produto[0]) && verificaAlpha(produto[1]) && verificaNumero(&produto[2], MINPRODUTO, MAXPRODUTO)){
+    prod[produto[0]-'A'].lista = insertAVL(prod[produto[0]-'A'].lista, produto, &prod[produto[0]-'A'].crescimento);
+    prod[produto[0]-'A'].tamanho++;
   }
+  return prod;
 }
 
+/*Boolean existeProduto(catClientes ccs, Cliente c){
+  return true;
+}*/
+
+int totalProdutos(catProdutos prod){
+  int total = 0;
+  int i;
+  for (i=0; i<TAMCAT; i++){
+    total += prod[i].tamanho;
+  }
+  return total;
+}
+
+int totalProdutosLetra(catProdutos prod, char letra){
+  return prod[letra - 'A'].tamanho;
+}
+
+void removeCatProdutos(catProdutos prod){
+
+}
 

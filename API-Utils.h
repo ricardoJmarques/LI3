@@ -1,7 +1,5 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+typedef enum {FALSE,TRUE} Boolean;
 
-char *criaArray(int linhas, int colunas);
+Boolean verificaAlpha(char caracter);
 
-int preencheArray(FILE *ficheiro, char *tabela, int tamLinha, int tamColuna);
+Boolean verificaNumero(char *num, int min, int max);

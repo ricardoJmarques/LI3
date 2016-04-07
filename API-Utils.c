@@ -1,25 +1,13 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+typedef enum {FALSE,TRUE} Boolean;
 
-char *criaArray(int linhas, int colunas){
-  char *array;
-  array = (char *)malloc(sizeof(char) * linhas * colunas);
-  if (array!=NULL)
-    printf("Espaço %d x %d alocado em memoria.\n", linhas, colunas);
-  return array;
+Boolean verificaAlpha(char caracter){
+    return ( caracter >= 'A' && caracter <= 'Z' ) ? TRUE : FALSE;
 }
 
-int preencheArray(FILE *ficheiro, char *tabela, int tamLinha, int tamColuna){
-  int i = 0;
-  char buffer[tamColuna];
-  while ((i<tamLinha) && (fgets(buffer, tamColuna-1, ficheiro)!=NULL)){
-    strcpy(&tabela[i*tamColuna], strtok(buffer, "\r\n"));
-    i++;
-  }
-  printf("Ficheiro carregado para a memoria no formato %d x %d.\n", tamLinha, tamColuna);
-  printf("%d linhas encontradas.\n", i);
-  return i;
+Boolean verificaNumero(char *num, int min, int max){
+    int n;
+    n=atoi(num);
+    return ( n >=min && n <=max ) ? TRUE : FALSE;  
 }
 
 

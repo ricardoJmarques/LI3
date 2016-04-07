@@ -1,8 +1,7 @@
-#include <string.h>
+#include <stdlib.h>
 
-#define TAMCL 20000 /*tamanho das linhas cliente*/
-#define TAMCC 10 /*tamanho das colunas cliente*/
+/* catalogo de clientes */
+typedef listaLetraClientes *catClientes;
 
-int retornaCodCliente(char *codigo);
-
-void criaMapaCliente(char *mapa, char *listaCliente, int tam);
+catClientes iniciaCatClientes();
+catClientes insereCliente(catClientes ccs, char *cliente);

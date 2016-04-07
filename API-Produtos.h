@@ -1,10 +1,9 @@
-#include <string.h>
+#include <stdlib.h>
 
-#define TAMPL 200000/*tamanho das linhas produto*/
-#define TAMPC 10 /*tamanho das colunas produto*/
+/* catalogo de clientes */
+typedef listaLetraProdutos *catProdutos;
 
-int retornaCodProduto(char *codigo);
-
-void criaMapaProduto(char *mapa, char *listaProduto, int tam);
+catProdutos iniciaCatProdutos();
+catProdutos insereProduto(catProdutos PROD, char *produto);
 
 

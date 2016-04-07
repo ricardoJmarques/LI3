@@ -1,72 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "avl-strings.h"
 #include "API-Clientes.h"
 #include "API-Produtos.h"
-#include "API-Vendas.h"
-#include "API-Utils.h"
 
 int main(){
-  char *clientes = NULL;
-  char *produtos = NULL;
-  char *vendas = NULL;
-  char *mapaProdutos = NULL;
-  char *mapaClientes = NULL;
-  
-  int tamClientes = 0;
-  int tamProdutos = 0;
-  int tamVendas = 0;
   FILE *fichClientes;
   FILE *fichProdutos;
-  FILE *fichVendas;
+  int i;
+  catClientes teste;
+  catProdutos teste2;
+  char buffer[21];
 
-  mapaClientes = (char *)malloc(sizeof(char) * 26 * 10000);
-  memset(mapaClientes, 0x00, sizeof(char) * 26 * 10000);
-
-  mapaProdutos = (char *)malloc(sizeof(char) * 26 * 26 * 1000);
-  memset(mapaProdutos, 0x00, sizeof(char) * 26 * 26 * 1000);
+  teste = iniciaCatClientes();
+  teste2 = iniciaCatProdutos();
 
   fichClientes = fopen("fichTeste/Clientes.txt", "r");
   if (fichClientes != NULL){
-    printf("Ficheiro Clientes.txt aberto com sucesso\n"); 
-    clientes = criaArray(20000, 10);
-    if(clientes != NULL)
-      tamClientes = preencheArray(fichClientes, clientes, 20000, 10);
-    else
-      printf("erro qefsfndifgnifdgn\n");
-    fclose(fichClientes);
-    if (tamClientes != 0 && mapaClientes != NULL)
-      criaMapaCliente(mapaClientes, clientes, tamClientes);
-  } 
-  
+    while (fgets(buffer, 20, fichClientes)!=NULL){
+      teste = insereCliente(teste, buffer);
+    }
+  }
+
   fichProdutos = fopen("fichTeste/Produtos.txt", "r");
   if (fichProdutos != NULL){
-    printf("Ficheiro Produtos.txt aberto com sucesso\n");
-    produtos = criaArray(200000, 10);
-    if (produtos != NULL)
-      tamProdutos = preencheArray(fichProdutos, produtos, 200000, 10);
-    fclose(fichProdutos);
-    if (tamProdutos != 0 && mapaProdutos != NULL)
-      criaMapaProduto(mapaProdutos, produtos, tamProdutos);
+    while (fgets(buffer, 20, fichProdutos)!=NULL){
+      teste2 = insereProduto(teste2, buffer);
+    }
   }
 
-
-  fichVendas = fopen("fichTeste/Vendas_1M.txt", "r");
-  if (fichVendas != NULL){
-    vendas = criaArray(1000000, 40);
-    if (vendas != NULL)
-      tamVendas = preencheArrayVendas(fichVendas, vendas, mapaProdutos, mapaClientes);
-    fclose(fichVendas);
+/*
+  for (i=0; i<26; i++){
+    printf("Total de Clientes letra %c: %d.\n", (char)('A'+i), totalClientesLetra(teste, (char)('A'+i)));
   }
-
-  if (clientes != NULL)
-    free(clientes);
-  if (produtos != NULL)
-    free(produtos);
-  if (vendas != NULL)
-    free(vendas);
-  if (mapaClientes != NULL)
-    free(mapaClientes);
-  if (mapaProdutos != NULL)
-    free(mapaProdutos);
-
-  printf("Clientes: %d | Produtos: %d | Vendas: %d\n", tamClientes, tamProdutos, tamVendas);
+  for (i=0; i<26; i++){
+    printf("Total de Produtos letra %c: %d.\n", (char)('A'+i), totalProdutosLetra(teste2, (char)('A'+i)));
+  }
+*/
+  printf("Total de Clientes: %d.\n", totalClientes(teste));
+  printf("Total de Produtos: %d.\n", totalProdutos(teste2));
+  
   return 0;
 }

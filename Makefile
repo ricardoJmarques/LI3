@@ -1,9 +1,10 @@
 # source files.
-SRC =  main.c API-Clientes.c API-Produtos.c API-Vendas.c API-Utils.c
+SRC =  main.c API-Utils.c avl-strings.c API-Clientes.c API-Produtos.c
+#API-Vendas.c 
 
 OBJ = $(SRC:.cpp=.o)
 
-OUT = geshiper
+OUT = GereVendas
 
 # include directories
 #INCLUDES = -I. 
@@ -18,7 +19,8 @@ CCC = gcc
 #LIBS = -lm -lpapi
 
 # dependencias
-DEPS = API-Clientes.h API-Produtos.h API-Vendas.h API-Utils.h
+DEPS = API-Utils.h avl-strings.h API-Clientes.h API-Produtos.h
+#API-Vendas.h
 
 .SUFFIXES: .cpp .c 
 
