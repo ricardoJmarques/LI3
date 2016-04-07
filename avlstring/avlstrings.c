@@ -205,5 +205,8 @@ BTree removeAvl (BTree t, char *str){
 	}
 	return t;
 }
+*/
+/*
+void removeAll 
 
 */
