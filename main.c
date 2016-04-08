@@ -44,16 +44,16 @@ int main(){
   char p1[] = "AF1198";
   char p2[] = "GG1046"; /* not */
   
-  if (existeCliente(teste, c2))
-    printf("Cliente %s existe.\n", c2);
+  if (existeCliente(teste, c1))
+    printf("Cliente %s existe.\n", c1);
   else
-    printf("Cliente %s não existe.\n", c2);
+    printf("Cliente %s não existe.\n", c1);
   
   
-  if (existeProduto(teste2, p2)==TRUE)
-    printf("Produto %s existe.\n", p2);
+  if (existeProduto(teste2, p1)==TRUE)
+    printf("Produto %s existe.\n", p1);
   else
-    printf("Produto %s não existe.\n", p2);
+    printf("Produto %s não existe.\n", p1);
   
   return 0;
 }
