@@ -20,9 +20,11 @@ int main () {
 	printf("new->left->string = %s\n", (new->left)->string );
 	printf("new->right->string = %s\n", (new->right)->string );
 	printf("new->right->right->string = %s\n", ((new->right)->right)->string );
-	printf ("exists = %d \n",exists(new, nova4));
+	printf ("exists = %d \n",exists(new, nova3));	
+	new = removeAvl(new , nova3);
+	printf("new->right->right->hidden = %d\n", ((new->right)->right)->hidden );
+	printf ("exists = %d \n",exists(new, nova3));
 
-	/*new = removeAvl(new , nova4);*/
 }
 
 BTree insertAVL(BTree t, char* str, int *grow) { 
@@ -34,6 +36,7 @@ BTree insertAVL(BTree t, char* str, int *grow) {
 	strcpy(t->string , str);
 	t->right = t->left = NULL;
 	t->balance = 0;
+	t->hidden = 0;
 	*grow = 1;
 	}
 	else 
@@ -171,6 +174,25 @@ void gdbbreak (BTree t) {
 }
 
 /*--------------FUNCOES PROCURA REMOCAO ETC...--------------*/
+/*
+int exists (BTree t, char* str) {
+	int n;
+	BTree aux;
+	aux = t;
+	while(aux!=NULL){
+		n = strcmp(aux->string , str);
+		if(n == 0 && t->hidden == 0){
+			printf("existe? %s t->hidden = %d\n", aux->string,  aux->hidden);
+			return 1;
+		}
+		else{
+			if (n > 0)
+				aux = aux->left;
+			else aux = aux->right;
+		}
+	}
+	return 0;
+}*/
 
 int exists (BTree t, char *str) {
 	int n;
@@ -178,7 +200,7 @@ int exists (BTree t, char *str) {
 	aux = t;
 	while(aux!=NULL){
 		n = strcmp(aux->string , str);
-		if(n == 0)
+		if(n == 0 && aux->hidden == 0)
 			return 1;
 		else{
 			if (n > 0)
@@ -188,25 +210,101 @@ int exists (BTree t, char *str) {
 	}
 	return 0;
 }
-/*
+
 BTree removeAvl (BTree t, char *str){
-	if(exists(t , str)){
-		while(aux!=NULL){
-			n = strcmp(aux->string , str);
-			if(n == 0)
-			else{
-				if (n > 0)
-					aux = aux->left;
-				else aux = aux->right;
+	int n;
+	BTree aux;
+	aux = t;
+	while (aux!= NULL){
+		n=strcmp(aux->string,str);
+		if (n==0){
+			printf("remove %s t->hidden = %d\n", aux->string,  aux->hidden);
+			aux->hidden = 1;
+			printf("t->hidden = %d\n", aux->hidden);
+			break;
+		}
+		else{
+			if(n<0){
+				aux = aux->right;			
+			}
+			else {
+				aux = aux->left;
 			}
 		}
-	return 0;
-		
 	}
+
 	return t;
 }
-*/
+
 /*
-void removeAll 
+void removeAvl (BTree t, char *str){
+	int n,k,j;
+	int* side; side para saber de que lado vem a procura 1 = right  -1 = left
+	BTree aux;
+	BTree* stack; stack que guarda os nodos que foram precorridos
+	aux = t;
+	k=0;j=0;
+	stack[0]=t;
+	k++;
+	while (t!= NULL){
+		n=strcmp(aux->string,str);
+		if (n==0)
+			delete(t,aux,stack,k,side,j);
+		else{
+			if(n<0){
+				aux = t;
+				t = t->right;
+				stack[k]=aux;
+				k++;
+				side[j]=1;
+				j++;			
+			}
+			else {
+				aux = t;
+				t = t->left;
+				stack[k]=aux;
+				k++;
+				side[j]=-1;
+				j++;
+			}
+		
+		}
+	}
+}
+
+void delete (BTree t , BTree parent, BTree* stack, int k, int* side, int j){
+	int i;
+	BTree aux, it ;
+	aux = t;
+
+	if (t->right != NULL && t->left != NULL){
+		if(side[j] == 1){
+			parent->right = t->left;
+			for(aux=t; aux->left != NULL; aux = aux->left);
+			aux->right = t->right;
+			free(t->string);
+			free(t);
+			for(i=0; i<k-1 ; i++){
+				if(side[i] == 1)
+					balanceRight(stack[i]);
+				else balanceLeft(stack[i]);
+			}
+
+		}
+
+
+	}
+
+	
+	if(t->right == NULL){ ultimo?
+		if(side == 1){
+			parent->right = t->left;
+			free(aux);
+		}
+
+
+	}
+	
+}
 
 */

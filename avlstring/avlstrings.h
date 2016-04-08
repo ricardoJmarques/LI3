@@ -1,6 +1,7 @@
 
 typedef struct btree {
-	int balance; 
+	int balance;
+	int hidden; /* 0 visivel 1 escondido*/ 
 	char* string;
 	struct btree *left, *right;
 } Node;
