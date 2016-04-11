@@ -161,3 +161,34 @@ int exists (BTree t, char *str) {
 	return 0;
 }
 
+BTree deleteAvl(BTree t)  {
+    if (t){
+	    deleteAvl(t->left);
+	    t->left = NULL;
+	    deleteAvl(t->right);
+	    t->right = NULL;
+	    free(t);
+    }
+    return NULL;  
+}
+
+void criaArrayStringaux(BTree t, int tamString ,char** str, int* i){
+	if(t){
+		str[*i] = malloc(sizeof(char) * tamString); /*aloca a string */
+		strcpy(str[*i] , t->string); /*copia a string*/
+		(*i)++; /* incrementa o indice*/
+		criaArrayStringaux(t->left , tamString ,str, i); /* cria a string para o ramo da esquerda*/
+		criaArrayStringaux(t->right , tamString,str, i); /* cria a string para o ramo da direita*/
+
+	}
+}
+
+char** criaArrayString(BTree catalogo, int tamString, int tamAVL){
+	char** str;
+	int i=0; /*indice do array*/
+	str  = malloc (sizeof(char*) * tamAVL); /*aloca o array de strings*/
+	criaArrayStringaux(catalogo , tamString, str,  &i);
+	return str;
+
+}
+

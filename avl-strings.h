@@ -21,5 +21,7 @@ BTree balanceLeft(BTree t);
 BTree rotateRight(BTree t);
 BTree rotateLeft(BTree t);
 int exists(BTree t, char *str);
+BTree deleteAvl (BTree t);
+char** criaArrayString(BTree catalogo, int tamStrint, int tamAVL);
 
 #endif

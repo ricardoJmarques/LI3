@@ -28,14 +28,14 @@ int main(){
     }
   }
 
-/*
+
   for (i=0; i<26; i++){
     printf("Total de Clientes letra %c: %d.\n", (char)('A'+i), totalClientesLetra(teste, (char)('A'+i)));
   }
   for (i=0; i<26; i++){
     printf("Total de Produtos letra %c: %d.\n", (char)('A'+i), totalProdutosLetra(teste2, (char)('A'+i)));
   }
-*/
+
   printf("Total de Clientes: %d.\n", totalClientes(teste));
   printf("Total de Produtos: %d.\n", totalProdutos(teste2));
   
@@ -44,16 +44,19 @@ int main(){
   char p1[] = "AF1198";
   char p2[] = "GG1046"; /* not */
   
-  if (existeCliente(teste, c1))
-    printf("Cliente %s existe.\n", c1);
+  if (existeCliente(teste, c2))
+    printf("Cliente %s existe.\n", c2);
   else
-    printf("Cliente %s não existe.\n", c1);
+    printf("Cliente %s não existe.\n", c2);
   
   
-  if (existeProduto(teste2, p1)==TRUE)
-    printf("Produto %s existe.\n", p1);
+  if (existeProduto(teste2, p2)==TRUE)
+    printf("Produto %s existe.\n", p2);
   else
-    printf("Produto %s não existe.\n", p1);
-  
+    printf("Produto %s não existe.\n", p2);
+ 
+  removeCatClientes(teste);
+  removeCatProdutos(teste2);
+
   return 0;
 }

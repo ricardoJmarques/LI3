@@ -58,6 +58,12 @@ int totalClientesLetra(catClientes ccs, char letra){
 }
 
 void removeCatClientes(catClientes ccs){
-
+  int i;
+  for (i=0; i<TAMCAT; i++){
+    deleteAvl(ccs[i].lista);
+    ccs[i].lista = NULL;
+    ccs[i].tamanho = 0;
+    ccs[i].crescimento = 0;
+  }
 }
 
