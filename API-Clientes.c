@@ -34,6 +34,7 @@ catClientes insereCliente(catClientes cat, char *cliente){
   if (verificaAlpha(cliente[0]) && verificaNumero(&cliente[1], MINCLIENTE, MAXCLIENTE)){
     c = (char*)malloc(sizeof(char)*(strlen(cliente)+1));
     strcpy(c , cliente);
+    printf("Cliente: %s\n", c);
     cat[cliente[0]-'A'].lista = insertAVL(cat[cliente[0]-'A'].lista, c, &cat[cliente[0]-'A'].crescimento,NULL);
     cat[cliente[0]-'A'].tamanho++;
   }
