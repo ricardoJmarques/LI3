@@ -29,8 +29,11 @@ catProdutos iniciaCatProdutos(){
 }
 
 catProdutos insereProduto(catProdutos prod, char *produto){
+  char *p;
   if (verificaAlpha(produto[0]) && verificaAlpha(produto[1]) && verificaNumero(&produto[2], MINPRODUTO, MAXPRODUTO)){
-    prod[produto[0]-'A'].lista = insertAVL(prod[produto[0]-'A'].lista, produto, &prod[produto[0]-'A'].crescimento);
+    p = (char*)malloc(sizeof(char)*(strlen(produto)+1));
+    strcpy(p , produto);
+    prod[produto[0]-'A'].lista = insertAVL(prod[produto[0]-'A'].lista, p, &prod[produto[0]-'A'].crescimento,NULL);
     prod[produto[0]-'A'].tamanho++;
   }
   return prod;
@@ -44,6 +47,12 @@ Boolean existeProduto(catProdutos prod, char *produto){
     }
   }
   return b;
+}
+
+char* existeProduto2(catProdutos prod, char *produto){
+    char *c;
+    c = (char*)exists2(prod[produto[0]-'A'].lista, produto);
+    return c;
 }
 
 int totalProdutos(catProdutos prod){
@@ -63,9 +72,10 @@ void removeCatProdutos(catProdutos prod){
   int i;
   for (i=0; i<TAMCAT; i++){
     deleteAvl(prod[i].lista);
-    prod[i].lista = NULL;
+/*    prod[i].lista = NULL;
     prod[i].tamanho = 0;
-    prod[i].crescimento = 0;
+    prod[i].crescimento = 0;*/
   }
+  free(prod);
 }
 

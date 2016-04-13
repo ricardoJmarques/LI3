@@ -6,7 +6,7 @@
 #define API_CLIENTES_H
 
 /* catalogo de clientes */
-typedef struct listaClientes *catClientes;
+typedef listaLetraClientes *catClientes;
 
 catClientes iniciaCatClientes();
 catClientes insereCliente(catClientes ccs, char *cliente);

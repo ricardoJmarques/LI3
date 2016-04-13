@@ -3,27 +3,34 @@
 #include <string.h>
 #include "avl-strings.h"
 
-BTree insertAVL(BTree t, char *str, int *grow) { 
+typedef struct btree {
+	int balance; 
+	char *string;
+	void *dados;
+	struct btree *left, *right;
+}Node;
+
+BTree insertAVL(BTree t, char *str, int *grow, void *dados) { 
 	if(t==NULL) { 
 	  int n;
 	  n = strlen(str) + 1;
 	  t = (BTree)malloc(sizeof(struct btree));
-	  t->string = malloc(sizeof(char) * n);
-	  strcpy(t->string , str);
+	  t->string = str;
+	  t->dados = dados;
 	  t->right = t->left = NULL;
 	  t->balance = 0;
 	  *grow = 1;
 	}
 	else 
 	  if (strcmp(t->string , str) < 0) 
-	    t = insertRight(t,str,grow); 
+	    t = insertRight(t,str,grow,dados); 
 	  else
-		t = insertLeft(t,str,grow); 
+		t = insertLeft(t,str,grow,dados); 
 	return t;
 }
 
-BTree insertRight(BTree t, char* str, int *grow) {
-	t->right = insertAVL(t->right,str,grow);
+BTree insertRight(BTree t, char* str, int *grow, void *dados) {
+	t->right = insertAVL(t->right,str,grow,dados);
 	if (*grow)
 		switch (t->balance) {
 			case -1: 
@@ -41,8 +48,8 @@ BTree insertRight(BTree t, char* str, int *grow) {
 	return t;
 }
 
-BTree insertLeft(BTree t, char* str, int *grow) { 
-	t->left = insertAVL(t->left,str,grow); 
+BTree insertLeft(BTree t, char* str, int *grow, void *dados) { 
+	t->left = insertAVL(t->left,str,grow,dados); 
 	if (*grow)	
 		switch (t->balance) {
 			case -1: 
@@ -161,12 +168,49 @@ int exists (BTree t, char *str) {
 	return 0;
 }
 
+void* exists2 (BTree t, char *str) {
+	int n;
+	BTree aux;
+	aux = t;
+	while(aux!=NULL){
+		n = strcmp(aux->string , str);
+		if(n == 0)
+			return (void*)aux->string;
+		else{
+			if (n > 0)
+				aux = aux->left;
+			else aux = aux->right;
+		}
+	}
+	return NULL;
+}
+
+void* retornaDados (BTree t, char *str) {
+	int n;
+	BTree aux;
+	aux = t;
+	while(aux!=NULL){
+		n = strcmp(aux->string , str);
+		if(n == 0)
+			return (void*)aux->dados;
+		else{
+			if (n > 0)
+				aux = aux->left;
+			else aux = aux->right;
+		}
+	}
+	return NULL;
+}
+
+
 BTree deleteAvl(BTree t)  {
     if (t){
 	    deleteAvl(t->left);
 	    t->left = NULL;
 	    deleteAvl(t->right);
 	    t->right = NULL;
+	    free(t->string);
+	    free(t->dados);
 	    free(t);
     }
     return NULL;  
@@ -183,11 +227,11 @@ void criaArrayStringaux(BTree t, int tamString ,char** str, int* i){
 	}
 }
 
-char** criaArrayString(BTree catalogo, int tamString, int tamAVL){
+char** criaArrayString(BTree t, int tamString, int tamAVL){
 	char** str;
 	int i=0; /*indice do array*/
 	str  = malloc (sizeof(char*) * tamAVL); /*aloca o array de strings*/
-	criaArrayStringaux(catalogo , tamString, str,  &i);
+	criaArrayStringaux(t , tamString, str,  &i);
 	return str;
 
 }

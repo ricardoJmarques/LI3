@@ -28,42 +28,46 @@ catClientes iniciaCatClientes(){
   return cat;
 }
 
-catClientes insereCliente(catClientes ccs, char *cliente){
+catClientes insereCliente(catClientes cat, char *cliente){
+  char *c;
   if (verificaAlpha(cliente[0]) && verificaNumero(&cliente[1], MINCLIENTE, MAXCLIENTE)){
-    ccs[cliente[0]-'A'].lista = insertAVL(ccs[cliente[0]-'A'].lista, cliente, &ccs[cliente[0]-'A'].crescimento);
-    ccs[cliente[0]-'A'].tamanho++;
+    c = (char*)malloc(sizeof(char)*(strlen(cliente)+1));
+    strcpy(c , cliente);
+    cat[cliente[0]-'A'].lista = insertAVL(cat[cliente[0]-'A'].lista, c, &cat[cliente[0]-'A'].crescimento,NULL);
+    cat[cliente[0]-'A'].tamanho++;
   }
-  return ccs;
+  return cat;
 }
 
-Boolean existeCliente(catClientes ccs, char *cliente){
+Boolean existeCliente(catClientes cat, char *cliente){
   Boolean b = FALSE;
   if (verificaAlpha(cliente[0]))
-    if (exists(ccs[cliente[0]-'A'].lista, cliente))
+    if (exists(cat[cliente[0]-'A'].lista, cliente))
       b = TRUE;
   return b;
 }
 
-int totalClientes(catClientes ccs){
+int totalClientes(catClientes cat){
   int total = 0;
   int i;
   for (i=0; i<TAMCAT; i++){
-    total += ccs[i].tamanho;
+    total += cat[i].tamanho;
   }
   return total;
 }
 
-int totalClientesLetra(catClientes ccs, char letra){
-  return ccs[letra - 'A'].tamanho;
+int totalClientesLetra(catClientes cat, char letra){
+  return cat[letra - 'A'].tamanho;
 }
 
-void removeCatClientes(catClientes ccs){
+void removeCatClientes(catClientes cat){
   int i;
   for (i=0; i<TAMCAT; i++){
-    deleteAvl(ccs[i].lista);
-    ccs[i].lista = NULL;
-    ccs[i].tamanho = 0;
-    ccs[i].crescimento = 0;
+    deleteAvl(cat[i].lista);
+/*    cat[i].lista = NULL;
+    cat[i].tamanho = 0;
+    cat[i].crescimento = 0; */
   }
+  free(cat);
 }
 

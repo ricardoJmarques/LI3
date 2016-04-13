@@ -1,5 +1,5 @@
 # source files.
-SRC =  main.c API-Utils.c avl-strings.c API-Clientes.c API-Produtos.c
+SRC =  main.c API-Utils.c avl-strings.c API-Clientes.c API-Produtos.c API-Facturacao.c
 #API-Vendas.c 
 
 OBJ = $(SRC:.cpp=.o)
@@ -19,7 +19,7 @@ CCC = gcc
 #LIBS = -lm -lpapi
 
 # dependencias
-DEPS = API-Utils.h avl-strings.h API-Clientes.h API-Produtos.h
+DEPS = API-Utils.h avl-strings.h API-Clientes.h API-Produtos.h API-Facturacao.h
 #API-Vendas.h
 
 .SUFFIXES: .cpp .c 
