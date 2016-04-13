@@ -59,15 +59,7 @@ catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, c
   else {
     if (existeProduto(pro, v[0]) && existeCliente(cli, v[4])){
       pp = (ppVenda)malloc(sizeof(struct prodVenda));
-      if (pp == NULL){
-        printf("Erro malloc pp\n");
-        return cat;
-      }
       var = (char*)malloc(sizeof(char) * (strlen(v[0]) +1));
-      if (var == NULL){
-        printf("Erro malloc var\n");
-        return cat;
-      }
       strcpy(var, v[0]);
       if (v[3][0] == 'N'){
         pp->qtdN = atoi(v[2]);
@@ -82,7 +74,7 @@ catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, c
         pp->precoN = 0;
       }
       i = ((atoi(v[6])-1) * TAMCAT) + (atoi(v[5]) - 1 );
-      printf("Venda %s na AVL %d\n", var, i);
+      printf("Produto %s inserido na lista %d.\n", var, i);
       cat[i].lista = insertAVL(cat[i].lista, var, &cat[i].crescimento, pp);
       cat[i].tamanho++;
     }
