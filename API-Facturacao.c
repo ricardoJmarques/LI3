@@ -74,7 +74,7 @@ catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, c
         pp->precoN = 0;
       }
       i = ((atoi(v[6])-1) * TAMCAT) + (atoi(v[5]) - 1 );
-      printf("Produto %s inserido na lista %d.\n", var, i);
+      printf("Venda produto %s inserido na lista %d.\n", var, i);
       cat[i].lista = insertAVL(cat[i].lista, var, &cat[i].crescimento, pp);
       cat[i].tamanho++;
     }
