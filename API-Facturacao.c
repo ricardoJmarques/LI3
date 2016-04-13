@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "avl-strings.h"
 #include "API-Utils.h"
+#include "API-Facturacao.h"
 
 #define TAMCAT 24 /* numero de arvores do catalogo; 12 meses P + 12 meses N */
 
@@ -18,7 +19,7 @@ typedef struct venda{
   int crescimento;
 } listaMesVendas;	
 	
-typedef listaMesVendas *catFacturacao;
+/*typedef struct venda *catFacturacao;*/
 	
 catFacturacao iniciaCatFacturacao(){
   int i;

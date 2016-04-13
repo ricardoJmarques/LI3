@@ -10,6 +10,8 @@ typedef struct btree {
 	struct btree *left, *right;
 }Node;
 
+/*typedef struct btree *BTree;*/
+
 BTree insertAVL(BTree t, char *str, int *grow, void *dados) { 
 	if(t==NULL) { 
 	  int n;

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "avl-strings.h"
 #include "API-Utils.h"
+#include "API-Clientes.h"
 
 #define TAMCAT 26 /* numero de arvores do catalogo */
 #define MINCLIENTE 1000
@@ -15,7 +16,7 @@ typedef struct listaClientes{
 } listaLetraClientes;
 
 /* catalogo de clientes */
-typedef listaLetraClientes *catClientes;
+/*typedef struct listaClientes *catClientes;*/
 
 catClientes iniciaCatClientes(){
   int i;

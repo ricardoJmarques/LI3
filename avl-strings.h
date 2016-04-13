@@ -5,7 +5,7 @@
 #ifndef AVL_STRINGS_H
 #define AVL_STRINGS_H
 
-typedef Node *BTree;
+typedef struct btree *BTree;
 
 BTree insertAVL(BTree t, char *str, int *grow, void *dados);
 BTree insertRight(BTree t, char *str, int *grow, void *dados);

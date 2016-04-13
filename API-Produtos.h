@@ -6,7 +6,7 @@
 #define API_PRODUTOS_H
 
 /* catalogo de clientes */
-typedef listaLetraProdutos *catProdutos;
+typedef  struct listaProdutos *catProdutos;
 
 catProdutos iniciaCatProdutos();
 catProdutos insereProduto(catProdutos PROD, char *produto);
