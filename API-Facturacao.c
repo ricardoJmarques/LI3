@@ -2,13 +2,17 @@
 #include "avl-strings.h"
 #include "API-Utils.h"
 #include "API-Facturacao.h"
+#include "API-Clientes.h"
+#include "API-Produtos.h"
 
-#define TAMCAT 24 /* numero de arvores do catalogo; 12 meses P + 12 meses N */
+#define TAMCAT 12 /* numero de arvores do catalogo; 12 meses por Filial */
 
 typedef struct prodVenda{
-  int qtd;
-  float preco;
-  int filial;
+  int qtdN;
+  int qtdP;
+  float precoN;
+  float precoP;
+/*  int filial;*/
 } pVenda;
 
 typedef pVenda *ppVenda;
@@ -22,18 +26,20 @@ typedef struct venda{
 /*typedef struct venda *catFacturacao;*/
 	
 catFacturacao iniciaCatFacturacao(){
-  int i;
+  int i, j;
   catFacturacao cat;
-  cat = (catFacturacao) malloc(sizeof(struct venda) * (TAMCAT*2));
-  for (i=0; i<TAMCAT*2; i++){
-    cat[i].lista = NULL;
-    cat[i].tamanho = 0;
-    cat[i].crescimento = 0;
+  cat = (catFacturacao)malloc(sizeof(struct venda) * (TAMCAT*3));
+  for (j=0; j<3; j++){
+    for (i=0; i<TAMCAT; i++){
+      cat[j*TAMCAT+i].lista = NULL;
+      cat[j*TAMCAT+i].tamanho = 0;
+      cat[j*TAMCAT+i].crescimento = 0;
+    }
   }
   return cat;
 }
 
-catFacturacao insereVenda(catFacturacao cat, char *venda){
+catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, char *venda){
   int i, j;
   char v[7][7]; /*char produtoID[7];char preço[7];char qtd[4];char PN[2];char cliente[6];char MES[3];char Filial[2];*/
   char *var;
@@ -47,33 +53,46 @@ catFacturacao insereVenda(catFacturacao cat, char *venda){
     strcpy(v[i] , var);
   }
   
-  if (verificaAlpha(v[0][0]) && 
-      verificaAlpha(v[0][1]) &&
-      verificaNumero(&v[0][2], 1000, 1999)){
-
-      
-    pp = (ppVenda)malloc(sizeof(struct prodVenda));
-    var = (char*)malloc(sizeof(char) * (strlen(v[0]) +1));
-    strcpy(var, v[0]);
-    pp->qtd = atoi(v[2]);
-    pp->preco = atof(v[1]);
-    pp->filial = atoi(v[6]);
-
-    if (v[3][0] == 'N') j=0; else j=1;
-    i = (j*TAMCAT) + atoi(v[5]) - 1;
-  
-    cat[i].lista = insertAVL(cat[i].lista, var, &cat[i].crescimento, pp);
-    cat[i].tamanho++;
-
+  if (existeVenda(cat, v[0],  atoi(v[6]), atoi(v[5]))){
+    printf("Existe\n"); /* update venda */
+  }
+  else {
+    if (existeProduto(pro, v[0]) && existeCliente(cli, v[4])){
+      pp = (ppVenda)malloc(sizeof(struct prodVenda));
+      if (pp == NULL){
+        printf("Erro malloc pp\n");
+        return cat;
+      }
+      var = (char*)malloc(sizeof(char) * (strlen(v[0]) +1));
+      if (var == NULL){
+        printf("Erro malloc var\n");
+        return cat;
+      }
+      strcpy(var, v[0]);
+      if (v[3][0] == 'N'){
+        pp->qtdN = atoi(v[2]);
+        pp->precoN = atof(v[1]);
+        pp->qtdP = 0;
+        pp->precoP = 0;
+      }
+      else{
+        pp->qtdP = atoi(v[2]);
+        pp->precoP = atof(v[1]);
+        pp->qtdN = 0;
+        pp->precoN = 0;
+      }
+      i = ((atoi(v[6])-1) * TAMCAT) + (atoi(v[5]) - 1 );
+      printf("Venda %s na AVL %d\n", var, i);
+      cat[i].lista = insertAVL(cat[i].lista, var, &cat[i].crescimento, pp);
+      cat[i].tamanho++;
+    }
   }
   return cat;
 }
 
-int totalProdutosVenda(catFacturacao cat, int mes, char tipo){
-  int i, j;
-  if (tipo == 'N') j=0; else j=1;
-    i = (j*TAMCAT) + mes - 1;
-
+int totalProdutosVenda(catFacturacao cat, int mes, int filial){
+  int i;
+  i = ((filial-1)*TAMCAT)+(mes-1);
   return cat[i].tamanho;
 }
 
@@ -85,8 +104,18 @@ void retornaCoisas(catFacturacao cat, char *produto, int mes, char tipo){
     i= j*TAMCAT + mes - 1;
     pp = (ppVenda) retornaDados (cat[i].lista, produto);
     if (pp)
-      printf("Quantidade: %d. Preço: %0.2f. Filial: %d.\n", pp->qtd, pp->preco, pp->filial);
+      printf("Quantidade: %d. Preço: %0.2f. Filial: %d.\n", pp->qtdN, pp->precoN);
     else
       printf("Não existem dados.\n"); 
-
 }
+
+Boolean existeVenda(catFacturacao cat, char *cliente, int filial, int mes){
+  Boolean b = FALSE;
+  int i;
+  if (verificaAlpha(cliente[0]))
+    i = ((filial-1)*TAMCAT)+(mes-1);
+    if (exists(cat[i].lista, cliente))
+      b = TRUE;
+  return b;
+}
+

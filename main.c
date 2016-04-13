@@ -7,11 +7,12 @@
 int main(){
   FILE *fichClientes;
   FILE *fichProdutos;
+  FILE *fichVendas;
   int i;
   catClientes teste;
   catProdutos teste2;
   catFacturacao teste3;
-  char buffer[21];
+  char buffer[41];
 
   teste = iniciaCatClientes();
   teste2 = iniciaCatProdutos();
@@ -19,38 +20,36 @@ int main(){
   
   fichClientes = fopen("fichTeste/Clientes.txt", "r");
   if (fichClientes != NULL){
-    while (fgets(buffer, 20, fichClientes)!=NULL){
+    while (fgets(buffer, 40, fichClientes)!=NULL){
       teste = insereCliente(teste, strtok(buffer, "\r\n"));
     }
   }
 
   fichProdutos = fopen("fichTeste/Produtos.txt", "r");
   if (fichProdutos != NULL){
-    while (fgets(buffer, 20, fichProdutos)!=NULL){
+    while (fgets(buffer, 40, fichProdutos)!=NULL){
       teste2 = insereProduto(teste2, strtok(buffer, "\r\n"));
     }
   }
-  
-  char v1[] = "OP1244 481.43 67 P Q3869 9 1";
-  char v2[] = "GK1523 344.51 146 N U3261 11 2";
-  char v3[] = "XU1314 332.11 160 P Y1793 7 2";
-  
-  teste3 = insereVenda(teste3, v1);
-  teste3 = insereVenda(teste3, v2);
-  teste3 = insereVenda(teste3, v3);
+
+  fichVendas = fopen("fichTeste/Vendas_1M.txt", "r");
+  if (fichVendas != NULL){
+    while (fgets(buffer, 40, fichVendas)!=NULL){
+      teste3 = insereVenda(teste3, teste, teste2, strtok(buffer, "\r\n"));
+    }
+  }
   
   fclose(fichClientes);
   fclose(fichProdutos);
+  fclose(fichVendas	);
 
   printf("Total de Clientes: %d.\n", totalClientes(teste));
   printf("Total de Produtos: %d.\n", totalProdutos(teste2));
   int abc;
-  char cvb;
-  cvb = 'N';
-  for (i=0; i<2; i++){
+  
+  for (i=0; i<3; i++){
     for (abc=0; abc<12; abc++)
-      printf("Total de produtos %c venda mes %d: %d.\n", cvb, (abc+1), totalProdutosVenda(teste3, abc+1,cvb));
-    cvb = 'P';
+      printf("Total de produtos %d venda mes %d: %d.\n", i+1, abc+1, totalProdutosVenda(teste3, abc+1,i+1));
   }
 
 

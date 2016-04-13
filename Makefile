@@ -10,7 +10,7 @@ OUT = GereVendas
 #INCLUDES = -I. 
  
 # C compiler flags 
-CCFLAGS = -I -Wall -pedantic --ansi
+CCFLAGS = -I -Wall -pedantic --ansi -g
 
 # compiler
 CCC = gcc 

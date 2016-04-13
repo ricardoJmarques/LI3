@@ -9,7 +9,7 @@
 typedef  struct listaProdutos *catProdutos;
 
 catProdutos iniciaCatProdutos();
-catProdutos insereProduto(catProdutos PROD, char *produto);
+catProdutos insereProduto(catProdutos prod, char *produto);
 Boolean existeProduto(catProdutos prod, char *produto);
 int totalProdutos(catProdutos prod);
 int totalProdutosLetra(catProdutos prod, char letra);
