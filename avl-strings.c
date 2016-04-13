@@ -86,12 +86,12 @@ BTree balanceRight(BTree t) {
 			t->right->balance = 0;
 			break;
 		case -1: 
-			t->left->balance = 0;
-			t->right->balance = 1;
+			t->left->balance = 1;
+			t->right->balance = 0;
 			break;
 		case 1: 
-			t->left->balance = -1;
-			t->right->balance = 0;
+			t->left->balance = 0;
+			t->right->balance = -1;
 	}
 	t->balance = 0; 
 	}
@@ -115,12 +115,12 @@ BTree balanceLeft(BTree t) {
 			t->right->balance = 0;
 			break;
 		case -1:
-			t->left->balance = 1;
-			t->right->balance = 0;
+			t->left->balance = 0;
+			t->right->balance = 1;
 			break;
 		case 1:	
-			t->left->balance = 0;
-			t->right->balance = -1;
+			t->left->balance = -1;
+			t->right->balance = 0;
 	}
 	t->balance = 0; 
 	}
