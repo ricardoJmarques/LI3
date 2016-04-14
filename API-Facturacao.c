@@ -39,7 +39,7 @@ catFacturacao iniciaCatFacturacao(){
   return cat;
 }
 
-catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, char *venda){
+catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, char *venda, int *err1, int *err2, int *val){
   int i;
   char v[7][7]; /*char produtoID[7];char preço[7];char qtd[4];char PN[2];char cliente[6];char MES[3];char Filial[2];*/
   char *var;
@@ -52,34 +52,44 @@ catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, c
     strcpy(v[i] , var);
   }
   i = ((atoi(v[6])-1) * TAMCAT) + (atoi(v[5]) - 1 );
-  if (existeVenda(cat, v[0],  atoi(v[6]), atoi(v[5]))){
-    pp = (ppVenda)retornaDados (cat[i].lista, v[0]);
-    if (v[3][0] == 'N'){
-        pp->qtdN += atoi(v[2]);
-      }
-      else{
-        pp->qtdP += atoi(v[2]);
-      }
+  /* teste variaveis */
+  Boolean a;
+  Boolean b;
+  a = existeProduto(pro, v[0]);
+  b = existeCliente(cli, v[4]);
+  if (a == FALSE || b == FALSE){
+    if (a == FALSE) *err2 = *err2 +1;
+    if (b == FALSE) *err1 = *err1 +1;
   }
   else {
-    if (existeProduto(pro, v[0]) && existeCliente(cli, v[4])){
-      pp = (ppVenda)malloc(sizeof(struct prodVenda));
-      var = (char*)malloc(sizeof(char) * (strlen(v[0]) +1));
-      strcpy(var, v[0]);
+    *val = *val + 1;
+    if (existeVenda(cat, v[0],  atoi(v[6]), atoi(v[5]))){
+      pp = (ppVenda)retornaDados (cat[i].lista, v[0]);
       if (v[3][0] == 'N'){
-        pp->qtdN = atoi(v[2]);
-        pp->precoN = atof(v[1]);
-        pp->qtdP = 0;
-        pp->precoP = 0;
-      }
-      else{
-        pp->qtdP = atoi(v[2]);
-        pp->precoP = atof(v[1]);
-        pp->qtdN = 0;
-        pp->precoN = 0;
-      }
-      cat[i].lista = insertAVL(cat[i].lista, var, &cat[i].crescimento, pp);
-      cat[i].tamanho++;
+          pp->qtdN += atoi(v[2]);
+        }
+        else{
+          pp->qtdP += atoi(v[2]);
+        }
+    }
+    else {
+        pp = (ppVenda)malloc(sizeof(struct prodVenda));
+        var = (char*)malloc(sizeof(char) * (strlen(v[0]) +1));
+        strcpy(var, v[0]);
+        if (v[3][0] == 'N'){
+          pp->qtdN = atoi(v[2]);
+          pp->precoN = atof(v[1]);
+          pp->qtdP = 0;
+          pp->precoP = 0;
+        }
+        else{
+          pp->qtdP = atoi(v[2]);
+          pp->precoP = atof(v[1]);
+          pp->qtdN = 0;
+          pp->precoN = 0;
+        }
+        cat[i].lista = insertAVL(cat[i].lista, var, &cat[i].crescimento, pp);
+        cat[i].tamanho++;
     }
   }
   return cat;
