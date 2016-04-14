@@ -14,8 +14,6 @@ typedef struct btree {
 
 BTree insertAVL(BTree t, char *str, int *grow, void *dados) { 
 	if(t==NULL) { 
-	  int n;
-	  n = strlen(str) + 1;
 	  t = (BTree)malloc(sizeof(struct btree));
 	  t->string = str;
 	  t->dados = dados;
@@ -70,7 +68,6 @@ BTree insertLeft(BTree t, char* str, int *grow, void *dados) {
 }
 
 BTree balanceRight(BTree t) { 
-	BTree aux;
 	if (t->right->balance==1) { 
 	t = rotateLeft(t); 
 	t->balance = 0; 
@@ -104,7 +101,6 @@ BTree balanceRight(BTree t) {
 }
 
 BTree balanceLeft(BTree t) { 
-	BTree aux;
 	if (t->left->balance==-1) { 
 	t = rotateRight(t); 
 	t->balance = 0; 
@@ -233,7 +229,6 @@ void* retornaDados (BTree t, char *str) {
 	}
 	return NULL;
 }
-
 
 BTree deleteAvl(BTree t)  {
     if (t){

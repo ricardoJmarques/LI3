@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 typedef enum {FALSE,TRUE} Boolean;
 
 Boolean verificaAlpha(char caracter){

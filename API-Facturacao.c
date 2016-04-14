@@ -22,28 +22,44 @@ typedef struct venda{
   int tamanho;
   int crescimento;
 } listaMesVendas;	
-	
-/*typedef struct venda *catFacturacao;*/
-	
-catFacturacao iniciaCatFacturacao(){
-  int i, j;
+
+typedef listaMesVendas *catVenda;
+
+typedef struct facturacao{
+    catVenda catalogo;
+    int erroClientes;
+    int erroProdutos;
+    int linhasLidas;
+} listFacturacao;
+
+/*typedef struct facturacao *catFacturacao;*/
+
+catFacturacao iniciaCatFacturacao(int nfiliais){
+  int i, j, k;
   catFacturacao cat;
-  cat = (catFacturacao)malloc(sizeof(struct venda) * (TAMCAT*3));
-  for (j=0; j<3; j++){
+  cat = (catFacturacao)malloc(sizeof(struct facturacao));
+  cat->catalogo = (catVenda)malloc(sizeof(struct venda) * (TAMCAT*nfiliais));
+  cat->erroClientes = 0;
+  cat->erroProdutos = 0;
+  cat->linhasLidas = 0;
+  for (j=0; j<nfiliais; j++){
     for (i=0; i<TAMCAT; i++){
-      cat[j*TAMCAT+i].lista = NULL;
-      cat[j*TAMCAT+i].tamanho = 0;
-      cat[j*TAMCAT+i].crescimento = 0;
+      k = (j * TAMCAT) + i;
+      cat->catalogo[k].lista = NULL;
+      cat->catalogo[k].tamanho = 0;
+      cat->catalogo[k].crescimento = 0;
     }
   }
   return cat;
 }
 
-catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, char *venda, int *err1, int *err2, int *val){
+catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, char *venda){
   int i;
   char v[7][7]; /*char produtoID[7];char preço[7];char qtd[4];char PN[2];char cliente[6];char MES[3];char Filial[2];*/
   char *var;
   ppVenda pp;
+  Boolean a;
+  Boolean b;
   i=0;
   var = strtok(venda, " ");
   strcpy(v[i] , var);
@@ -53,18 +69,17 @@ catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, c
   }
   i = ((atoi(v[6])-1) * TAMCAT) + (atoi(v[5]) - 1 );
   /* teste variaveis */
-  Boolean a;
-  Boolean b;
   a = existeProduto(pro, v[0]);
   b = existeCliente(cli, v[4]);
   if (a == FALSE || b == FALSE){
-    if (a == FALSE) *err2 = *err2 +1;
-    if (b == FALSE) *err1 = *err1 +1;
+    if (a == FALSE) cat->erroProdutos++;
+    if (b == FALSE) cat->erroClientes++;
   }
   else {
-    *val = *val + 1;
+    cat->linhasLidas++;
     if (existeVenda(cat, v[0],  atoi(v[6]), atoi(v[5]))){
-      pp = (ppVenda)retornaDados (cat[i].lista, v[0]);
+      pp = (ppVenda)retornaDados (cat->catalogo[i].lista, v[0]);
+/*      if(pp) printf("existe pp: %d N / %d P\n", pp->qtdN, pp->qtdP);*/
       if (v[3][0] == 'N'){
           pp->qtdN += atoi(v[2]);
         }
@@ -88,8 +103,8 @@ catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, c
           pp->qtdN = 0;
           pp->precoN = 0;
         }
-        cat[i].lista = insertAVL(cat[i].lista, var, &cat[i].crescimento, pp);
-        cat[i].tamanho++;
+        cat->catalogo[i].lista = insertAVL(cat->catalogo[i].lista, var, &cat->catalogo[i].crescimento, pp);
+        cat->catalogo[i].tamanho++;
     }
   }
   return cat;
@@ -98,28 +113,26 @@ catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, c
 int totalProdutosVenda(catFacturacao cat, int mes, int filial){
   int i;
   i = ((filial-1)*TAMCAT)+(mes-1);
-  return cat[i].tamanho;
+  return cat->catalogo[i].tamanho;
 }
 
-void retornaCoisas(catFacturacao cat, char *produto, int mes, char tipo){
+void retornaCoisas(catFacturacao cat, char *produto, int mes, int filial){
     ppVenda pp;
-    int i, j;
-    char *c;
-    if (tipo == 'N') j=0; else j=1;
-    i= j*TAMCAT + mes - 1;
-    pp = (ppVenda) retornaDados (cat[i].lista, produto);
+    int i;
+    i= ((filial-1)*TAMCAT) + mes - 1;
+    pp = (ppVenda) retornaDados (cat->catalogo[i].lista, produto);
     if (pp)
-      printf("Quantidade: %d. Preço: %0.2f. Filial: %d.\n", pp->qtdN, pp->precoN);
+      printf("QuantidadeN: %d. PreçoN: %0.2f.\nQuantidadeP: %d. PreçoP: %0.2f.\n", pp->qtdN, pp->precoN, pp->qtdP, pp->precoP);
     else
       printf("Não existem dados.\n"); 
 }
 
-Boolean existeVenda(catFacturacao cat, char *cliente, int filial, int mes){
+Boolean existeVenda(catFacturacao cat, char *produto, int filial, int mes){
   Boolean b = FALSE;
   int i;
-  if (verificaAlpha(cliente[0]))
+  if (verificaAlpha(produto[0]))
     i = ((filial-1)*TAMCAT)+(mes-1);
-    if (exists(cat[i].lista, cliente))
+    if (exists(cat->catalogo[i].lista, produto))
       b = TRUE;
   return b;
 }
@@ -128,7 +141,13 @@ void removeCatFacturacao(catFacturacao fact, int filiais){
   int i, j;
   j = TAMCAT * filiais;
   for (i=0; i<j; i++){
-    deleteAvl(fact[i].lista);
+    deleteAvl(fact->catalogo[i].lista);
   }
+  free(fact->catalogo);
   free(fact);
 }
+
+int totalVendas(catFacturacao cat){
+  return cat->linhasLidas;
+}
+

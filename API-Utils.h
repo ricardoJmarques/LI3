@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #ifndef API_UTILS_H
 #define API_UTILS_H
 
