@@ -111,3 +111,11 @@ Boolean existeVenda(catFacturacao cat, char *cliente, int filial, int mes){
   return b;
 }
 
+void removeCatFacturacao(catFacturacao fact, int filiais){
+  int i, j;
+  j = TAMCAT * filiais;
+  for (i=0; i<j; i++){
+    deleteAvl(fact[i].lista);
+  }
+  free(fact);
+}

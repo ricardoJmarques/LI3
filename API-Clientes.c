@@ -66,9 +66,6 @@ void removeCatClientes(catClientes cat){
   int i;
   for (i=0; i<TAMCAT; i++){
     deleteAvl(cat[i].lista);
-/*    cat[i].lista = NULL;
-    cat[i].tamanho = 0;
-    cat[i].crescimento = 0; */
   }
   free(cat);
 }

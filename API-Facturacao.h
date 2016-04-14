@@ -13,5 +13,6 @@ catFacturacao iniciaCatFacturacao();
 catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, char *venda);
 int totalProdutosVenda(catFacturacao cat, int mes, int filial);
 Boolean existeVenda(catFacturacao cat, char *cliente, int filial, int mes);
+void removeCatFacturacao(catFacturacao fact, int filiais);
 
 #endif

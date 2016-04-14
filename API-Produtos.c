@@ -74,9 +74,6 @@ void removeCatProdutos(catProdutos prod){
   int i;
   for (i=0; i<TAMCAT; i++){
     deleteAvl(prod[i].lista);
-/*    prod[i].lista = NULL;
-    prod[i].tamanho = 0;
-    prod[i].crescimento = 0;*/
   }
   free(prod);
 }
