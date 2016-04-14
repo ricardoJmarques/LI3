@@ -49,7 +49,7 @@ int main(){
   
   for (i=0; i<3; i++){
     for (abc=0; abc<12; abc++)
-      printf("Total de produtos %d venda mes %d: %d.\n", i+1, abc+1, totalProdutosVenda(teste3, abc+1,i+1));
+      printf("Total de vendas na filial %d no mes %d: %d.\n", i+1, abc+1, totalProdutosVenda(teste3, abc+1,i+1));
   }
 
 

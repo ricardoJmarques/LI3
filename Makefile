@@ -11,6 +11,7 @@ OUT = GereVendas
  
 # C compiler flags 
 CCFLAGS = -I -Wall -pedantic --ansi -g
+#-I
 
 # compiler
 CCC = gcc 

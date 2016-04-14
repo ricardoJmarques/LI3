@@ -79,22 +79,27 @@ BTree balanceRight(BTree t) {
 	else {
 	
 	t->right = rotateRight(t->right);
-	t = rotateLeft(t); 
-	switch (t->balance) { 
+	t = rotateLeft(t);
+	if(t->right && t->left){ 
+	switch (t->balance && t->left && t->right) { 
 		case 0: 
 			t->left->balance = 0;
 			t->right->balance = 0;
 			break;
-		case 1: 
-			t->left->balance = 0;
-			t->right->balance = -1;
-			break;
 		case -1: 
-			t->left->balance = 1;
+			t->left->balance = 0;
+			t->right->balance = 1;
+			break;
+		case 1: 
+			t->left->balance = -1;
 			t->right->balance = 0;
+			break;
 	}
 	t->balance = 0; 
 	}
+	}
+
+
 	return t;
 }
 
@@ -107,32 +112,35 @@ BTree balanceLeft(BTree t) {
 	}
 	else {
 	
-	t->left = rotateLeft(t->left); 
-	t = rotateRight(t); 
-	switch (t->balance) { 
-		case 0: 
-			t->left->balance = 0;
-			t->right->balance = 0;
-			break;
-		case 1:
-			t->left->balance = 0;
-			t->right->balance = 1;
-			break;
-		case -1:	
-			t->left->balance = -1;
-			t->right->balance = 0;
-	}
-	t->balance = 0; 
+		t->left = rotateLeft(t->left); 
+		t = rotateRight(t); 
+		if(t->right && t->left){
+		switch (t->balance) { 
+			case 0: 
+				t->left->balance = 0;
+				t->right->balance = 0;
+				break;
+			case -1:
+				t->left->balance = 1;
+				t->right->balance = 0;
+				break;
+			case 1:	
+				t->left->balance = 0;
+				t->right->balance = -1;
+				break;
+		}
+	t->balance = 0;
+	} 
 	}
 	return t;
 }
 
-BTree rotateRight(BTree t) { /* rotação simples a direita        	  t->(5)        t->(4)<-aux  	*/
-	BTree aux;											    /*  	     /             / \			*/
-	if ((! t) || (! t->left)){								/*    aux->(4)   =>      (3) (5)		*/
-	}							    						/*  	   /      						*/
-	else {													/*	  	 (3)           					*/
-		aux = t->left;
+BTree rotateRight(BTree t) { 
+	BTree aux;										
+	if ((! t) || (! t->left)){								
+	}							    	   						
+	else {
+		aux = t->left;														  	
  		t->left = aux->right;																					
 		aux->right = t;											
 		t = aux;												
@@ -140,11 +148,11 @@ BTree rotateRight(BTree t) { /* rotação simples a direita        	  t->(5)    
 return t;
 }
 
-BTree rotateLeft(BTree t) { /* rotação simples a esquerda      t->(3)			 t->(4)<-aux 		*/
-	BTree aux;												/*		  \				/ \				*/
-	if ((! t) || (! t->right)) {							/*	 aux->(4)   =>    (3) (5)			*/
-	}														/*			\							*/
-	else {													/*		    (5)							*/
+BTree rotateLeft(BTree t) { 
+	BTree aux;												
+	if ((! t) || (! t->right)) {							
+	}														
+	else {													
 	aux = t->right;											
 	t->right = aux->left;									
 	aux->left = t;											
@@ -152,6 +160,28 @@ BTree rotateLeft(BTree t) { /* rotação simples a esquerda      t->(3)			 t->(4
 	}														
 return t;
 }
+/*
+
+BTree rotateLeft (BTree a) {
+	if(a->left){
+		BTree b  = a->right;
+		a->right = b->left;
+		b->left  = a;
+		return b;
+	}
+}
+
+BTree rotateRight (BTree a) {
+	if(a->right){
+		BTree b  = a->left;
+		a->left  = b->right;
+		b->right = a;
+		return b;
+	}
+
+}
+*/
+
 
 int exists (BTree t, char *str) {
 	int n;

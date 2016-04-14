@@ -34,7 +34,6 @@ catProdutos insereProduto(catProdutos prod, char *produto){
   if (verificaAlpha(produto[0]) && verificaAlpha(produto[1]) && verificaNumero(&produto[2], MINPRODUTO, MAXPRODUTO)){
     p = (char*)malloc(sizeof(char)*(strlen(produto)+1));
     strcpy(p , produto);
-    printf("Produto: %s\n", p);
     prod[produto[0]-'A'].lista = insertAVL(prod[produto[0]-'A'].lista, p, &prod[produto[0]-'A'].crescimento,NULL);
     prod[produto[0]-'A'].tamanho++;
   }
