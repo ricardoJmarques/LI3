@@ -267,3 +267,19 @@ char** criaArrayString(BTree t, int tamString, int tamAVL){
 	return str;
 
 }
+
+
+BTree avlCopy (BTree t){
+	BTree tmp;
+	if(t){
+	 	tmp = (BTree)malloc(sizeof(struct btree));
+		tmp->string = t->string;
+	  	tmp->dados = t->dados;
+	  	tmp->balance = t->balance;
+	  	tmp->right = avlCopy(t->right);
+	  	tmp->left = avlCopy (t->left);
+	  	return tmp;
+	}
+
+	else return NULL;
+}
