@@ -5,14 +5,22 @@
 #ifndef API_CLIENTES_H
 #define API_CLIENTES_H
 
-/* catalogo de clientes */
-typedef struct listaClientes *catClientes;
+typedef char* Cliente;
 
-catClientes iniciaCatClientes();
-catClientes insereCliente(catClientes ccs, char *cliente);
-Boolean existeCliente(catClientes ccs, char* cliente);
-int totalClientes(catClientes ccs);
-int totalClientesLetra(catClientes ccs, char letra);
-void removeCatClientes(catClientes ccs);
+typedef struct ListaClientes *CatalogoClientes;
+
+CatalogoClientes iniciaCatClientes();
+
+CatalogoClientes copiaCatClientes(CatalogoClientes catCli);
+
+CatalogoClientes insereCliente(CatalogoClientes catCli, Cliente c);
+
+Boolean existeCliente(CatalogoClientes catCli, Cliente c);
+
+int totalClientes(CatalogoClientes catCli);
+
+int totalClientesLetra(CatalogoClientes catCli, char letra);
+
+void removeCatClientes(CatalogoClientes catCli);
 
 #endif

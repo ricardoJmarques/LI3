@@ -4,76 +4,86 @@
 #include "API-Produtos.h"
 
 #define TAMCAT 26 /* numero de arvores do catalogo */
-#define MINPRODUTO 1000
-#define MAXPRODUTO 1999
+#define MINP 1000
+#define MAXP 1999
 
 /* listaLetra é uma AVL onde constam os   */
 /* clientes iniciados por determinada letra */
-typedef struct listaProdutos{
+typedef struct ListaProdutos{
   BTree lista;
   int tamanho;
   int crescimento;
-} listaLetraProdutos;
+} listap;
 
-/* catalogo de clientes */
-/*typedef struct listaProdutos *catProdutos;*/
+/* tipo Produto */
+/*typedef char* Produto;*/
 
-catProdutos iniciaCatProdutos(){
+/* catalogo de Produtos */
+/*typedef struct ListaProdutos *CatalogoProdutos;*/
+
+CatalogoProdutos iniciaCatProdutos(){
   int i;
-  catProdutos prod = (catProdutos) malloc(sizeof(struct listaProdutos) * TAMCAT);
+  /* criar array de 26 listaProdutos */
+  CatalogoProdutos catProd = (CatalogoProdutos)malloc(sizeof(struct ListaProdutos) * TAMCAT);
   for (i=0; i<TAMCAT; i++){
-    prod[i].lista = NULL;
-    prod[i].tamanho = 0;
-    prod[i].crescimento = 0;
+    catProd[i].lista = NULL;
+    catProd[i].tamanho = 0;
+    catProd[i].crescimento = 0;
   }
-  return prod;
+  return catProd;
 }
 
-catProdutos insereProduto(catProdutos prod, char *produto){
-  char *p;
-  if (verificaAlpha(produto[0]) && verificaAlpha(produto[1]) && verificaNumero(&produto[2], MINPRODUTO, MAXPRODUTO)){
-    p = (char*)malloc(sizeof(char)*(strlen(produto)+1));
-    strcpy(p , produto);
-    prod[produto[0]-'A'].lista = insertAVL(prod[produto[0]-'A'].lista, p, &prod[produto[0]-'A'].crescimento,NULL);
-    prod[produto[0]-'A'].tamanho++;
+CatalogoProdutos copiaCatProdutos(CatalogoProdutos catProd){
+  int i;
+  CatalogoProdutos cp = (CatalogoProdutos)malloc(sizeof(struct ListaProdutos) * TAMCAT);
+  for (i=0; i<TAMCAT; i++){
+    cp[i].lista = avlCopy(catProd[i].lista);
+    cp[i].tamanho = catProd[i].tamanho;
+    cp[i].crescimento = catProd[i].crescimento;
   }
-  return prod;
+  return cp;
 }
 
-Boolean existeProduto(catProdutos prod, char *produto){
+CatalogoProdutos insereProduto(CatalogoProdutos catProd, Produto p){
+  char *ch;
+  int i;
+  if (verificaAlpha(p[0]) && verificaAlpha(p[1]) && verificaNumero(&p[2], MINP, MAXP)){
+    i = p[0]-'A';
+    ch = (char*)malloc(sizeof(char)*(strlen(p)+1));
+    strcpy(ch , p);
+    catProd[i].lista = insertAVL(catProd[i].lista, ch, &catProd[i].crescimento,NULL);
+    catProd[i].tamanho++;
+  }
+  return catProd;
+}
+
+Boolean existeProduto(CatalogoProdutos catProd, Produto p){
   Boolean b = FALSE;
-  if (verificaAlpha(produto[0])){
-    if (exists(prod[produto[0]-'A'].lista, produto)){
-      b = TRUE;
-    }
+  if (verificaAlpha(p[0])){
+    b=exists(catProd[p[0]-'A'].lista, p);
   }
   return b;
 }
 
-char* existeProduto2(catProdutos prod, char *produto){
-    char *c;
-    c = (char*)exists2(prod[produto[0]-'A'].lista, produto);
-    return c;
-}
-
-int totalProdutos(catProdutos prod){
+int totalProdutos(CatalogoProdutos catProd){
   int total = 0;
   int i;
   for (i=0; i<TAMCAT; i++){
-    total += prod[i].tamanho;
+    total += catProd[i].tamanho;
   }
   return total;
 }
 
-int totalProdutosLetra(catProdutos prod, char letra){
-  return prod[letra - 'A'].tamanho;
+int totalProdutosLetra(CatalogoProdutos catProd, char letra){
+  return catProd[letra - 'A'].tamanho;
 }
 
-void removeCatProdutos(catProdutos prod){
+void removeCatProdutos(CatalogoProdutos catProd){
   int i;
   for (i=0; i<TAMCAT; i++){
-    deleteAvl(prod[i].lista);
+    deleteAvl(catProd[i].lista);
   }
-  free(prod);
+  free(catProd);
 }
+
 

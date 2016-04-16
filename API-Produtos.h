@@ -6,13 +6,22 @@
 #define API_PRODUTOS_H
 
 /* catalogo de clientes */
-typedef  struct listaProdutos *catProdutos;
+typedef char* Produto;
 
-catProdutos iniciaCatProdutos();
-catProdutos insereProduto(catProdutos prod, char *produto);
-Boolean existeProduto(catProdutos prod, char *produto);
-int totalProdutos(catProdutos prod);
-int totalProdutosLetra(catProdutos prod, char letra);
-void removeCatProdutos(catProdutos prod);
+typedef struct ListaProdutos *CatalogoProdutos;
+
+CatalogoProdutos iniciaCatProdutos();
+
+CatalogoProdutos copiaCatProdutos(CatalogoProdutos catProd);
+
+CatalogoProdutos insereProduto(CatalogoProdutos catProd, Produto p);
+
+Boolean existeProduto(CatalogoProdutos catProd, Produto p);
+
+int totalProdutos(CatalogoProdutos catProd);
+
+int totalProdutosLetra(CatalogoProdutos catProd, char letra);
+
+void removeCatProdutos(CatalogoProdutos catProd);
 
 #endif

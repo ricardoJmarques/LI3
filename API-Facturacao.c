@@ -6,31 +6,28 @@
 #include "API-Produtos.h"
 
 #define TAMCAT 12 /* numero de arvores do catalogo; 12 meses por Filial */
-
-typedef struct prodVenda{
+#define TAMMES 12
+#define TAMPROD 26
+typedef struct Venda{
   int qtdN;
   int qtdP;
   float precoN;
   float precoP;
 /*  int filial;*/
-} pVenda;
+} *venda;
 
-typedef pVenda *ppVenda;
-
-typedef struct venda{
+typedef struct ListaVenda{
   BTree lista;
   int tamanho;
   int crescimento;
-} listaMesVendas;	
+} *listavenda;
 
-typedef listaMesVendas *catVenda;
-
-typedef struct facturacao{
+typedef struct ListaFaturacao{
     catVenda catalogo;
     int erroClientes;
     int erroProdutos;
     int linhasLidas;
-} listFacturacao;
+} *listafaturacao;
 
 /*typedef struct facturacao *catFacturacao;*/
 
@@ -71,41 +68,39 @@ catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, c
   /* teste variaveis */
   a = existeProduto(pro, v[0]);
   b = existeCliente(cli, v[4]);
-  if (a == FALSE || b == FALSE){
-    if (a == FALSE) cat->erroProdutos++;
-    if (b == FALSE) cat->erroClientes++;
+  if (!a || !b){
+    if (!a) cat->erroProdutos++;
+    else cat->erroClientes++;
   }
   else {
-    cat->linhasLidas++;
-    if (existeVenda(cat, v[0],  atoi(v[6]), atoi(v[5]))){
-      pp = (ppVenda)retornaDados (cat->catalogo[i].lista, v[0]);
-/*      if(pp) printf("existe pp: %d N / %d P\n", pp->qtdN, pp->qtdP);*/
+    if ((pp=(ppVenda)retornaDados(cat->catalogo[i].lista, v[0]))!=NULL){
       if (v[3][0] == 'N'){
-          pp->qtdN += atoi(v[2]);
-        }
-        else{
-          pp->qtdP += atoi(v[2]);
-        }
+        pp->qtdN += atoi(v[2]);
+      }
+      else{
+        pp->qtdP += atoi(v[2]);
+      }
     }
     else {
-        pp = (ppVenda)malloc(sizeof(struct prodVenda));
-        var = (char*)malloc(sizeof(char) * (strlen(v[0]) +1));
-        strcpy(var, v[0]);
-        if (v[3][0] == 'N'){
-          pp->qtdN = atoi(v[2]);
-          pp->precoN = atof(v[1]);
-          pp->qtdP = 0;
-          pp->precoP = 0;
-        }
-        else{
-          pp->qtdP = atoi(v[2]);
-          pp->precoP = atof(v[1]);
-          pp->qtdN = 0;
-          pp->precoN = 0;
-        }
-        cat->catalogo[i].lista = insertAVL(cat->catalogo[i].lista, var, &cat->catalogo[i].crescimento, pp);
-        cat->catalogo[i].tamanho++;
+      pp = (ppVenda)malloc(sizeof(struct prodVenda));
+      var = (char*)malloc(sizeof(char) * (strlen(v[0]) +1));
+      strcpy(var, v[0]);
+      if (v[3][0] == 'N'){
+        pp->qtdN = atoi(v[2]);
+        pp->precoN = atof(v[1]);
+        pp->qtdP = 0;
+        pp->precoP = 0;
+      }
+      else{
+        pp->qtdP = atoi(v[2]);
+        pp->precoP = atof(v[1]);
+        pp->qtdN = 0;
+        pp->precoN = 0;
+      }
+      cat->catalogo[i].lista = insertAVL(cat->catalogo[i].lista, var, &cat->catalogo[i].crescimento, pp);
+      cat->catalogo[i].tamanho++;
     }
+    cat->linhasLidas++;
   }
   return cat;
 }
@@ -115,7 +110,7 @@ int totalProdutosVenda(catFacturacao cat, int mes, int filial){
   i = ((filial-1)*TAMCAT)+(mes-1);
   return cat->catalogo[i].tamanho;
 }
-
+/*
 void retornaCoisas(catFacturacao cat, char *produto, int mes, int filial){
     ppVenda pp;
     int i;
@@ -126,7 +121,7 @@ void retornaCoisas(catFacturacao cat, char *produto, int mes, int filial){
     else
       printf("Não existem dados.\n"); 
 }
-
+*/
 Boolean existeVenda(catFacturacao cat, char *produto, int filial, int mes){
   Boolean b = FALSE;
   int i;

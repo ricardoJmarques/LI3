@@ -7,9 +7,9 @@
 #ifndef API_FACTURACAO_H
 #define API_FACTURACAO_H
 
-typedef struct facturacao *catFacturacao;
+typedef struct ListaFaturacao *CatalogoFaturacao;
 
-catFacturacao iniciaCatFacturacao(int nfiliais);
+CatalogoFaturacao iniciaCatFacturacao(int nfiliais);
 catFacturacao insereVenda(catFacturacao cat, catClientes cli, catProdutos pro, char *venda);
 int totalProdutosVenda(catFacturacao cat, int mes, int filial);
 Boolean existeVenda(catFacturacao cat, char *produto, int filial, int mes);

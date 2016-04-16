@@ -16,7 +16,7 @@ BTree insertAVL(BTree t, char *str, int *grow, void *dados) {
 	if(t==NULL) { 
 	  t = (BTree)malloc(sizeof(struct btree));
 	  t->string = str;
-	  t->dados = dados;
+      t->dados = dados;
 	  t->right = t->left = NULL;
 	  t->balance = 0;
 	  *grow = 1;
@@ -219,8 +219,9 @@ void* retornaDados (BTree t, char *str) {
 	aux = t;
 	while(aux!=NULL){
 		n = strcmp(aux->string , str);
-		if(n == 0)
+		if(n == 0){
 			return (void*)aux->dados;
+	    }
 		else{
 			if (n > 0)
 				aux = aux->left;
@@ -237,7 +238,7 @@ BTree deleteAvl(BTree t)  {
 	    deleteAvl(t->right);
 	    t->right = NULL;
 	    free(t->string);
-	    free(t->dados);
+        free(t->dados);
 	    free(t);
     }
     return NULL;  
@@ -250,7 +251,6 @@ void criaArrayStringaux(BTree t, int tamString ,char** str, int* i){
 		(*i)++; /* incrementa o indice*/
 		criaArrayStringaux(t->left , tamString ,str, i); /* cria a string para o ramo da esquerda*/
 		criaArrayStringaux(t->right , tamString,str, i); /* cria a string para o ramo da direita*/
-
 	}
 }
 
@@ -260,21 +260,21 @@ char** criaArrayString(BTree t, int tamString, int tamAVL){
 	str  = malloc (sizeof(char*) * tamAVL); /*aloca o array de strings*/
 	criaArrayStringaux(t , tamString, str,  &i);
 	return str;
-
 }
-
 
 BTree avlCopy (BTree t){
 	BTree tmp;
+	char *c;
 	if(t){
 	 	tmp = (BTree)malloc(sizeof(struct btree));
-		tmp->string = t->string;
-	  	tmp->dados = t->dados;
+		c = (char*)malloc(sizeof(char)*(strlen(t->string)+1));
+		strcpy(c, t->string);
+		tmp->string = c;
+		tmp->dados = NULL;
 	  	tmp->balance = t->balance;
 	  	tmp->right = avlCopy(t->right);
-	  	tmp->left = avlCopy (t->left);
+	  	tmp->left = avlCopy(t->left);
 	  	return tmp;
 	}
-
 	else return NULL;
 }

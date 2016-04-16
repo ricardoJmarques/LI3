@@ -1,14 +1,18 @@
 #include <stdlib.h>
 #include "avl-strings.h"
 #include "API-Utils.h"
+#include "API-Clientes.h"
+#include "API-Produtos.h"
 
 #ifndef API_FILIAIS_H
 #define API_FILIAIS_H
 
-typedef struct venda *catFilial;
+typedef struct ListaFilial *CatalogoFilial;
 
-catFilial iniciaCatFilial();
-catFilial insereVendaFilialProdutos (catFilial cat, char* venda);
-catFilial insereVendaFilialClientes (catFilial cat, char* venda)
+CatalogoFilial iniciaCatFilial(CatalogoClientes catCli);
+
+CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, int qtd, float preco, int mes, char tipo);
+
+void removeCatFilial(CatalogoFilial catFil);
 
 #endif

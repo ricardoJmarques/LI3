@@ -9,63 +9,75 @@
 
 /* listaLetra é uma AVL onde constam os   */
 /* clientes iniciados por determinada letra */
-typedef struct listaClientes{
+typedef struct ListaClientes{
   BTree lista;
   int tamanho;
   int crescimento;
-} listaLetraClientes;
+} listac;
 
 /* catalogo de clientes */
-/*typedef struct listaClientes *catClientes;*/
+/*typedef struct ListaClientes *CatalogoClientes;*/
 
-catClientes iniciaCatClientes(){
+CatalogoClientes iniciaCatClientes(){
   int i;
-  catClientes cat = (catClientes) malloc(sizeof(struct listaClientes) * TAMCAT);
+  CatalogoClientes catCli = (CatalogoClientes)malloc(sizeof(struct ListaClientes) * TAMCAT);
   for (i=0; i<TAMCAT; i++){
-    cat[i].lista = NULL;
-    cat[i].tamanho = 0;
-    cat[i].crescimento = 0;
+    catCli[i].lista = NULL;
+    catCli[i].tamanho = 0;
+    catCli[i].crescimento = 0;
   }
-  return cat;
+  return catCli;
 }
 
-catClientes insereCliente(catClientes cat, char *cliente){
-  char *c;
-  if (verificaAlpha(cliente[0]) && verificaNumero(&cliente[1], MINCLIENTE, MAXCLIENTE)){
-    c = (char*)malloc(sizeof(char)*(strlen(cliente)+1));
-    strcpy(c , cliente);
-    cat[cliente[0]-'A'].lista = insertAVL(cat[cliente[0]-'A'].lista, c, &cat[cliente[0]-'A'].crescimento,NULL);
-    cat[cliente[0]-'A'].tamanho++;
+CatalogoClientes copiaCatClientes(CatalogoClientes catCli){
+  int i;
+  CatalogoClientes cp = (CatalogoClientes)malloc(sizeof(struct ListaClientes) * TAMCAT);
+  for (i=0; i<TAMCAT; i++){
+    cp[i].lista = avlCopy(catCli[i].lista);
+    cp[i].tamanho = catCli[i].tamanho;
+    cp[i].crescimento = catCli[i].crescimento;
   }
-  return cat;
+  return cp;
 }
 
-Boolean existeCliente(catClientes cat, char *cliente){
+CatalogoClientes insereCliente(CatalogoClientes catCli, Cliente c){
+  char *ch;
+  int i;
+  if (verificaAlpha(c[0]) && verificaNumero(&c[1], MINCLIENTE, MAXCLIENTE)){
+    i = c[0]-'A';
+    ch = (char*)malloc(sizeof(char)*(strlen(c)+1));
+    strcpy(ch , c);
+    catCli[i].lista = insertAVL(catCli[i].lista, ch, &catCli[i].crescimento,NULL);
+    catCli[i].tamanho++;
+  }
+  return catCli;
+}
+
+Boolean existeCliente(CatalogoClientes catCli, Cliente c){
   Boolean b = FALSE;
-  if (verificaAlpha(cliente[0]))
-    if (exists(cat[cliente[0]-'A'].lista, cliente))
-      b = TRUE;
+  if (verificaAlpha(c[0]))
+    b= exists(catCli[c[0]-'A'].lista, c);
   return b;
 }
 
-int totalClientes(catClientes cat){
+int totalClientes(CatalogoClientes catCli){
   int total = 0;
   int i;
   for (i=0; i<TAMCAT; i++){
-    total += cat[i].tamanho;
+    total += catCli[i].tamanho;
   }
   return total;
 }
 
-int totalClientesLetra(catClientes cat, char letra){
-  return cat[letra - 'A'].tamanho;
+int totalClientesLetra(CatalogoClientes catCli, char letra){
+  return catCli[letra-'A'].tamanho;
 }
 
-void removeCatClientes(catClientes cat){
+void removeCatClientes(CatalogoClientes catCli){
   int i;
   for (i=0; i<TAMCAT; i++){
-    deleteAvl(cat[i].lista);
+    deleteAvl(catCli[i].lista);
   }
-  free(cat);
+  free(catCli);
 }
 
