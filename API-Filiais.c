@@ -15,6 +15,12 @@ typedef struct Compra{
 /*  int filial;*/
 } *compra;
 
+typedef struct ListaProdutos{
+  BTree lista;
+  int tamanho;
+  int crescimento;
+} *listaproduto;
+
 typedef struct ListaCompra{
   BTree lista;
   int tamanho;
@@ -49,58 +55,39 @@ CatalogoFilial iniciaCatFilial(int nfiliais){
   return catFil;
 }
 
-CatalogoFilial insereCompra(CatalogoFilial catFil, CatalogoClientes catCli, CatalogoProdutos catProd, char *venda){
+CatalogoFilial insereCompra(CatalogoFilial catFil, Cliente c, int qtd, float preco, int mes, char tipo, int filial){
   int i;
-  char v[7][7]; /*char produtoID[7];char preço[7];char qtd[4];char PN[2];char cliente[6];char MES[3];char Filial[2];*/
   char *var;
   compra cp;
-  Boolean a;
-  Boolean b;
-  i=0;
-  var = strtok(venda, " ");
-  strcpy(v[i] , var);
-  while ((var = strtok(NULL, " ")) != NULL){ 
-    i++;
-    strcpy(v[i] , var);
-  }
-  i = ((atoi(v[6])-1) * TAMCAT) + (atoi(v[5]) - 1 );
-  /* teste variaveis */
-  a = existeProduto(catProd, v[0]);
-  b = existeCliente(catCli, v[4]);
-  if (!a || !b){
-    if (!a) catFil->erroProdutos++;
-    else catFil->erroClientes++;
+  i = ((filial-1)*TAMCAT)+(mes-1);
+  if ((cp=(compra)retornaDados(catFil->catalogo[i].lista, c))!=NULL){
+    if (tipo == 'N'){
+      cp->qtdN += qtd;
+    }
+    else{
+      cp->qtdP += qtd;
+    }
   }
   else {
-    if ((cp=(compra)retornaDados(catFil->catalogo[i].lista, v[0]))!=NULL){
-      if (v[3][0] == 'N'){
-        cp->qtdN += atoi(v[2]);
-      }
-      else{
-        cp->qtdP += atoi(v[2]);
-      }
+    cp = (compra)malloc(sizeof(struct Compra));
+    var = (char*)malloc(sizeof(char) * (strlen(c) +1));
+    strcpy(var, c);
+    if (tipo == 'N'){
+      cp->qtdN = qtd;
+      cp->precoN = preco;
+      cp->qtdP = 0;
+      cp->precoP = 0;
     }
-    else {
-      cp = (compra)malloc(sizeof(struct Compra));
-      var = (char*)malloc(sizeof(char) * (strlen(v[0]) +1));
-      strcpy(var, v[0]);
-      if (v[3][0] == 'N'){
-        cp->qtdN = atoi(v[2]);
-        cp->precoN = atof(v[1]);
-        cp->qtdP = 0;
-        cp->precoP = 0;
-      }
-      else{
-        cp->qtdP = atoi(v[2]);
-        cp->precoP = atof(v[1]);
-        cp->qtdN = 0;
-        cp->precoN = 0;
-      }
-      catFil->catalogo[i].lista = insertAVL(catFil->catalogo[i].lista, var, &catFil->catalogo[i].crescimento, cp);
-      catFil->catalogo[i].tamanho++;
+    else{
+      cp->qtdP = qtd;
+      cp->precoP = preco;
+      cp->qtdN = 0;
+      cp->precoN = 0;
     }
-    catFil->linhasLidas++;
+    catFil->catalogo[i].lista = insertAVL(catFil->catalogo[i].lista, var, &catFil->catalogo[i].crescimento, cp);
+    catFil->catalogo[i].tamanho++;
   }
+  catFil->linhasLidas++;
   return catFil;
 }
 

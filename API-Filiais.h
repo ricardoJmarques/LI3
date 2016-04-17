@@ -11,7 +11,7 @@ typedef struct ListaFilial *CatalogoFilial;
 
 CatalogoFilial iniciaCatFilial(int nfiliais);
 
-CatalogoFilial insereCompra(CatalogoFilial catFil, CatalogoClientes calCli, CatalogoProdutos catProd, char *venda);
+CatalogoFilial insereCompra(CatalogoFilial catFil, Cliente c, int qtd, float preco, int mes, char tipo, int filial);
 
 int totalProdutosCompra(CatalogoFilial catFil, int mes, int filial);
 
