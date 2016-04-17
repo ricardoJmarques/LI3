@@ -10,9 +10,9 @@
 /* listaLetra é uma AVL onde constam os   */
 /* clientes iniciados por determinada letra */
 typedef struct ListaClientes{
-  BTree lista;
-  int tamanho;
-  int crescimento;
+  BTree lista[TAMCAT];
+  int tamanho[TAMCAT];
+  int crescimento[TAMCAT];
 } listac;
 
 /* catalogo de clientes */
@@ -20,22 +20,22 @@ typedef struct ListaClientes{
 
 CatalogoClientes iniciaCatClientes(){
   int i;
-  CatalogoClientes catCli = (CatalogoClientes)malloc(sizeof(struct ListaClientes) * TAMCAT);
+  CatalogoClientes catCli = (CatalogoClientes)malloc(sizeof(struct ListaClientes));
   for (i=0; i<TAMCAT; i++){
-    catCli[i].lista = NULL;
-    catCli[i].tamanho = 0;
-    catCli[i].crescimento = 0;
+    catCli->lista[i] = NULL;
+    catCli->tamanho[i] = 0;
+    catCli->crescimento[i] = 0;
   }
   return catCli;
 }
 
 CatalogoClientes copiaCatClientes(CatalogoClientes catCli){
   int i;
-  CatalogoClientes cp = (CatalogoClientes)malloc(sizeof(struct ListaClientes) * TAMCAT);
+  CatalogoClientes cp = (CatalogoClientes)malloc(sizeof(struct ListaClientes));
   for (i=0; i<TAMCAT; i++){
-    cp[i].lista = avlCopy(catCli[i].lista);
-    cp[i].tamanho = catCli[i].tamanho;
-    cp[i].crescimento = catCli[i].crescimento;
+    cp->lista[i] = avlCopy(catCli->lista[i]);
+    cp->tamanho[i] = catCli->tamanho[i];
+    cp->crescimento[i] = catCli->crescimento[i];
   }
   return cp;
 }
@@ -47,8 +47,8 @@ CatalogoClientes insereCliente(CatalogoClientes catCli, Cliente c){
     i = c[0]-'A';
     ch = (char*)malloc(sizeof(char)*(strlen(c)+1));
     strcpy(ch , c);
-    catCli[i].lista = insertAVL(catCli[i].lista, ch, &catCli[i].crescimento,NULL);
-    catCli[i].tamanho++;
+    catCli->lista[i] = insertAVL(catCli->lista[i], ch, &catCli->crescimento[i],NULL);
+    catCli->tamanho[i]++;
   }
   return catCli;
 }
@@ -56,7 +56,7 @@ CatalogoClientes insereCliente(CatalogoClientes catCli, Cliente c){
 Boolean existeCliente(CatalogoClientes catCli, Cliente c){
   Boolean b = FALSE;
   if (verificaAlpha(c[0]))
-    b= exists(catCli[c[0]-'A'].lista, c);
+    b= exists(catCli->lista[c[0]-'A'], c);
   return b;
 }
 
@@ -64,20 +64,24 @@ int totalClientes(CatalogoClientes catCli){
   int total = 0;
   int i;
   for (i=0; i<TAMCAT; i++){
-    total += catCli[i].tamanho;
+    total += catCli->tamanho[i];
   }
   return total;
 }
 
 int totalClientesLetra(CatalogoClientes catCli, char letra){
-  return catCli[letra-'A'].tamanho;
+  return catCli->tamanho[letra-'A'];
 }
 
 void removeCatClientes(CatalogoClientes catCli){
   int i;
   for (i=0; i<TAMCAT; i++){
-    deleteAvl(catCli[i].lista);
+    deleteAvl(catCli->lista[i]);
   }
   free(catCli);
+}
+
+void* retornaDadosCliente(CatalogoClientes catCli, Cliente c){
+  return retornaDados(catCli->lista[c[0]-'A'], c);
 }
 

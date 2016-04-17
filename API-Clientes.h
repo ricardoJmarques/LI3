@@ -23,4 +23,6 @@ int totalClientesLetra(CatalogoClientes catCli, char letra);
 
 void removeCatClientes(CatalogoClientes catCli);
 
+void* retornaDadosCliente(CatalogoClientes catCli, Cliente c);
+
 #endif

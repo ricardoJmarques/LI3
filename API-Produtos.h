@@ -24,4 +24,8 @@ int totalProdutosLetra(CatalogoProdutos catProd, char letra);
 
 void removeCatProdutos(CatalogoProdutos catProd);
 
+void* retornaDadosProduto(CatalogoProdutos catProd, Produto p);
+
+void insereDadosProduto(CatalogoProdutos catProd, Produto p, void *data);
+
 #endif

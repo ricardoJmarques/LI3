@@ -23,14 +23,14 @@ BTree insertAVL(BTree t, char *str, int *grow, void *dados) {
 	}
 	else 
 	  if (strcmp(t->string , str) < 0) 
-	    t = insertRight(t,str,grow,dados); 
+	    t = insertRight(t,str,grow, dados); 
 	  else
-		t = insertLeft(t,str,grow,dados); 
+		t = insertLeft(t,str,grow, dados); 
 	return t;
 }
 
 BTree insertRight(BTree t, char* str, int *grow, void *dados) {
-	t->right = insertAVL(t->right,str,grow,dados);
+	t->right = insertAVL(t->right,str,grow, dados);
 	if (*grow)
 		switch (t->balance) {
 			case -1: 
@@ -49,7 +49,7 @@ BTree insertRight(BTree t, char* str, int *grow, void *dados) {
 }
 
 BTree insertLeft(BTree t, char* str, int *grow, void *dados) { 
-	t->left = insertAVL(t->left,str,grow,dados); 
+	t->left = insertAVL(t->left,str,grow, dados); 
 	if (*grow)	
 		switch (t->balance) {
 			case -1: 
@@ -239,6 +239,7 @@ BTree deleteAvl(BTree t)  {
 	    t->right = NULL;
 	    free(t->string);
         free(t->dados);
+        t->dados=NULL;
 	    free(t);
     }
     return NULL;  
