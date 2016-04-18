@@ -86,6 +86,13 @@ void removeCatProdutos(CatalogoProdutos catProd){
   free(catProd);
 }
 
+void removeCatProdutos2(CatalogoProdutos catProd){
+  int i;
+  for (i=0; i<TAMCAT; i++){
+    deleteAvl(catProd->lista[i]);
+  }
+}
+
 void* retornaDadosProduto(CatalogoProdutos catProd, Produto p){
   return retornaDados(catProd->lista[p[0]-'A'], p);
 }

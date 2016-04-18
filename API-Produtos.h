@@ -23,6 +23,7 @@ int totalProdutos(CatalogoProdutos catProd);
 int totalProdutosLetra(CatalogoProdutos catProd, char letra);
 
 void removeCatProdutos(CatalogoProdutos catProd);
+void removeCatProdutos2(CatalogoProdutos catProd);
 
 void* retornaDadosProduto(CatalogoProdutos catProd, Produto p);
 

@@ -1,6 +1,4 @@
 #include <stdlib.h>
-#include "avl-strings.h"
-#include "API-Utils.h"
 #include "API-Clientes.h"
 #include "API-Produtos.h"
 #include "API-Filiais.h"
@@ -14,7 +12,7 @@
 
 typedef struct ListaFilial{/*lista de clientes*/
   CatalogoClientes catMes[FMTAM];
-  int comprasvalidas[FMTAM];
+  int comprasValidas[FMTAM];
 } lf1;
 	
 typedef struct Compra{
@@ -26,14 +24,10 @@ typedef struct Compra{
 
 compra insereCompra(compra c, int qtd, float preco, char tipo){
   if (c!=NULL){
-    if (tipo == 'N'){
+    if (tipo == 'N')
       c->qtdN += qtd;
-      c->precoN += preco;
-    }
-    else{
+    else
       c->qtdP += qtd;
-      c->precoP += preco;
-    }
     return c;
   }
   else {
@@ -61,6 +55,7 @@ CatalogoFilial iniciaCatFilial(CatalogoClientes catCli, int nfiliais){
   for (i=0;i<nfiliais;i++){
     for (j = 0; j<FMTAM; j++){
       catFil[i].catMes[j] = copiaCatClientes(catCli);
+      catFil[i].comprasValidas[j] = 0;
     }
   }
   return catFil;
@@ -83,10 +78,11 @@ CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, in
     cp = insereCompra(cp, qtd, preco, tipo);
     insereDadosProduto(catProd, p, cp);
   }
-  else
+  else{
     cp = insereCompra(cp, qtd, preco, tipo);
+  }
 
-  catFil[i].comprasvalidas[j]++;
+  catFil[i].comprasValidas[j]++;
   return catFil;
 }
 
@@ -103,7 +99,7 @@ void removeCatFilial(CatalogoFilial catFil, int nfiliais){
         for (l=MINCLIENTE; l<=MAXCLIENTE; l++){
           sprintf(ch,"%c%d",c , l);
           if ((catProd = (CatalogoProdutos)retornaDadosCliente(catFil[i].catMes[j], ch)) != NULL){
-          removeCatProdutos(catProd);
+          removeCatProdutos2(catProd);
           }
         }
       c++;
@@ -112,5 +108,16 @@ void removeCatFilial(CatalogoFilial catFil, int nfiliais){
     }
   }
   free(catFil);
+}
+
+int totalCompras(CatalogoFilial catFil, int nfiliais){
+  int i,j,total;
+  total=0;
+  for (i=0; i<nfiliais; i++){
+    for (j=0; j<FMTAM; j++){
+      total += catFil[i].comprasValidas[j];
+    }
+  }
+  return total;
 }
 

@@ -23,13 +23,13 @@ int main(){
   printf("Total de Clientes: %d.\n", totalClientes(teste));
   printf("Total de Produtos: %d.\n", totalProdutos(teste2));
 
-  teste3 = iniciaCatFaturacao(nfiliais);
+  teste3 = iniciaCatFaturacao(teste2, nfiliais);
   teste4 = iniciaCatFilial(teste, nfiliais);
 
   abreFicheiroVendas(teste3, teste4, teste, teste2);
 
-  printf("Total de Vendas: %d.\n", totalVendas(teste3));
-  /*printf("Total de Compras: %d.\n", totalCompras(teste4));*/
+  printf("Total de Vendas: %d.\n", totalVendas(teste3, nfiliais));
+  printf("Total de Compras: %d.\n", totalCompras(teste4, nfiliais));
 
   removeCatFaturacao(teste3, nfiliais);
   removeCatFilial(teste4, nfiliais);

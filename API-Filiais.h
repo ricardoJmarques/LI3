@@ -13,13 +13,8 @@ CatalogoFilial iniciaCatFilial(CatalogoClientes catCli, int nfiliais);
 
 CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, int qtd, float preco, int mes, char tipo, int filial);
 
-/*
-int totalProdutosVenda(CatalogoFilial catFil, int mes, int filial);
-
-Boolean existeVenda(CatalogoFilial catFil, Produto p, int filial, int mes);
-*/
 void removeCatFilial(CatalogoFilial catFil, int nfiliais);
-/*
-int totalVendas(CatalogoFilial catFil);
-*/
+
+int totalCompras(CatalogoFilial catFil, int nfiliais);
+
 #endif

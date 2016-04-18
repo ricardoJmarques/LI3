@@ -51,7 +51,7 @@ void abreFicheiroVendas(CatalogoFaturacao catFact, CatalogoFilial catFil, Catalo
   int mes;
   int filial;
 
-  fichVendas = fopen("fichTeste/Vendas_20E.txt", "r");
+  fichVendas = fopen("fichTeste/Vendas_1M.txt", "r");
   if (fichVendas != NULL){
     while (fgets(buffer, 40, fichVendas)!=NULL){
       i=0;
@@ -71,7 +71,7 @@ void abreFicheiroVendas(CatalogoFaturacao catFact, CatalogoFilial catFil, Catalo
           (tipo == 'N' || tipo == 'P') && (mes >=1 && mes <=12) &&
           (filial >= 1 && filial <=3)){
         
-        catFact = insereVenda(catFact, v[0], qtd, preco, mes, tipo, filial);
+        catFact = insereCompraFaturacao(catFact, v[0], qtd, preco, mes, tipo, filial);
         catFil = insereVendaFilial(catFil, v[4], v[0], qtd, preco, mes, tipo, filial);
       }
     }
