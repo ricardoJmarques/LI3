@@ -13,7 +13,7 @@ typedef struct ListaClientes{
   BTree lista[TAMCAT];
   int tamanho[TAMCAT];
   int crescimento[TAMCAT];
-} listac;
+} *listaclientes;
 
 /* catalogo de clientes */
 /*typedef struct ListaClientes *CatalogoClientes;*/
@@ -85,3 +85,6 @@ void* retornaDadosCliente(CatalogoClientes catCli, Cliente c){
   return retornaDados(catCli->lista[c[0]-'A'], c);
 }
 
+void insereDadosCliente(CatalogoClientes catCli, Cliente c, void* dados){
+    insereDados(catCli->lista[c[0]-'A'], c, dados);
+}

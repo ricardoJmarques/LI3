@@ -5,130 +5,112 @@
 #include "API-Produtos.h"
 #include "API-Filiais.h"
 
-#define TAMCAT 12 /* numero de arvores do catalogo; 12 meses por Filial */
-#define TAMCLI 26
+#define FMTAM 12
+#define FCTAM 26
+#define MINCLIENTE 1000
+#define MAXCLIENTE 5000
+#define MINPRODUTO 1000
+#define MAXPRODUTO 1999
+
+typedef struct ListaFilial{/*lista de clientes*/
+  CatalogoClientes catMes[FMTAM];
+  int comprasvalidas[FMTAM];
+} lf1;
+	
 typedef struct Compra{
   int qtdN;
-  int qtdP;
   float precoN;
+  int qtdP;
   float precoP;
-/*  int filial;*/
-} *compra;
+  } *compra;
 
-typedef struct ListaProdutos{
-  BTree lista;
-  int tamanho;
-  int crescimento;
-} *listaproduto;
-
-typedef struct ListaCompra{
-  BTree lista;
-  int tamanho;
-  int crescimento;
-} *listacompra;
-
-typedef struct ListaFilial{
-    listacompra catalogo;
-    int erroClientes;
-    int erroProdutos;
-    int linhasLidas;
-} *listafilial;
-
-/*typedef struct ListaFilial *CatalogoFilial;*/
-
-CatalogoFilial iniciaCatFilial(int nfiliais){
-  int i, j, k;
-  CatalogoFilial catFil;
-  catFil = (CatalogoFilial)malloc(sizeof(struct ListaFilial));
-  catFil->catalogo = (listacompra)malloc(sizeof(struct ListaCompra) * (TAMCAT*nfiliais));
-  catFil->erroClientes = 0;
-  catFil->erroProdutos = 0;
-  catFil->linhasLidas = 0;
-  for (j=0; j<nfiliais; j++){
-    for (i=0; i<TAMCAT; i++){
-      k = (j * TAMCAT) + i;
-      catFil->catalogo[k].lista = NULL;
-      catFil->catalogo[k].tamanho = 0;
-      catFil->catalogo[k].crescimento = 0;
-    }
-  }
-  return catFil;
-}
-
-CatalogoFilial insereCompra(CatalogoFilial catFil, Cliente c, int qtd, float preco, int mes, char tipo, int filial){
-  int i;
-  char *var;
-  compra cp;
-  i = ((filial-1)*TAMCAT)+(mes-1);
-  if ((cp=(compra)retornaDados(catFil->catalogo[i].lista, c))!=NULL){
+compra insereCompra(compra c, int qtd, float preco, char tipo){
+  if (c!=NULL){
     if (tipo == 'N'){
-      cp->qtdN += qtd;
+      c->qtdN += qtd;
+      c->precoN += preco;
     }
     else{
-      cp->qtdP += qtd;
+      c->qtdP += qtd;
+      c->precoP += preco;
     }
+    return c;
   }
   else {
-    cp = (compra)malloc(sizeof(struct Compra));
-    var = (char*)malloc(sizeof(char) * (strlen(c) +1));
-    strcpy(var, c);
+    compra aux;
+    aux = (compra)malloc(sizeof(struct Compra));
     if (tipo == 'N'){
-      cp->qtdN = qtd;
-      cp->precoN = preco;
-      cp->qtdP = 0;
-      cp->precoP = 0;
+      aux->qtdN = qtd;
+      aux->precoN = preco;
+      aux->qtdP = 0;
+      aux->precoP = 0;
     }
     else{
-      cp->qtdP = qtd;
-      cp->precoP = preco;
-      cp->qtdN = 0;
-      cp->precoN = 0;
+      aux->qtdP = qtd;
+      aux->precoP = preco;
+      aux->qtdN = 0;
+      aux->precoN = 0;
     }
-    catFil->catalogo[i].lista = insertAVL(catFil->catalogo[i].lista, var, &catFil->catalogo[i].crescimento, cp);
-    catFil->catalogo[i].tamanho++;
+    return aux;
   }
-  catFil->linhasLidas++;
+}
+
+CatalogoFilial iniciaCatFilial(CatalogoClientes catCli, int nfiliais){
+  int i, j;
+  CatalogoFilial catFil = malloc(sizeof(struct ListaFilial)*nfiliais);
+  for (i=0;i<nfiliais;i++){
+    for (j = 0; j<FMTAM; j++){
+      catFil[i].catMes[j] = copiaCatClientes(catCli);
+    }
+  }
   return catFil;
 }
 
-int totalProdutosCompra(CatalogoFilial catFil, int mes, int filial){
-  int i;
-  i = ((filial-1)*TAMCAT)+(mes-1);
-  return catFil->catalogo[i].tamanho;
-}
-/*
-void retornaCoisas(CatalogoFilial cat, char *produto, int mes, int filial){
-    ppVenda pp;
-    int i;
-    i= ((filial-1)*TAMCAT) + mes - 1;
-    pp = (ppVenda) retornaDados (cat->catalogo[i].lista, produto);
-    if (pp)
-      printf("QuantidadeN: %d. PreçoN: %0.2f.\nQuantidadeP: %d. PreçoP: %0.2f.\n", pp->qtdN, pp->precoN, pp->qtdP, pp->precoP);
-    else
-      printf("Não existem dados.\n"); 
-}
-*/
-Boolean existeCompra(CatalogoFilial catFil, Produto p, int filial, int mes){
-  Boolean b = FALSE;
-  int i;
-  if (verificaAlpha(p[0]))
-    i = ((filial-1)*TAMCAT)+(mes-1);
-    if (exists(catFil->catalogo[i].lista, p))
-      b = TRUE;
-  return b;
+CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, int qtd, float preco, int mes, char tipo, int filial){
+  int i, j;
+  CatalogoProdutos catProd;
+  compra cp;
+  i = filial-1;
+  j = mes - 1;
+    
+  if ((catProd=(CatalogoProdutos)retornaDadosCliente(catFil[i].catMes[j], c)) == NULL){
+    catProd = iniciaCatProdutos();
+    insereDadosCliente(catFil[i].catMes[j], c, catProd);
+    insereProduto(catProd, p);
+  }
+
+  if ((cp=(compra)retornaDadosProduto(catProd, p)) == NULL){
+    cp = insereCompra(cp, qtd, preco, tipo);
+    insereDadosProduto(catProd, p, cp);
+  }
+  else
+    cp = insereCompra(cp, qtd, preco, tipo);
+
+  catFil[i].comprasvalidas[j]++;
+  return catFil;
 }
 
 void removeCatFilial(CatalogoFilial catFil, int nfiliais){
-  int i, j;
-  j = TAMCAT * nfiliais;
-  for (i=0; i<j; i++){
-    deleteAvl(catFil->catalogo[i].lista);
+  int i,j,k,l;
+  char c;
+  char ch[10];
+  CatalogoProdutos catProd;
+  CatalogoClientes catCli;
+  for (i=0; i<nfiliais; i++){
+    for (j=0; j<FMTAM; j++){
+      c = 'A';
+      for (k=0; k<FCTAM; k++){
+        for (l=MINCLIENTE; l<=MAXCLIENTE; l++){
+          sprintf(ch,"%c%d",c , l);
+          if ((catProd = (CatalogoProdutos)retornaDadosCliente(catFil[i].catMes[j], ch)) != NULL){
+          removeCatProdutos(catProd);
+          }
+        }
+      c++;
+      }
+    removeCatClientes(catFil[i].catMes[j]);
+    }
   }
-  free(catFil->catalogo);
   free(catFil);
-}
-
-int totalCompras(CatalogoFilial catFil){
-  return catFil->linhasLidas;
 }
 

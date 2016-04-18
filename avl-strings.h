@@ -19,5 +19,5 @@ void* retornaDados (BTree t, char *str);
 BTree deleteAvl (BTree t);
 char** criaArrayString(BTree catalogo, int tamStrint, int tamAVL);
 BTree avlCopy(BTree t);
-
+void insereDados(BTree t, char *str, void* dados);
 #endif

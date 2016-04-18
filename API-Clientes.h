@@ -25,4 +25,6 @@ void removeCatClientes(CatalogoClientes catCli);
 
 void* retornaDadosCliente(CatalogoClientes catCli, Cliente c);
 
+void insereDadosCliente(CatalogoClientes catCli, Cliente c, void* dados);
+
 #endif

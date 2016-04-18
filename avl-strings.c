@@ -136,12 +136,12 @@ BTree rotateRight(BTree t) {
 	if ((! t) || (! t->left)){								
 	}							    	   						
 	else {
-		aux = t->left;														  	
- 		t->left = aux->right;																					
-		aux->right = t;											
-		t = aux;												
+		aux = t->left;
+		t->left = aux->right;
+		aux->right = t;
+		t = aux;	
 	}
-return t;
+	return t;
 }
 
 BTree rotateLeft(BTree t) { 
@@ -196,6 +196,7 @@ int exists (BTree t, char *str) {
 	return 0;
 }
 
+
 void* exists2 (BTree t, char *str) {
 	int n;
 	BTree aux;
@@ -220,7 +221,7 @@ void* retornaDados (BTree t, char *str) {
 	while(aux!=NULL){
 		n = strcmp(aux->string , str);
 		if(n == 0){
-			return (void*)aux->dados;
+		      return aux->dados;
 	    }
 		else{
 			if (n > 0)
@@ -231,16 +232,34 @@ void* retornaDados (BTree t, char *str) {
 	return NULL;
 }
 
+void insereDados(BTree t, char *str, void* dados){
+	int n;
+	BTree aux;
+	aux = t;
+	while(aux!=NULL){
+		n = strcmp(aux->string , str);
+		if(n == 0){
+			aux->dados = dados;
+			return;
+	    }
+		else{
+			if (n > 0)
+				aux = aux->left;
+			else aux = aux->right;
+		}
+	}
+}
+
 BTree deleteAvl(BTree t)  {
     if (t){
 	    deleteAvl(t->left);
 	    t->left = NULL;
 	    deleteAvl(t->right);
 	    t->right = NULL;
-	    free(t->string);
+        free(t->string);
         free(t->dados);
-        t->dados=NULL;
 	    free(t);
+	    t=NULL;
     }
     return NULL;  
 }

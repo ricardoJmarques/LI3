@@ -13,7 +13,7 @@ typedef struct ListaProdutos{
   BTree lista[TAMCAT];
   int tamanho[TAMCAT];
   int crescimento[TAMCAT];
-} listap;
+} *listaprodutos;
 
 /* tipo Produto */
 /*typedef char* Produto;*/
@@ -87,6 +87,10 @@ void removeCatProdutos(CatalogoProdutos catProd){
 }
 
 void* retornaDadosProduto(CatalogoProdutos catProd, Produto p){
-  return retornaDados (catProd->lista[p[0]-'A'], p);
+  return retornaDados(catProd->lista[p[0]-'A'], p);
+}
+
+void insereDadosProduto(CatalogoProdutos catProd, Produto p, void* dados){
+    insereDados(catProd->lista[p[0]-'A'], p, dados);
 }
 

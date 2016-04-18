@@ -12,26 +12,30 @@ int main(){
   CatalogoClientes teste;
   CatalogoProdutos teste2;
   CatalogoFaturacao teste3;
-/*  CatalogoFilial teste4;
-*/
+  CatalogoFilial teste4;
 
   teste = iniciaCatClientes();
   teste2 = iniciaCatProdutos();
-  teste3 = iniciaCatFaturacao(nfiliais);
-/*  teste4 = iniciaCatFilial(nfiliais); 
-*/
+  
   teste = abreFicheiroClientes(teste);
   teste2 = abreFicheiroProdutos(teste2);
-  abreFicheiroVendas(teste3, teste, teste2);
 
   printf("Total de Clientes: %d.\n", totalClientes(teste));
   printf("Total de Produtos: %d.\n", totalProdutos(teste2));
-  printf("Total de Vendas: %d.\n", totalVendas(teste3));
 
+  teste3 = iniciaCatFaturacao(nfiliais);
+  teste4 = iniciaCatFilial(teste, nfiliais);
+
+  abreFicheiroVendas(teste3, teste4, teste, teste2);
+
+  printf("Total de Vendas: %d.\n", totalVendas(teste3));
+  /*printf("Total de Compras: %d.\n", totalCompras(teste4));*/
+
+  removeCatFaturacao(teste3, nfiliais);
+  removeCatFilial(teste4, nfiliais);
   removeCatClientes(teste);
   removeCatProdutos(teste2);
-  removeCatFaturacao(teste3, nfiliais);
-/*  removeCatFilial(teste4, nfiliais);
-*/
+
+  
   return 0;
 }

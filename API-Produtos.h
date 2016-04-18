@@ -26,6 +26,6 @@ void removeCatProdutos(CatalogoProdutos catProd);
 
 void* retornaDadosProduto(CatalogoProdutos catProd, Produto p);
 
-void insereDadosProduto(CatalogoProdutos catProd, Produto p, void *data);
+void insereDadosProduto(CatalogoProdutos catProd, Produto p, void *dados);
 
 #endif
