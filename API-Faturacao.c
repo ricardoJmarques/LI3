@@ -99,3 +99,130 @@ int totalVendas(CatalogoFaturacao catFact, int nfiliais){
   return total;
 }
 
+int quantidadeVendida (CatalogoFaturacao catFact, int mes , Produto p , int filial , int np){
+
+/*0=venda normal 1=promocao na variavel np (depois faço parse na main com um menu so para esta query)*/
+
+int resultado;
+venda vd;
+resultado = 0.0;
+  
+  switch(filial){
+    case 1:
+
+      vd = (venda)retornaDadosProduto(catFact[0].catMes[mes-1] , p);
+      if(vd != NULL){
+        if(np == 0){
+          resultado = (vd->qtdN);
+        }
+        else resultado = (vd->qtdP);
+      }
+      break;
+    
+    case 2:
+      
+      vd = (venda)retornaDadosProduto(catFact[1].catMes[mes-1] , p);
+      if(vd != NULL){
+        if(np == 0){
+          resultado = (vd->qtdN);
+        }
+        else resultado = (vd->qtdP);
+      }
+      break;
+    
+    case 3:
+      
+      vd = (venda)retornaDadosProduto(catFact[2].catMes[mes-1] , p);
+      if(vd != NULL){
+        if(np == 0){
+          resultado = (vd->qtdN);
+        }
+        else resultado = (vd->qtdP);
+      }
+      break;
+    
+    default:
+      
+      vd = (venda)retornaDadosProduto(catFact[0].catMes[mes-1] , p);
+      if(vd != NULL){
+        if(np == 0 ){
+          resultado += (vd->qtdN);
+        }
+        else resultado += (vd->qtdP);
+      }
+      
+      vd = (venda)retornaDadosProduto(catFact[1].catMes[mes-1] , p);
+      if(vd != NULL){
+        if(np == 0){
+          resultado += (vd->qtdN);
+        }
+        else resultado += (vd->qtdP);
+      }
+      
+      vd = (venda)retornaDadosProduto(catFact[2].catMes[mes-1] , p);
+      if(vd != NULL){
+        if(np == 0){
+          resultado += (vd->qtdN);
+        }
+        else resultado += (vd->qtdP);
+      }
+      break;
+  }
+
+  return resultado;
+
+}
+
+
+/*
+int produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact){
+
+
+  int j,i,k;
+  char** str;
+  char** resultado;
+  char* p;
+  str = malloc(sizeof(char*));
+  j=0;
+  k=0;
+  for(i=0;i<26;i++){
+    avlInorder(catProd->lista[i] ,str,  &j);
+  }
+
+  resultado = malloc(sizeof(char*) * j);
+  for(i=0 ; i<j ; i++){
+    p = malloc(sizeof(char) * strlen(str[i]));
+    p = strcpy(p,str[i]);
+    for(j=0 ; j<=11 ; j++){
+      if(retornaDadosProduto(catFact[0].catMes[j], p) == NULL && retornaDadosProduto(catFact[1].catMes[j], p) == NULL && retornaDadosProduto(catFact[2].catMes[j], p) == NULL)
+        resultado[k]=malloc(sizeof(char) * strlen(p));
+        strcpy(resultado[k],p);
+        k++;
+    }
+  }
+
+  return k;
+}
+*/
+/*
+int produtosNinguemComprou (CatalogoFaturacao catFact){
+  
+
+  for(i=0 ; i<=11 ; i++){
+    int j0,j1,j2;
+    char** str0,str1,str2;
+    str0 = malloc(sizeof(char*));
+    str1 = malloc(sizeof(char*));
+    str2 = malloc(sizeof(char*));
+    j0=0;
+    j1=0;
+    j2=0;
+    avlInorder(catProd->lista[i] , str0 , &j0);
+    avlInorder(catProd->lista[i] , str1 , &j1);
+    avlInorder(catProd->lista[i] , str2 , &j2);
+    for(j=0 ; j<=11 ; j++){
+      if(retornaDadosProduto(catFact[0].catMes[j], p) == NULL && retornaDadosProduto(catFact[1].catMes[j], p) == NULL && retornaDadosProduto(catFact[2].catMes[j], p) == NULL) 
+    }
+  }
+}
+*/

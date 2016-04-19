@@ -20,4 +20,6 @@ BTree deleteAvl (BTree t);
 char** criaArrayString(BTree catalogo, int tamStrint, int tamAVL);
 BTree avlCopy(BTree t);
 void insereDados(BTree t, char *str, void* dados);
+char* retornaString (BTree t);
+void avlInorder (BTree t, char** str , int *j);
 #endif

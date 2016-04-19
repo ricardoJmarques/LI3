@@ -29,4 +29,6 @@ void* retornaDadosProduto(CatalogoProdutos catProd, Produto p);
 
 void insereDadosProduto(CatalogoProdutos catProd, Produto p, void *dados);
 
+int imprimeProdutosLetra (CatalogoProdutos catProd , char letra);
+
 #endif

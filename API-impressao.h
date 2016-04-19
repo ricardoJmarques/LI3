@@ -1,0 +1,1 @@
+void imprimeString (char ** cat , int size);

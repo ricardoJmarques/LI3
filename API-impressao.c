@@ -3,8 +3,9 @@
 #include <ctype.h>
 #include <string.h>
 
-#define PageSize 2
+#define PageSize 150
 
+/*
 void imprimeString (char ** cat , int size);
 int verificaNumero(char *num, int min, int max);
 
@@ -21,8 +22,9 @@ int main(){
 
 	imprimeString(str , 18);
 }
+*/
 
-void imprimeString (char ** cat , int size){
+void imprimeString (char** cat , int size){
 	int i, numpagina,j, nump, k , controlo;
 	int cmd;
 
@@ -34,6 +36,7 @@ void imprimeString (char ** cat , int size){
 
 	for(numpagina=0; numpagina < nump ; numpagina++){
 
+		printf("teste=%s\n", cat[0] );
 		controlo=1;
 
 		printf("Proxima pagina [-1]\n");
@@ -112,10 +115,3 @@ void imprimeString (char ** cat , int size){
 	}
 
 }
-
-int verificaNumero(char *num, int min, int max){
-    int n;
-    n=atoi(num);
-    return ( n >=min && n <=max ) ? 1 : 0;  
-}
-

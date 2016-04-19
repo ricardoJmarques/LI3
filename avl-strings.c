@@ -298,3 +298,34 @@ BTree avlCopy (BTree t){
 	}
 	else return NULL;
 }
+
+char* retornaString (BTree t){
+	return (t->string);
+}
+
+void avlInorder (BTree t, char** str , int *j){
+
+  if(t != NULL){
+    avlInorder(t->left , str , j);
+    str[*j]=malloc(sizeof(char) * strlen(t->string));
+    strcpy(str[(*j)],t->string);
+    /*printf("insere %s\n", str[(*j)] );*/
+    (*j)++;
+    avlInorder(t->right , str , j);
+  }
+
+}
+
+void avlInorder2 (BTree t, char** str , int *j){
+
+  if(t != NULL){
+    avlInorder2(t->left , str , j);
+    if((t->dados) == NULL){
+	    str[(*j)]=malloc(sizeof(char) * strlen(t->string));
+	    strcpy(str[(*j)],t->string);
+	    (*j)++;
+	}
+    avlInorder2(t->right , str , j);
+  }
+
+}

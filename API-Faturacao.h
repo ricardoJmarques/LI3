@@ -14,4 +14,6 @@ void removeCatFaturacao(CatalogoFaturacao catFact, int nfiliais);
 
 int totalVendas(CatalogoFaturacao catFact, int nfiliais);
 
+int quantidadeVendida(CatalogoFaturacao catFact, int mes , Produto p , int filial , int np);
+
 #endif
