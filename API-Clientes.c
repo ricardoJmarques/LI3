@@ -6,7 +6,12 @@
 #define TAMCAT 26 /* numero de arvores do catalogo */
 #define MINCLIENTE 1000
 #define MAXCLIENTE 5000
-
+/*
+typedef struct LClientes{
+  char** lista;
+  int tamanho;
+} *lclientes;
+*/
 /* listaLetra é uma AVL onde constam os   */
 /* clientes iniciados por determinada letra */
 typedef struct StructClientes{
@@ -90,13 +95,13 @@ void insereDadosCliente(CatalogoClientes catCli, Cliente c, void* dados){
 }
 
 ListaClientes retornaListaClientes (CatalogoClientes catCli){
-  ListaClientes ListC;
-  int i,j, t;
+  ListaClientes ListaC;
+  int i,j,t;
   t = totalClientes(catCli);
   ListC= malloc(sizeof(char*) * t);
   j=0;
   for(i=0;i<TAMCAT;i++){
-    avlInorder(catCli->lista[i] , ListC , &j);
+    avlInorder(catCli->lista[i] , ListaC , &j);
   }
   return ListC;
 }

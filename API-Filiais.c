@@ -131,31 +131,28 @@ void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalP
 
 */
 
-/*
+
 int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){
   int i,j,k,resultado,controlo, tt;
   CatalogoProdutos catProd;
-  char** str;
-  tt = totalClientes(catCli);
-  printf("%d\n", tt);
-  str= malloc(sizeof(char*) * tt);
-  k=0;
-  retornaClientes(catCli , str, &k);
+  ListaClientes ListaC;
+  ListaC = retornaListaClientes(catCli);
   resultado = 0;
-  printf("%d\n", k);
+  k=totalClientes(catCli);
   for(i=0;i<k;i++){
     controlo=1;
     for(j=0;controlo == 1 && j<FMTAM;j++){
-      if(retornaDadosCliente(catFil->catMes[j], str[i]) != NULL){
+      if(retornaDadosCliente(catFil->catMes[j], ListaC[i]) != NULL){
         controlo=0;
       }
     }
     if(controlo==0)
-      resultado++;*//*meter para a string*/
-/*  }
+      resultado++;/*meter para a string*/
+  }
+    removeListaClientes(ListaC, k);
     return resultado;
 }
-
+/*
 int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p , int filial , int totalClientes){
   int i,k,l,totalP,totalN;
   CatalogoProdutos catProd;

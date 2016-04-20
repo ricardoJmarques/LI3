@@ -49,19 +49,6 @@ int main(){
   printf("Total de Compras Filial 1: %d.\n", t3);
   printf("Total de Compras todas as Filiais: %d.\n", t1+t2+t3);
 
-  t2 = totalClientes(teste);
-  ListaC = retornaListaClientes(teste);
-  for(t1=0; t1<t2; t1++)
-    printf("%s\n", ListaC[t1]);
-  removeListaClientes(ListaC, t2);
-  
-  removeCatFaturacao(teste3, nfiliais);
-  removeCatFilial(teste4[0]);
-  removeCatFilial(teste4[1]);
-  removeCatFilial(teste4[2]);
-  removeCatClientes(teste);
-  removeCatProdutos(teste2);
-  
   /*printf("query2=%d\n", imprimeProdutosLetra(teste2 , 'A') );*/
 
   /*printf("total faturado %d\n" , quantidadeVendida(teste3 , 6,  "AF1184" , 4, 0) );*/
@@ -76,14 +63,19 @@ int main(){
 
  /* printf("%d\n",produtosNinguemComprou (teste2, teste3 )); */
 
-/*  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));*/
-/*  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[1]));*/
-/*  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[2]));*/
+  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));
+  printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
+  printf("Clientes gold Filial 3: %d\n" , clientesGold (teste, teste4[2]));
 
   /*clientesContemProduto (teste , teste4, c , 2 , totalClientes(teste));*/
    
-  
-  
+  removeCatFaturacao(teste3, nfiliais);
+  removeCatFilial(teste4[0]);
+  removeCatFilial(teste4[1]);
+  removeCatFilial(teste4[2]);
+  removeCatClientes(teste);
+  removeCatProdutos(teste2);
+ 
   return 0;
 
 
