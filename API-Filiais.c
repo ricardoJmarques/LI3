@@ -22,6 +22,11 @@ typedef struct Compra{
   float precoP;
   } *compra;
 
+typedef struct ListaDecrescente{
+  char* string;
+  int qtd;
+}*listaDecrescente;
+
 compra insereCompra(compra c, int qtd, float preco, char tipo){
   if (c!=NULL){
     if (tipo == 'N'){
@@ -117,6 +122,15 @@ int totalCompras(CatalogoFilial catFil){
   }
   return total;
 }
+/*
+void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalProdutos){
+  listaDecrescente* listd;
+  listd = malloc(sizeof(struct ListaDecrescente) * totalProdutos);
+
+}
+
+*/
+
 /*
 int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){
   int i,j,k,resultado,controlo, tt;

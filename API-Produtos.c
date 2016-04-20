@@ -9,7 +9,7 @@
 
 /* listaLetra é uma AVL onde constam os   */
 /* clientes iniciados por determinada letra */
-typedef struct ListaProdutos{
+typedef struct StructProdutos{
   BTree lista[TAMCAT];
   int tamanho[TAMCAT];
   int crescimento[TAMCAT];
@@ -24,7 +24,7 @@ typedef struct ListaProdutos{
 CatalogoProdutos iniciaCatProdutos(){
   int i;
   /* criar array de 26 listaProdutos */
-  CatalogoProdutos catProd = malloc(sizeof(struct ListaProdutos));
+  CatalogoProdutos catProd = malloc(sizeof(struct StructProdutos));
   for (i=0; i<TAMCAT; i++){
     catProd->lista[i] = NULL;
     catProd->tamanho[i] = 0;
@@ -35,7 +35,7 @@ CatalogoProdutos iniciaCatProdutos(){
 
 CatalogoProdutos copiaCatProdutos(CatalogoProdutos catProd){
   int i;
-  CatalogoProdutos cp = (CatalogoProdutos)malloc(sizeof(struct ListaProdutos));
+  CatalogoProdutos cp = (CatalogoProdutos)malloc(sizeof(struct StructProdutos));
   for (i=0; i<TAMCAT; i++){
     cp->lista[i] = avlCopy(catProd->lista[i]);
     cp->tamanho[i] = catProd->tamanho[i];
@@ -125,4 +125,23 @@ void retornaProdutos(CatalogoProdutos catProd , char** str, int* j){
   }
 
   printf("%s\n", str[0]);
+}
+
+ListaProdutos retornaListaProdutos (CatalogoProdutos catProd){
+  ListaProdutos ListP;
+  int i,j, t;
+  t = totalClientes(catProd);
+  ListP= malloc(sizeof(char*) * t);
+  j=0;
+  for(i=0;i<TAMCAT;i++){
+    avlInorder(catProd->lista[i] , ListP , &j);
+  }
+  return ListP;
+}
+
+void removeListaProdutos(ListaProdutos ListP, int tamanho){
+  int i;
+  for (i=0; i<tamanho; i++)
+    free(ListP[i]);
+  free(ListP);
 }

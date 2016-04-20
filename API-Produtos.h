@@ -8,7 +8,9 @@
 /* catalogo de clientes */
 typedef char* Produto;
 
-typedef struct ListaProdutos *CatalogoProdutos;
+typedef char** ListaProdutos;
+
+typedef struct StructProdutos *CatalogoProdutos;
 
 CatalogoProdutos iniciaCatProdutos();
 
@@ -32,5 +34,9 @@ void insereDadosProduto(CatalogoProdutos catProd, Produto p, void *dados);
 int imprimeProdutosLetra (CatalogoProdutos catProd , char letra);
 
 void retornaProdutos(CatalogoProdutos catProd , char** str, int* j);
+
+ListaProdutos retornaListaProdutos (CatalogoProdutos catProd);
+
+void removeListaProdutos(ListaProdutos ListP, int tamanho);
 
 #endif

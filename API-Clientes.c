@@ -107,4 +107,3 @@ void removeListaClientes(ListaClientes ListC, int tamanho){
     free(ListC[i]);
   free(ListC);
 }
-  	
