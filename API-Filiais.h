@@ -17,4 +17,8 @@ void removeCatFilial(CatalogoFilial catFil, int nfiliais);
 
 int totalCompras(CatalogoFilial catFil, int nfiliais);
 
+int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil , int nfiliais , int totalClientes);
+
+int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p , int filial , int totalClientes);
+
 #endif

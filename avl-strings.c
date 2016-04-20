@@ -329,3 +329,20 @@ void avlInorder2 (BTree t, char** str , int *j){
   }
 
 }
+/*
+BTree retornaPosicao (BTree t, char* str){
+	int n;
+	BTree aux;
+	aux = t;
+	while(aux!=NULL){
+		n = strcmp(aux->string , str);
+		if(n == 0)
+			return aux;
+		else{
+			if (n > 0)
+				aux = aux->left;
+			else aux = aux->right;
+		}
+	}
+	return 0;
+}*/

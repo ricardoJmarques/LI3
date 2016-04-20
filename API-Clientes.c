@@ -88,3 +88,10 @@ void* retornaDadosCliente(CatalogoClientes catCli, Cliente c){
 void insereDadosCliente(CatalogoClientes catCli, Cliente c, void* dados){
     insereDados(catCli->lista[c[0]-'A'], c, dados);
 }
+
+void retornaClientes (CatalogoClientes catCli , char** str, int* j){
+  int i;
+  for(i=0;i<TAMCAT;i++){
+    avlInorder(catCli->lista[i] , str , j);
+  }
+}

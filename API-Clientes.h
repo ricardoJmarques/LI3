@@ -27,4 +27,6 @@ void* retornaDadosCliente(CatalogoClientes catCli, Cliente c);
 
 void insereDadosCliente(CatalogoClientes catCli, Cliente c, void* dados);
 
+void retornaClientes (CatalogoClientes catCli , char** str, int* j);
+
 #endif

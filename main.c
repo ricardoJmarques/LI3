@@ -16,6 +16,9 @@ int main(){
   CatalogoFilial teste4;
   int totalvendas;
   float totalfaturado;
+  totalvendas=0;
+  totalfaturado=0;
+  char* c = "AF1184";
 
   teste = iniciaCatClientes();
   teste2 = iniciaCatProdutos();
@@ -51,7 +54,11 @@ int main(){
   printf("%d\n", totalvendas );
   printf("%f\n", totalfaturado );*/
 
-  printf("%d\n",produtosNinguemComprou (teste2, teste3 )); 
+ /* printf("%d\n",produtosNinguemComprou (teste2, teste3 )); */
+
+  /*printf("%d\n" , clientesGold (teste, teste4 ,nfiliais , totalClientes(teste)));*/
+
+  clientesContemProduto (teste , teste4, c , 2 , totalClientes(teste));
   
   return 0;
 

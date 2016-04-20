@@ -23,10 +23,16 @@ typedef struct Venda{
 
 venda insereVenda(venda v, int qtd, float preco, char tipo){
   if (v!=NULL){
-    if (tipo == 'N')
+    if (tipo == 'N'){
       v->qtdN += qtd;
-    else
+      if(v->precoN == 0)
+        v->precoN = preco;
+    }
+    else{
       v->qtdP += qtd;
+      if(v->precoP == 0)
+        v->precoP = preco;
+    }
     return v;
   }
   else {
@@ -180,20 +186,18 @@ void totalIntervalo (CatalogoFaturacao catFact, int mesi, int mess, int nfiliais
   str= malloc(sizeof(char*) * 200000);
   k=0;
 
+
   retornaProdutos(catFact[0].catMes[0] , str, &k); /*cria array com os produtos*/
 
-  printf("%s\n", str[0] );
-  printf("%s\n", str[k-1]);
 
   for(i=0;i<nfiliais;i++){
-    for(j=mesi-1;j<mess-1;j++){
+    for(j=mesi-1;j<=mess-1;j++){
       for(l=0;l<k;l++){
-        vd = (venda)retornaDadosProduto(catFact[i].catMes[j] , str[l]);
-          if(vd != NULL){
-            *totalvendas += (vd->qtdN);
-            *totalvendas += (vd->qtdP);
-            *totalfaturado += (vd->qtdN)*(vd->precoN);
-            *totalfaturado += (vd->qtdP)*(vd->precoP);
+          if((vd = (venda)retornaDadosProduto(catFact[i].catMes[j] , str[l])) != NULL){
+            (*totalvendas) += (vd->qtdN);
+            (*totalvendas) += (vd->qtdP);
+            (*totalfaturado) += ((vd->qtdN)*(vd->precoN));
+            (*totalfaturado) += ((vd->qtdP)*(vd->precoP));
           }
       }
       
@@ -203,7 +207,7 @@ void totalIntervalo (CatalogoFaturacao catFact, int mesi, int mess, int nfiliais
 }
 
 
-int produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact){
+int produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact, int nfiliais){/*recebe a str*/
   
   int i,j,k,l , resultado,controlo;
   venda vd;
@@ -215,14 +219,14 @@ int produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact)
 
   for(l=0;l<k;l++){
     controlo=1;
-    for(i=0;i<3;i++){
+    for(i=0;i<nfiliais;i++){
       for(j=0;j<FMTAM;j++){
         if(retornaDadosProduto(catFact[i].catMes[j], str[l]) != NULL)
           controlo=0;
       }
     }
     if(controlo==1)
-      resultado++;
+      resultado++;/*meter para a string*/
   }
 
     return resultado;

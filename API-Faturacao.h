@@ -18,4 +18,6 @@ int quantidadeVendida(CatalogoFaturacao catFact, int mes , Produto p , int filia
 
 void totalIntervalo (CatalogoFaturacao catFact, int mesi, int mess, int nfiliais , int* totalvendas , float* totalfaturado);
 
+int produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact , int nfiliais);
+
 #endif
