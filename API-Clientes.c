@@ -98,12 +98,12 @@ ListaClientes retornaListaClientes (CatalogoClientes catCli){
   ListaClientes ListaC;
   int i,j,t;
   t = totalClientes(catCli);
-  ListC= malloc(sizeof(char*) * t);
+  ListaC= malloc(sizeof(char*) * t);
   j=0;
   for(i=0;i<TAMCAT;i++){
     avlInorder(catCli->lista[i] , ListaC , &j);
   }
-  return ListC;
+  return ListaC;
 }
 
 void removeListaClientes(ListaClientes ListC, int tamanho){

@@ -67,7 +67,7 @@ int main(){
   printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
   printf("Clientes gold Filial 3: %d\n" , clientesGold (teste, teste4[2]));
 
-  /*clientesContemProduto (teste , teste4, c , 2 , totalClientes(teste));*/
+  clientesContemProduto(teste , teste4[0], c);
    
   removeCatFaturacao(teste3, nfiliais);
   removeCatFilial(teste4[0]);

@@ -132,7 +132,7 @@ void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalP
 */
 
 
-int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){
+int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){ /*query x*/
   int i,j,k,resultado,controlo, tt;
   CatalogoProdutos catProd;
   ListaClientes ListaC;
@@ -152,30 +152,30 @@ int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){
     removeListaClientes(ListaC, k);
     return resultado;
 }
-/*
-int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p , int filial , int totalClientes){
-  int i,k,l,totalP,totalN;
+
+int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p){
+  int i,j,k,totalP,totalN;
   CatalogoProdutos catProd;
-  char** str;
   compra cp;
-  str= malloc(sizeof(char*) * totalClientes);
-  k=0;
+  ListaClientes ListaC;
+
+  ListaC = retornaListaClientes(catCli);
+  k=totalClientes(catCli);
   totalN=0;
   totalP=0;
-  retornaClientes(catCli , str, &k);
   
   for(i=0;i<FMTAM;i++){
-    for(l=0;l<k;l++){
-      if((catProd = (CatalogoProdutos)retornaDadosCliente(catFil[filial-1].catMes[i] , str[l])) != NULL){
+    for(j=0;j<k;j++){
+      if((catProd = (CatalogoProdutos)retornaDadosCliente(catFil->catMes[i] , ListaC[j])) != NULL){
         if((cp = (compra) retornaDadosProduto(catProd , p)) != NULL){
           if(cp->qtdP != 0) totalP++;
           if(cp->qtdN != 0) totalN++;
-          *//*mete na string*/
-/*        }
+          /*mete na string*/
+        }
       }
     }
   }
   printf("totalN=%d\n", totalN);
   printf("totalP=%d\n", totalP);
   return 0;
-}*/
+}
