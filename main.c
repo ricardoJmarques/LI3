@@ -21,6 +21,7 @@ int main(){
   int t1,t2,t3;
   ListaClientes ListaC;
   char* c = "AF1184";
+  char* cli = "Z5000";
 
   teste = iniciaCatClientes();
   teste2 = iniciaCatProdutos();
@@ -62,12 +63,14 @@ int main(){
   printf("%f\n", totalfaturado );*/
 
  /* printf("%d\n",produtosNinguemComprou (teste2, teste3 )); */
-
+/*
   printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));
   printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
   printf("Clientes gold Filial 3: %d\n" , clientesGold (teste, teste4[2]));
 
-  clientesContemProduto(teste , teste4[0], c);
+  clientesContemProduto(teste , teste4[0], c);*/
+
+  comprasDecrescente (teste4[0] , cli, 4 , totalProdutos(teste2));
    
   removeCatFaturacao(teste3, nfiliais);
   removeCatFilial(teste4[0]);

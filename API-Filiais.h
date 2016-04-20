@@ -21,4 +21,6 @@ int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil);
 
 int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p);
 
+void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalProdutos);
+
 #endif
