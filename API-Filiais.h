@@ -9,16 +9,16 @@
 
 typedef struct ListaFilial *CatalogoFilial;
 
-CatalogoFilial iniciaCatFilial(CatalogoClientes catCli, int nfiliais);
+CatalogoFilial iniciaCatFilial(CatalogoClientes catCli);
 
-CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, int qtd, float preco, int mes, char tipo, int filial);
+CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, int qtd, float preco, int mes, char tipo);
 
-void removeCatFilial(CatalogoFilial catFil, int nfiliais);
+void removeCatFilial(CatalogoFilial catFil);
 
-int totalCompras(CatalogoFilial catFil, int nfiliais);
-
+int totalCompras(CatalogoFilial catFil);
+/*
 int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil , int nfiliais , int totalClientes);
 
 int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p , int filial , int totalClientes);
-
+*/
 #endif

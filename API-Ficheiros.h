@@ -11,6 +11,6 @@ CatalogoClientes abreFicheiroClientes(CatalogoClientes catCli);
 
 CatalogoProdutos abreFicheiroProdutos(CatalogoProdutos catProd);
 
-void abreFicheiroVendas(CatalogoFaturacao catFact, CatalogoFilial catFil, CatalogoClientes catCli, CatalogoProdutos catProd);
+void abreFicheiroVendas(CatalogoFaturacao catFact, CatalogoFilial *catFil, CatalogoClientes catCli, CatalogoProdutos catProd);
 
 #endif

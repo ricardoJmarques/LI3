@@ -13,11 +13,12 @@ int main(){
   CatalogoClientes teste;
   CatalogoProdutos teste2;
   CatalogoFaturacao teste3;
-  CatalogoFilial teste4;
+  CatalogoFilial teste4[nfiliais];
   int totalvendas;
   float totalfaturado;
   totalvendas=0;
   totalfaturado=0;
+  int t1,t2,t3;
   char* c = "AF1184";
 
   teste = iniciaCatClientes();
@@ -30,12 +31,21 @@ int main(){
   printf("Total de Produtos: %d.\n", totalProdutos(teste2));
 
   teste3 = iniciaCatFaturacao(teste2, nfiliais);
-  teste4 = iniciaCatFilial(teste, nfiliais);
+  teste4[0] = iniciaCatFilial(teste);
+  teste4[1] = iniciaCatFilial(teste);
+  teste4[2] = iniciaCatFilial(teste);
 
   abreFicheiroVendas(teste3, teste4, teste, teste2);
 
   printf("Total de Vendas: %d.\n", totalVendas(teste3, nfiliais));
-  printf("Total de Compras: %d.\n", totalCompras(teste4, nfiliais));
+  t1 = totalCompras(teste4[0]);
+  t2 = totalCompras(teste4[1]);
+  t3 = totalCompras(teste4[2]);
+    
+  printf("Total de Compras Filial 1: %d.\n", t1);
+  printf("Total de Compras Filial 1: %d.\n", t2);
+  printf("Total de Compras Filial 1: %d.\n", t3);
+  printf("Total de Compras todas as Filiais: %d.\n", t1+t2+t3);
   /*
   removeCatFaturacao(teste3, nfiliais);
   removeCatFilial(teste4, nfiliais);
@@ -58,7 +68,7 @@ int main(){
 
   /*printf("%d\n" , clientesGold (teste, teste4 ,nfiliais , totalClientes(teste)));*/
 
-  clientesContemProduto (teste , teste4, c , 2 , totalClientes(teste));
+  /*clientesContemProduto (teste , teste4, c , 2 , totalClientes(teste));*/
   
   return 0;
 

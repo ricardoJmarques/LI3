@@ -24,10 +24,14 @@ typedef struct Compra{
 
 compra insereCompra(compra c, int qtd, float preco, char tipo){
   if (c!=NULL){
-    if (tipo == 'N')
+    if (tipo == 'N'){
       c->qtdN += qtd;
-    else
+      c->precoN = preco;
+    }
+    else {
       c->qtdP += qtd;
+      c->precoP = preco;
+    }
     return c;
   }
   else {
@@ -49,28 +53,25 @@ compra insereCompra(compra c, int qtd, float preco, char tipo){
   }
 }
 
-CatalogoFilial iniciaCatFilial(CatalogoClientes catCli, int nfiliais){
-  int i, j;
-  CatalogoFilial catFil = malloc(sizeof(struct ListaFilial)*nfiliais);
-  for (i=0;i<nfiliais;i++){
-    for (j = 0; j<FMTAM; j++){
-      catFil[i].catMes[j] = copiaCatClientes(catCli);
-      catFil[i].comprasValidas[j] = 0;
-    }
+CatalogoFilial iniciaCatFilial(CatalogoClientes catCli){
+  int i;
+  CatalogoFilial catFil = malloc(sizeof(struct ListaFilial));
+  for (i = 0; i<FMTAM; i++){
+    catFil->catMes[i] = copiaCatClientes(catCli);
+    catFil->comprasValidas[i] = 0;
   }
   return catFil;
 }
 
-CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, int qtd, float preco, int mes, char tipo, int filial){
-  int i, j;
+CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, int qtd, float preco, int mes, char tipo){
+  int i;
   CatalogoProdutos catProd;
   compra cp;
-  i = filial-1;
-  j = mes - 1;
+  i = mes - 1;
     
-  if ((catProd=(CatalogoProdutos)retornaDadosCliente(catFil[i].catMes[j], c)) == NULL){
+  if ((catProd=(CatalogoProdutos)retornaDadosCliente(catFil->catMes[i], c)) == NULL){
     catProd = iniciaCatProdutos();
-    insereDadosCliente(catFil[i].catMes[j], c, catProd);
+    insereDadosCliente(catFil->catMes[i], c, catProd);
     insereProduto(catProd, p);
   }
 
@@ -82,46 +83,42 @@ CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, in
     cp = insereCompra(cp, qtd, preco, tipo);
   }
 
-  catFil[i].comprasValidas[j]++;
+  catFil->comprasValidas[i]++;
   return catFil;
 }
 
-void removeCatFilial(CatalogoFilial catFil, int nfiliais){
-  int i,j,k,l;
+void removeCatFilial(CatalogoFilial catFil){
+  int i,j,k;
   char c;
   char ch[10];
   CatalogoProdutos catProd;
   CatalogoClientes catCli;
-  for (i=0; i<nfiliais; i++){
-    for (j=0; j<FMTAM; j++){
-      c = 'A';
-      for (k=0; k<FCTAM; k++){
-        for (l=MINCLIENTE; l<=MAXCLIENTE; l++){
-          sprintf(ch,"%c%d",c , l);
-          if ((catProd = (CatalogoProdutos)retornaDadosCliente(catFil[i].catMes[j], ch)) != NULL){
-          removeCatProdutos2(catProd);
-          }
+  for (i=0; i<FMTAM; i++){
+    c = 'A';
+    for (j=0; j<FCTAM; j++){
+      for (k=MINCLIENTE; k<=MAXCLIENTE; k++){
+        sprintf(ch,"%c%d",c , k);
+        if ((catProd = (CatalogoProdutos)retornaDadosCliente(catFil->catMes[i], ch)) != NULL){
+        removeCatProdutos2(catProd);
         }
-      c++;
       }
-    removeCatClientes(catFil[i].catMes[j]);
+    c++;
     }
+  removeCatClientes(catFil->catMes[i]);
   }
   free(catFil);
 }
 
-int totalCompras(CatalogoFilial catFil, int nfiliais){
+int totalCompras(CatalogoFilial catFil){
   int i,j,total;
   total=0;
-  for (i=0; i<nfiliais; i++){
-    for (j=0; j<FMTAM; j++){
-      total += catFil[i].comprasValidas[j];
-    }
+  for (i=0; i<FMTAM; i++){
+      total += catFil->comprasValidas[i];
   }
   return total;
 }
 
-
+/*
 int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil , int nfiliais , int totalClientes){
   int i,j,k,l , resultado,controlo , controlo2;
   CatalogoProdutos catProd;
@@ -130,10 +127,10 @@ int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil , int nfiliais 
   k=0;
   retornaClientes(catCli , str, &k);
   resultado = 0;
-  /*
+  *//*
   for(i=0;i<k;i++)
     printf("%s\n",str[i] );*/
-
+/*
   for(l=0;l<k;l++){
     controlo=1;
     for(i=0;i<nfiliais;i++){
@@ -147,8 +144,8 @@ int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil , int nfiliais 
         controlo=0;
     }
     if(controlo==1)
-      resultado++;/*meter para a string*/
-  }
+      resultado++;*//*meter para a string*/
+/*  }
 
     return resultado;
 }
@@ -170,12 +167,12 @@ int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Prod
         if((cp = (compra) retornaDadosProduto(catProd , p)) != NULL){
           if(cp->qtdP != 0) totalP++;
           if(cp->qtdN != 0) totalN++;
-          /*mete na string*/
-        }
+          *//*mete na string*/
+/*        }
       }
     }
   }
   printf("totalN=%d\n", totalN);
   printf("totalP=%d\n", totalP);
   return 0;
-}
+}*/

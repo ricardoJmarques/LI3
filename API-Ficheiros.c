@@ -39,7 +39,7 @@ CatalogoProdutos abreFicheiroProdutos(CatalogoProdutos catProd){/*int argc, char
   char cliente[6];
   char MES[3];
   char Filial[2];*/
-void abreFicheiroVendas(CatalogoFaturacao catFact, CatalogoFilial catFil, CatalogoClientes catCli, CatalogoProdutos catProd){
+void abreFicheiroVendas(CatalogoFaturacao catFact, CatalogoFilial *catFil, CatalogoClientes catCli, CatalogoProdutos catProd){
   FILE *fichVendas;
   char buffer[41];
   int i;
@@ -72,7 +72,7 @@ void abreFicheiroVendas(CatalogoFaturacao catFact, CatalogoFilial catFil, Catalo
           (filial >= 1 && filial <=3)){
         
         catFact = insereCompraFaturacao(catFact, v[0], qtd, preco, mes, tipo, filial);
-        catFil = insereVendaFilial(catFil, v[4], v[0], qtd, preco, mes, tipo, filial);
+        catFil[filial-1] = insereVendaFilial(catFil[filial-1], v[4], v[0], qtd, preco, mes, tipo);
       }
     }
   }
