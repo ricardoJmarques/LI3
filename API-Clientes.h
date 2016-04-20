@@ -7,7 +7,9 @@
 
 typedef char* Cliente;
 
-typedef struct ListaClientes *CatalogoClientes;
+typedef char** ListaClientes;
+
+typedef struct StructClientes *CatalogoClientes;
 
 CatalogoClientes iniciaCatClientes();
 
@@ -27,6 +29,8 @@ void* retornaDadosCliente(CatalogoClientes catCli, Cliente c);
 
 void insereDadosCliente(CatalogoClientes catCli, Cliente c, void* dados);
 
-void retornaClientes (CatalogoClientes catCli , char** str, int* j);
+ListaClientes retornaListaClientes (CatalogoClientes catCli);
+
+void removeListaClientes(ListaClientes ListC, int tamanho);
 
 #endif

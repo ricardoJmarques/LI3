@@ -9,18 +9,18 @@
 
 /* listaLetra é uma AVL onde constam os   */
 /* clientes iniciados por determinada letra */
-typedef struct ListaClientes{
+typedef struct StructClientes{
   BTree lista[TAMCAT];
   int tamanho[TAMCAT];
   int crescimento[TAMCAT];
-} *listaclientes;
+} *structclientes;
 
 /* catalogo de clientes */
 /*typedef struct ListaClientes *CatalogoClientes;*/
 
 CatalogoClientes iniciaCatClientes(){
   int i;
-  CatalogoClientes catCli = (CatalogoClientes)malloc(sizeof(struct ListaClientes));
+  CatalogoClientes catCli = (CatalogoClientes)malloc(sizeof(struct StructClientes));
   for (i=0; i<TAMCAT; i++){
     catCli->lista[i] = NULL;
     catCli->tamanho[i] = 0;
@@ -31,7 +31,7 @@ CatalogoClientes iniciaCatClientes(){
 
 CatalogoClientes copiaCatClientes(CatalogoClientes catCli){
   int i;
-  CatalogoClientes cp = (CatalogoClientes)malloc(sizeof(struct ListaClientes));
+  CatalogoClientes cp = (CatalogoClientes)malloc(sizeof(struct StructClientes));
   for (i=0; i<TAMCAT; i++){
     cp->lista[i] = avlCopy(catCli->lista[i]);
     cp->tamanho[i] = catCli->tamanho[i];
@@ -89,9 +89,22 @@ void insereDadosCliente(CatalogoClientes catCli, Cliente c, void* dados){
     insereDados(catCli->lista[c[0]-'A'], c, dados);
 }
 
-void retornaClientes (CatalogoClientes catCli , char** str, int* j){
-  int i;
+ListaClientes retornaListaClientes (CatalogoClientes catCli){
+  ListaClientes ListC;
+  int i,j, t;
+  t = totalClientes(catCli);
+  ListC= malloc(sizeof(char*) * t);
+  j=0;
   for(i=0;i<TAMCAT;i++){
-    avlInorder(catCli->lista[i] , str , j);
+    avlInorder(catCli->lista[i] , ListC , &j);
   }
+  return ListC;
 }
+
+void removeListaClientes(ListaClientes ListC, int tamanho){
+  int i;
+  for (i=0; i<tamanho; i++)
+    free(ListC[i]);
+  free(ListC);
+}
+  	

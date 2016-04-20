@@ -117,7 +117,7 @@ int totalCompras(CatalogoFilial catFil){
   }
   return total;
 }
-
+/*
 int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){
   int i,j,k,resultado,controlo, tt;
   CatalogoProdutos catProd;
@@ -137,11 +137,11 @@ int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){
       }
     }
     if(controlo==0)
-      resultado++;/*meter para a string*/
-  }
+      resultado++;*//*meter para a string*/
+/*  }
     return resultado;
 }
-/*
+
 int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p , int filial , int totalClientes){
   int i,k,l,totalP,totalN;
   CatalogoProdutos catProd;

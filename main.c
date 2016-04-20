@@ -19,6 +19,7 @@ int main(){
   totalvendas=0;
   totalfaturado=0;
   int t1,t2,t3;
+  ListaClientes ListaC;
   char* c = "AF1184";
 
   teste = iniciaCatClientes();
@@ -47,6 +48,12 @@ int main(){
   printf("Total de Compras Filial 1: %d.\n", t2);
   printf("Total de Compras Filial 1: %d.\n", t3);
   printf("Total de Compras todas as Filiais: %d.\n", t1+t2+t3);
+
+  t2 = totalClientes(teste);
+  ListaC = retornaListaClientes(teste);
+  for(t1=0; t1<t2; t1++)
+    printf("%s\n", ListaC[t1]);
+  removeListaClientes(ListaC, t2);
   
   removeCatFaturacao(teste3, nfiliais);
   removeCatFilial(teste4[0]);
@@ -69,11 +76,13 @@ int main(){
 
  /* printf("%d\n",produtosNinguemComprou (teste2, teste3 )); */
 
-  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));
-  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[1]));
-  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[2]));
+/*  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));*/
+/*  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[1]));*/
+/*  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[2]));*/
 
   /*clientesContemProduto (teste , teste4, c , 2 , totalClientes(teste));*/
+   
+  
   
   return 0;
 
