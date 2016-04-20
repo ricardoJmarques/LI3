@@ -185,15 +185,12 @@ void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalP
   listd = malloc(sizeof(struct ListaDecrescente) * totalProdutos);*/
   int i;
   CatalogoProdutos catProd;
-  catProd = (CatalogoProdutos)retornaDadosCliente(catFil->catMes[mes-1], c);
-
   ListaProdutos listP;
-
-  listP = retornaListaProdutos(catProd);
-
-  printf("%s\n", listP[0] );
   
-  for(i=0;i<totalProdutos;i++){
+  catProd = (CatalogoProdutos)retornaDadosCliente(catFil->catMes[mes-1], c);
+  listP = retornaListaProdutos(catProd);
+	
+  for(i=0;listP[i]!=NULL;i++){
     printf("%s\n", listP[i] );
   }
 

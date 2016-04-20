@@ -98,7 +98,7 @@ ListaClientes retornaListaClientes (CatalogoClientes catCli){
   ListaClientes ListaC;
   int i,j,t;
   t = totalClientes(catCli);
-  ListaC= malloc(sizeof(char*) * t);
+  ListaC= calloc(t, sizeof(char*));
   j=0;
   for(i=0;i<TAMCAT;i++){
     avlInorder(catCli->lista[i] , ListaC , &j);

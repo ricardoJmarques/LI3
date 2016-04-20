@@ -131,7 +131,7 @@ ListaProdutos retornaListaProdutos (CatalogoProdutos catProd){
   ListaProdutos ListP;
   int i,j, t;
   t = totalClientes(catProd);
-  ListP= malloc(sizeof(char*) * t);
+  ListP = calloc(t, sizeof(char*));
   j=0;
   for(i=0;i<TAMCAT;i++){
     avlInorder(catProd->lista[i] , ListP , &j);
