@@ -16,9 +16,9 @@ CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, in
 void removeCatFilial(CatalogoFilial catFil);
 
 int totalCompras(CatalogoFilial catFil);
-/*
-int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil , int nfiliais , int totalClientes);
 
+int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil);
+/*
 int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p , int filial , int totalClientes);
 */
 #endif

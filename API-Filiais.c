@@ -118,38 +118,30 @@ int totalCompras(CatalogoFilial catFil){
   return total;
 }
 
-/*
-int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil , int nfiliais , int totalClientes){
-  int i,j,k,l , resultado,controlo , controlo2;
+int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){
+  int i,j,k,resultado,controlo, tt;
   CatalogoProdutos catProd;
   char** str;
-  str= malloc(sizeof(char*) * totalClientes);
+  tt = totalClientes(catCli);
+  printf("%d\n", tt);
+  str= malloc(sizeof(char*) * tt);
   k=0;
   retornaClientes(catCli , str, &k);
   resultado = 0;
-  *//*
-  for(i=0;i<k;i++)
-    printf("%s\n",str[i] );*/
-/*
-  for(l=0;l<k;l++){
+  printf("%d\n", k);
+  for(i=0;i<k;i++){
     controlo=1;
-    for(i=0;i<nfiliais;i++){
-      controlo2 = 1;
-      for(j=0;j<FMTAM && controlo2 == 1 ;j++){
-        if(retornaDadosCliente(catFil[i].catMes[j], str[l]) != NULL){
-          controlo2=0;
-        }
-      }
-      if(controlo2 !=0)
+    for(j=0;controlo == 1 && j<FMTAM;j++){
+      if(retornaDadosCliente(catFil->catMes[j], str[i]) != NULL){
         controlo=0;
+      }
     }
-    if(controlo==1)
-      resultado++;*//*meter para a string*/
-/*  }
-
+    if(controlo==0)
+      resultado++;/*meter para a string*/
+  }
     return resultado;
 }
-
+/*
 int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p , int filial , int totalClientes){
   int i,k,l,totalP,totalN;
   CatalogoProdutos catProd;
