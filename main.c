@@ -14,6 +14,8 @@ int main(){
   CatalogoProdutos teste2;
   CatalogoFaturacao teste3;
   CatalogoFilial teste4;
+  int totalvendas;
+  float totalfaturado;
 
   teste = iniciaCatClientes();
   teste2 = iniciaCatProdutos();
@@ -44,6 +46,12 @@ int main(){
   /*int totalFaturado(CatalogoFaturacao catFact, int mes , Produto p , int filial , int np)*/
 
   /*produtosNinguemComprou(teste2, teste3);*/
+
+  /*totalIntervalo (teste3, 1, 12, nfiliais , &totalvendas , &totalfaturado);
+  printf("%d\n", totalvendas );
+  printf("%f\n", totalfaturado );*/
+
+  printf("%d\n",produtosNinguemComprou (teste2, teste3 )); 
   
   return 0;
 

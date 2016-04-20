@@ -16,4 +16,6 @@ int totalVendas(CatalogoFaturacao catFact, int nfiliais);
 
 int quantidadeVendida(CatalogoFaturacao catFact, int mes , Produto p , int filial , int np);
 
+void totalIntervalo (CatalogoFaturacao catFact, int mesi, int mess, int nfiliais , int* totalvendas , float* totalfaturado);
+
 #endif

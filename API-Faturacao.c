@@ -173,56 +173,58 @@ resultado = 0.0;
 
 }
 
-
-/*
-int produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact){
-
-
-  int j,i,k;
+void totalIntervalo (CatalogoFaturacao catFact, int mesi, int mess, int nfiliais , int* totalvendas , float* totalfaturado){ 
+  int i,j,k,l;
+  venda vd;
   char** str;
-  char** resultado;
-  char* p;
-  str = malloc(sizeof(char*));
-  j=0;
+  str= malloc(sizeof(char*) * 200000);
   k=0;
-  for(i=0;i<26;i++){
-    avlInorder(catProd->lista[i] ,str,  &j);
-  }
 
-  resultado = malloc(sizeof(char*) * j);
-  for(i=0 ; i<j ; i++){
-    p = malloc(sizeof(char) * strlen(str[i]));
-    p = strcpy(p,str[i]);
-    for(j=0 ; j<=11 ; j++){
-      if(retornaDadosProduto(catFact[0].catMes[j], p) == NULL && retornaDadosProduto(catFact[1].catMes[j], p) == NULL && retornaDadosProduto(catFact[2].catMes[j], p) == NULL)
-        resultado[k]=malloc(sizeof(char) * strlen(p));
-        strcpy(resultado[k],p);
-        k++;
+  retornaProdutos(catFact[0].catMes[0] , str, &k); /*cria array com os produtos*/
+
+  printf("%s\n", str[0] );
+  printf("%s\n", str[k-1]);
+
+  for(i=0;i<nfiliais;i++){
+    for(j=mesi-1;j<mess-1;j++){
+      for(l=0;l<k;l++){
+        vd = (venda)retornaDadosProduto(catFact[i].catMes[j] , str[l]);
+          if(vd != NULL){
+            *totalvendas += (vd->qtdN);
+            *totalvendas += (vd->qtdP);
+            *totalfaturado += (vd->qtdN)*(vd->precoN);
+            *totalfaturado += (vd->qtdP)*(vd->precoP);
+          }
+      }
+      
+
     }
   }
-
-  return k;
 }
-*/
-/*
-int produtosNinguemComprou (CatalogoFaturacao catFact){
+
+
+int produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact){
   
+  int i,j,k,l , resultado,controlo;
+  venda vd;
+  char** str;
+  str= malloc(sizeof(char*) * 200000);
+  k=0;
+  retornaProdutos(catProd , str, &k);
+  resultado = 0;
 
-  for(i=0 ; i<=11 ; i++){
-    int j0,j1,j2;
-    char** str0,str1,str2;
-    str0 = malloc(sizeof(char*));
-    str1 = malloc(sizeof(char*));
-    str2 = malloc(sizeof(char*));
-    j0=0;
-    j1=0;
-    j2=0;
-    avlInorder(catProd->lista[i] , str0 , &j0);
-    avlInorder(catProd->lista[i] , str1 , &j1);
-    avlInorder(catProd->lista[i] , str2 , &j2);
-    for(j=0 ; j<=11 ; j++){
-      if(retornaDadosProduto(catFact[0].catMes[j], p) == NULL && retornaDadosProduto(catFact[1].catMes[j], p) == NULL && retornaDadosProduto(catFact[2].catMes[j], p) == NULL) 
+  for(l=0;l<k;l++){
+    controlo=1;
+    for(i=0;i<3;i++){
+      for(j=0;j<FMTAM;j++){
+        if(retornaDadosProduto(catFact[i].catMes[j], str[l]) != NULL)
+          controlo=0;
+      }
     }
+    if(controlo==1)
+      resultado++;
   }
+
+    return resultado;
+
 }
-*/

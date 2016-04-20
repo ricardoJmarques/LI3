@@ -117,3 +117,12 @@ int imprimeProdutosLetra (CatalogoProdutos catProd , char letra){ /*mudar o nome
 
   return size;
 }
+
+void retornaProdutos(CatalogoProdutos catProd , char** str, int* j){
+  int i;
+  for(i=0;i<TAMCAT;i++){
+    avlInorder(catProd->lista[i] , str , j);
+  }
+
+  printf("%s\n", str[0]);
+}
