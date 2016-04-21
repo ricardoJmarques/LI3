@@ -210,5 +210,5 @@ void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes ,   listaDec
 }
 
 void iniciaListaDecrescente (listaDecrescente* ld){
-  ld = malloc (sizeof(struct ListaDecrescente) * 200); /*<----- faço o primeiro malloc ; é preciso */
+  ld = malloc (sizeof(struct ListaDecrescente)); /*<----- faço o primeiro malloc ; é preciso */
 }
