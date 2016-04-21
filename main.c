@@ -8,18 +8,22 @@
 
 #define nfiliais 3
 
+
+
 int main(){
-  
+
+  int i;
   CatalogoClientes teste;
   CatalogoProdutos teste2;
   CatalogoFaturacao teste3;
   CatalogoFilial teste4[nfiliais];
   int totalvendas;
   float totalfaturado;
-  totalvendas=0;
-  totalfaturado=0;
   int t1,t2,t3;
   ListaClientes ListaC;
+  listaDecrescente* ld;
+  totalvendas=0;
+  totalfaturado=0;
   char* c = "AF1184";
   char* cli = "Z5000";
 
@@ -70,7 +74,13 @@ int main(){
 
   clientesContemProduto(teste , teste4[0], c);*/
 
-  comprasDecrescente (teste4[0] , cli, 4 , totalProdutos(teste2));
+  iniciaListaDecrescente(ld);
+  i=0;
+  comprasDecrescente (teste4[0] , cli, 4, ld , &i );
+  comprasDecrescente (teste4[1] , cli, 4, ld , &i );
+  comprasDecrescente (teste4[2] , cli, 4, ld , &i );
+
+  /*for(i=0;i<)*/
    
   removeCatFaturacao(teste3, nfiliais);
   removeCatFilial(teste4[0]);

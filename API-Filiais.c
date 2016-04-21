@@ -25,7 +25,7 @@ typedef struct Compra{
 typedef struct ListaDecrescente{
   char* string;
   int qtd;
-}*listaDecrescente;
+}*ld1;
 
 compra insereCompra(compra c, int qtd, float preco, char tipo){
   if (c!=NULL){
@@ -180,19 +180,35 @@ int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Prod
   return 0;
 }
 
-void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalProdutos){
+void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes ,   listaDecrescente* ld , int* j){
   /*listaDecrescente* listd;
   listd = malloc(sizeof(struct ListaDecrescente) * totalProdutos);*/
   int i;
   CatalogoProdutos catProd;
   ListaProdutos listP;
+  compra cp;
   
   catProd = (CatalogoProdutos)retornaDadosCliente(catFil->catMes[mes-1], c);
   listP = retornaListaProdutos(catProd);
 	
+  ld=realloc(ld , totalProdutos(catProd));
+
   for(i=0;listP[i]!=NULL;i++){
-    printf("%s\n", listP[i] );
+    printf("for%s\n",listP[i] );
+  }
+
+  for(i=0;listP[i]!=NULL;i++){
+    ld[*j]->string = malloc(sizeof(char) * strlen(listP[i]));
+    strcpy(ld[*j]->string , listP[i]);
+    cp = (compra)retornaDadosProduto(catProd , listP[i]);
+    ld[*j]->qtd = ((cp->qtdN) + (cp->qtdP));
+    (*j)++;
+    printf("string = %s\n", ld[*j]->string );
+    printf("qtd = %d\n", ld[*j]->qtd );
   }
 
 }
 
+void iniciaListaDecrescente (listaDecrescente* ld){
+  ld = malloc (sizeof(struct ListaDecrescente) * 200); /*<----- faço o primeiro malloc ; é preciso */
+}
