@@ -5,6 +5,8 @@
 
 #define PageSize 150
 
+/*FAZER UMA STRUCT PARA CAMUFLAR O TIPO CHAR** */
+
 /*
 void imprimeString (char ** cat , int size);
 int verificaNumero(char *num, int min, int max);

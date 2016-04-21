@@ -12,7 +12,7 @@
 
 int main(){
 
-  int i;
+  int i,j;
   CatalogoClientes teste;
   CatalogoProdutos teste2;
   CatalogoFaturacao teste3;
@@ -79,8 +79,6 @@ int main(){
   comprasDecrescente (teste4[0] , cli, 4, ld , &i );
   comprasDecrescente (teste4[1] , cli, 4, ld , &i );
   comprasDecrescente (teste4[2] , cli, 4, ld , &i );
-
-  /*for(i=0;i<)*/
    
   removeCatFaturacao(teste3, nfiliais);
   removeCatFilial(teste4[0]);

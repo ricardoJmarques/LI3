@@ -111,8 +111,6 @@ int imprimeProdutosLetra (CatalogoProdutos catProd , char letra){ /*mudar o nome
 
   avlInorder(catProd->lista[i] , str , &j);
 
-  printf("!!!!%s\n", str[0] );
-
   imprimeString(str , size);
 
   return size;
