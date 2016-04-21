@@ -10,9 +10,13 @@
 #define MINPRODUTO 1000
 #define MAXPRODUTO 1999
 
+typedef struct ListaMes{
+  CatalogoProdutos catMes[FMTAM];
+} *listaMes;
+
 typedef struct ListaFilial{/*lista de clientes*/
-  CatalogoClientes catMes[FMTAM];
-  int comprasValidas[FMTAM];
+  CatalogoClientes cliente;
+  int comprasValidas;
 } lf1;
 	
 typedef struct Compra{
@@ -59,28 +63,47 @@ compra insereCompra(compra c, int qtd, float preco, char tipo){
   }
 }
 
+listaMes iniciaListaMes(){
+  int i;
+  listaMes lm = malloc(sizeof(struct ListaMes));
+  for(i=0;i<FMTAM;i++){
+    lm->catMes[i] = iniciaCatProdutos();
+  }
+  return lm;
+}
+
+void removeListaMes(listaMes lm){
+  int i;
+  for(i=0;i<FMTAM;i++){
+    removeCatProdutos2(lm->catMes[i]);
+  }
+  free(lm);
+}
+
 CatalogoFilial iniciaCatFilial(CatalogoClientes catCli){
   int i;
   CatalogoFilial catFil = malloc(sizeof(struct ListaFilial));
-  for (i = 0; i<FMTAM; i++){
-    catFil->catMes[i] = copiaCatClientes(catCli);
-    catFil->comprasValidas[i] = 0;
-  }
+  catFil->cliente = copiaCatClientes(catCli);
+  catFil->comprasValidas = 0;
   return catFil;
 }
 
 CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, int qtd, float preco, int mes, char tipo){
   int i;
+  listaMes lstMes;
   CatalogoProdutos catProd;
   compra cp;
+  
   i = mes - 1;
     
-  if ((catProd=(CatalogoProdutos)retornaDadosCliente(catFil->catMes[i], c)) == NULL){
-    catProd = iniciaCatProdutos();
-    insereDadosCliente(catFil->catMes[i], c, catProd);
-    insereProduto(catProd, p);
+  if ((lstMes=(listaMes)retornaDadosCliente(catFil->cliente, c)) == NULL){
+    lstMes = iniciaListaMes();
+    insereDadosCliente(catFil->cliente, c, lstMes);
   }
-
+  
+  catProd = lstMes->catMes[i];
+  insereProduto(lstMes->catMes[i], p);
+  
   if ((cp=(compra)retornaDadosProduto(catProd, p)) == NULL){
     cp = insereCompra(cp, qtd, preco, tipo);
     insereDadosProduto(catProd, p, cp);
@@ -88,33 +111,28 @@ CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, in
   else{
     cp = insereCompra(cp, qtd, preco, tipo);
   }
-
-  catFil->comprasValidas[i]++;
+  catFil->comprasValidas++;
   return catFil;
 }
 
 void removeCatFilial(CatalogoFilial catFil){
-  int i,j,k;
+  int i,j;
   char c;
   char ch[10];
-  CatalogoProdutos catProd;
-  CatalogoClientes catCli;
-  for (i=0; i<FMTAM; i++){
-    c = 'A';
-    for (j=0; j<FCTAM; j++){
-      for (k=MINCLIENTE; k<=MAXCLIENTE; k++){
-        sprintf(ch,"%c%d",c , k);
-        if ((catProd = (CatalogoProdutos)retornaDadosCliente(catFil->catMes[i], ch)) != NULL){
-        removeCatProdutos2(catProd);
+  listaMes lm;
+  c = 'A';
+  for (i=0; i<FCTAM; i++){
+    for (j=MINCLIENTE; j<=MAXCLIENTE; j++){
+      sprintf(ch,"%c%d",c , j);
+      if ((lm = (listaMes)retornaDadosCliente(catFil->cliente, ch)) != NULL){
+        removeListaMes(lm);
         }
       }
     c++;
     }
-  removeCatClientes(catFil->catMes[i]);
-  }
   free(catFil);
 }
-
+/*
 int totalCompras(CatalogoFilial catFil){
   int i,j,total;
   total=0;
@@ -123,7 +141,7 @@ int totalCompras(CatalogoFilial catFil){
   }
   return total;
 }
-/*
+*//*
 void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalProdutos){
   listaDecrescente* listd;
   listd = malloc(sizeof(struct ListaDecrescente) * totalProdutos);
@@ -132,9 +150,9 @@ void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalP
 
 */
 
-
-int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){ /*query x*/
-  int i,j,k,resultado,controlo, tt;
+/*
+int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){ *//*query x*/
+/*  int i,j,k,resultado,controlo, tt;
   CatalogoProdutos catProd;
   ListaClientes ListaC;
   ListaC = retornaListaClientes(catCli);
@@ -148,8 +166,8 @@ int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){ /*query x*/
       }
     }
     if(controlo==0)
-      resultado++;/*meter para a string*/
-  }
+      resultado++;*//*meter para a string*/
+/*  }
     removeListaClientes(ListaC, k);
     return resultado;
 }
@@ -171,8 +189,8 @@ int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Prod
         if((cp = (compra) retornaDadosProduto(catProd , p)) != NULL){
           if(cp->qtdP != 0) totalP++;
           if(cp->qtdN != 0) totalN++;
-          /*mete na string*/
-        }
+          *//*mete na string*/
+/*        }
       }
     }
   }
@@ -182,9 +200,9 @@ int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Prod
 }
 
 void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes ,   listaDecrescente* ld , int* j){
-  /*listaDecrescente* listd;
+  *//*listaDecrescente* listd;
   listd = malloc(sizeof(struct ListaDecrescente) * totalProdutos);*/
-  int i;
+/*  int i;
   CatalogoProdutos catProd;
   ListaProdutos listP;
   compra cp;
@@ -214,8 +232,8 @@ void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes ,   listaDec
 
 void iniciaListaDecrescente (listaDecrescente* ld){
   ld = malloc ((sizeof(struct ListaDecrescente)));
-  ld->tamanho = 0; /*<----- faço o primeiro malloc ; é preciso */
-}
+  ld->tamanho = 0; *//*<----- faço o primeiro malloc ; é preciso */
+/*}
 
 void quick_sort (int *a, int n) {
     int i, j, p, t;
@@ -235,4 +253,4 @@ void quick_sort (int *a, int n) {
     }
     quick_sort(a, i);
     quick_sort(a + i, n - i);
-}
+}*/

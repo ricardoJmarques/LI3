@@ -51,7 +51,7 @@ void abreFicheiroVendas(CatalogoFaturacao catFact, CatalogoFilial *catFil, Catal
   int mes;
   int filial;
 
-  fichVendas = fopen("fichTeste/Vendas_1M.txt", "r");
+  fichVendas = fopen("fichTeste/Vendas_20E.txt", "r");
   if (fichVendas != NULL){
     while (fgets(buffer, 40, fichVendas)!=NULL){
       i=0;

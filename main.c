@@ -45,14 +45,14 @@ int main(){
 
 
   printf("Total de Vendas: %d.\n", totalVendas(teste3, nfiliais));
-  t1 = totalCompras(teste4[0]);
+/*  t1 = totalCompras(teste4[0]);
   t2 = totalCompras(teste4[1]);
   t3 = totalCompras(teste4[2]);
     
   printf("Total de Compras Filial 1: %d.\n", t1);
   printf("Total de Compras Filial 1: %d.\n", t2);
   printf("Total de Compras Filial 1: %d.\n", t3);
-  printf("Total de Compras todas as Filiais: %d.\n", t1+t2+t3);
+  printf("Total de Compras todas as Filiais: %d.\n", t1+t2+t3);*/
 
   /*printf("query2=%d\n", imprimeProdutosLetra(teste2 , 'A') );*/
 
@@ -74,12 +74,12 @@ int main(){
 
   clientesContemProduto(teste , teste4[0], c);*/
 
-  iniciaListaDecrescente(ld);
+/*  iniciaListaDecrescente(ld);
   i=0;
   comprasDecrescente (teste4[0] , cli, 4, ld , &i );
   comprasDecrescente (teste4[1] , cli, 4, ld , &i );
   comprasDecrescente (teste4[2] , cli, 4, ld , &i );
-   
+  */ 
   removeCatFaturacao(teste3, nfiliais);
   removeCatFilial(teste4[0]);
   removeCatFilial(teste4[1]);
