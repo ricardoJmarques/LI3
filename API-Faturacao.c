@@ -111,7 +111,7 @@ int quantidadeVendida (CatalogoFaturacao catFact, int mes , Produto p , int fili
 
 int resultado;
 venda vd;
-resultado = 0.0;
+resultado = 0;
   
   switch(filial){
     case 1:

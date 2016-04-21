@@ -72,7 +72,7 @@ int main(){
   printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
   printf("Clientes gold Filial 3: %d\n" , clientesGold (teste, teste4[2]));
 
-  clientesContemProduto(teste , teste4[0], c);
+  clientesContemProduto(teste , teste4[1], c);
 
 /*  iniciaListaDecrescente(ld);
   i=0;
