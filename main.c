@@ -20,12 +20,12 @@ int main(){
   int totalvendas;
   float totalfaturado;
   int t1,t2,t3;
-  ListaClientes ListaC;
-  listaDecrescente* ld;
+/*  ListaClientes ListaC;
+  listaDecrescente* ld;*/
   totalvendas=0;
   totalfaturado=0;
-  char* c = "AF1184";
-  char* cli = "Z5000";
+  /*char* c = "AF1184";
+  char* cli = "Z5000";*/
 
   teste = iniciaCatClientes();
   teste2 = iniciaCatProdutos();

@@ -65,7 +65,7 @@ compra insereCompra(compra c, int qtd, float preco, char tipo){
 
 listaMes iniciaListaMes(){
   int i;
-  listaMes lm = malloc(sizeof(struct ListaMes));
+  listaMes lm = (listaMes)malloc(sizeof(struct ListaMes));
   for(i=0;i<FMTAM;i++){
     lm->catMes[i] = iniciaCatProdutos();
   }
@@ -77,7 +77,7 @@ void removeListaMes(listaMes lm){
   for(i=0;i<FMTAM;i++){
     removeCatProdutos(lm->catMes[i]);
   }
-  free(lm);
+  /*free(lm);*/
 }
 
 CatalogoFilial iniciaCatFilial(CatalogoClientes catCli){
@@ -102,7 +102,9 @@ CatalogoFilial insereVendaFilial(CatalogoFilial catFil, Cliente c, Produto p, in
   }
   
   catProd = lstMes->catMes[i];
-  insereProduto(lstMes->catMes[i], p);
+  
+  if (!existeProduto(catProd, p))
+    insereProduto(catProd, p);
   
   if ((cp=(compra)retornaDadosProduto(catProd, p)) == NULL){
     cp = insereCompra(cp, qtd, preco, tipo);

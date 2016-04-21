@@ -86,6 +86,13 @@ void removeCatClientes(CatalogoClientes catCli){
   free(catCli);
 }
 
+void removeCatClientes2(CatalogoClientes catCli){
+  int i;
+  for (i=0; i<TAMCAT; i++){
+    deleteAvl(catCli->lista[i]);
+  }
+}
+
 void* retornaDadosCliente(CatalogoClientes catCli, Cliente c){
   return retornaDados(catCli->lista[c[0]-'A'], c);
 }
