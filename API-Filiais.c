@@ -130,6 +130,7 @@ void removeCatFilial(CatalogoFilial catFil){
       }
     c++;
     }
+  removeCatClientes(catFil->cliente);
   free(catFil);
 }
 /*
