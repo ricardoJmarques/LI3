@@ -19,12 +19,12 @@ void removeCatFilial(CatalogoFilial catFil);
 
 int totalCompras(CatalogoFilial catFil);
 
-int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil);
+int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil); /*query 7*/
 
-int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p);
-
+int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p); /*query 8*/
+/*
 void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes, listaDecrescente* ld , int* j);
 
 void iniciaListaDecrescente (listaDecrescente* ld);
-
+*/
 #endif

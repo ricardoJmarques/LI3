@@ -24,8 +24,8 @@ int main(){
   listaDecrescente* ld;*/
   totalvendas=0;
   totalfaturado=0;
-  /*char* c = "AF1184";
-  char* cli = "Z5000";*/
+  char* c = "AF1184";
+/*  char* cli = "Z5000";*/
 
   teste = iniciaCatClientes();
   teste2 = iniciaCatProdutos();
@@ -45,14 +45,14 @@ int main(){
 
 
   printf("Total de Vendas: %d.\n", totalVendas(teste3, nfiliais));
-/*  t1 = totalCompras(teste4[0]);
+  t1 = totalCompras(teste4[0]);
   t2 = totalCompras(teste4[1]);
   t3 = totalCompras(teste4[2]);
     
   printf("Total de Compras Filial 1: %d.\n", t1);
   printf("Total de Compras Filial 1: %d.\n", t2);
   printf("Total de Compras Filial 1: %d.\n", t3);
-  printf("Total de Compras todas as Filiais: %d.\n", t1+t2+t3);*/
+  printf("Total de Compras todas as Filiais: %d.\n", t1+t2+t3);
 
   /*printf("query2=%d\n", imprimeProdutosLetra(teste2 , 'A') );*/
 
@@ -66,13 +66,13 @@ int main(){
   printf("%d\n", totalvendas );
   printf("%f\n", totalfaturado );*/
 
- /* printf("%d\n",produtosNinguemComprou (teste2, teste3 )); */
-/*
+  printf("Produtos ninguem comprou: %d\n",produtosNinguemComprou (teste2, teste3, nfiliais ));
+
   printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));
   printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
   printf("Clientes gold Filial 3: %d\n" , clientesGold (teste, teste4[2]));
 
-  clientesContemProduto(teste , teste4[0], c);*/
+  clientesContemProduto(teste , teste4[0], c);
 
 /*  iniciaListaDecrescente(ld);
   i=0;
