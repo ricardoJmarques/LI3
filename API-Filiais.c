@@ -75,7 +75,7 @@ listaMes iniciaListaMes(){
 void removeListaMes(listaMes lm){
   int i;
   for(i=0;i<FMTAM;i++){
-    removeCatProdutos2(lm->catMes[i]);
+    removeCatProdutos(lm->catMes[i]);
   }
   free(lm);
 }
