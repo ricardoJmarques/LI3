@@ -77,6 +77,9 @@ int main(){
     printf("Produtos não comprado: %s\n", qwe1[i]);
   }
   printf("total Produtos não comprados: %d\n", j);
+  removeListaGen(genN);
+  /* fim da query 4 */
+
 
   printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));
   printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
