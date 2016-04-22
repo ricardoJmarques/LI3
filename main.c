@@ -23,6 +23,8 @@ int main(){
   listaDecrescente* ld;*/
   totalvendas=0;
   totalfaturado=0;
+  char **qwe1;
+  char **qwe2;
   char* c = "AF1184";
 /*  char* cli = "Z5000";*/
 
@@ -65,7 +67,16 @@ int main(){
   printf("%d\n", totalvendas );
   printf("%f\n", totalfaturado );*/
 
-  printf("Produtos ninguem comprou: %d\n",produtosNinguemComprou (teste2, teste3, nfiliais ));
+/* inicio da query 4 */
+  genN = initListaGen(totalProdutos(teste2));
+   
+  genN = produtosNinguemComprou (teste2, teste3, nfiliais, genN);
+  qwe1 = retornaListaGen(genN);
+  j = retornaPosListaGen(genN);
+  for (i=0; i<j; i++){
+    printf("Produtos não comprado: %s\n", qwe1[i]);
+  }
+  printf("total Produtos não comprados: %d\n", j);
 
   printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));
   printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
@@ -77,8 +88,7 @@ int main(){
   genP = initListaGen(totalClientes(teste));
   clientesContemProduto(teste , teste4[1], c, genN, genP);
   
-  char **qwe1;
-  char **qwe2;
+
   qwe1 = retornaListaGen(genN);
   qwe2 = retornaListaGen(genP);
 
@@ -94,7 +104,7 @@ int main(){
   /*imprimeString (qwe2 , j);*/
   for (i=0; i<j; i++){
     printf("Cliente: %s\n", qwe2[i]);
-  }	x
+  }
   printf("total Promocao: %d\n", j);
   removeListaGen(genN);
   removeListaGen(genP);

@@ -106,43 +106,33 @@ int totalVendas(CatalogoFaturacao catFact, int nfiliais){
 }
 
 int quantidadeVendida (CatalogoFaturacao catFact, int mes , Produto p , int filial , int np){
-
 /*0=venda normal 1=promocao na variavel np (depois faço parse na main com um menu so para esta query)*/
-
   int resultado;
   venda vd;
   resultado = 0;
-  
   vd = (venda)retornaDadosProduto(catFact[filial-1].catMes[mes-1] , p);
-    if(vd != NULL){
-      if(np == 0){
-        resultado = (vd->qtdN);
-      }
-        else resultado = (vd->qtdP);
-      }
-
+  if(vd != NULL){
+    if(np == 0)
+      resultado = (vd->qtdN);
+    else
+      resultado = (vd->qtdP);
+  }
   return resultado;
-
 }
 
 float quantidadeFaturada (CatalogoFaturacao catFact, int mes , Produto p , int filial , int np){
-
 /*0=venda normal 1=promocao na variavel np (depois faço parse na main com um menu so para esta query)*/
-
   float resultado;
   venda vd;
   resultado = 0.0;
-  
   vd = (venda)retornaDadosProduto(catFact[filial-1].catMes[mes-1] , p);
-    if(vd != NULL){
-      if(np == 0){
-        resultado = (vd->qtdN) * (vd->precoN);
-      }
-        else resultado = (vd->qtdP) * (vd->precoP);
-      }
-
+  if(vd != NULL){
+    if(np == 0)
+      resultado = (vd->qtdN) * (vd->precoN);
+    else
+      resultado = (vd->qtdP) * (vd->precoP);
+  }
   return resultado;
-
 }
 
 void totalIntervalo (CatalogoFaturacao catFact, int mesi, int mess, int nfiliais , int* totalvendas , float* totalfaturado){ 
@@ -151,11 +141,7 @@ void totalIntervalo (CatalogoFaturacao catFact, int mesi, int mess, int nfiliais
   char** str;
   str= malloc(sizeof(char*) * 200000);
   k=0;
-
-
   retornaProdutos(catFact[0].catMes[0] , str, &k); /*cria array com os produtos*/
-
-
   for(i=0;i<nfiliais;i++){
     for(j=mesi-1;j<=mess-1;j++){
       for(l=0;l<k;l++){
@@ -166,35 +152,29 @@ void totalIntervalo (CatalogoFaturacao catFact, int mesi, int mess, int nfiliais
             (*totalfaturado) += ((vd->qtdP)*(vd->precoP));
           }
       }
-      
-
     }
   }
 }
 
 
-int produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact, int nfiliais){/*recebe a str*/
-  
+ListaGenerica produtosNinguemComprou (CatalogoProdutos catProd, CatalogoFaturacao catFact, int nfiliais, ListaGenerica lg){/*query 4*/
   int i,j,k,l , resultado,controlo;
   venda vd;
-  char** str;
-  str= malloc(sizeof(char*) * 200000);
-  k=0;
-  retornaProdutos(catProd , str, &k);
+  ListaProdutos lp;
+  lp = retornaListaProdutos(catProd);
+  k=totalProdutos(catProd);
   resultado = 0;
 
   for(l=0;l<k;l++){
     controlo=1;
     for(i=0;i<nfiliais;i++){
       for(j=0;j<FMTAM;j++){
-        if(retornaDadosProduto(catFact[i].catMes[j], str[l]) != NULL)
+        if(retornaDadosProduto(catFact[i].catMes[j], lp[l]) != NULL)
           controlo=0;
       }
     }
     if(controlo==1)
-      resultado++;/*meter para a string*/
+      lg = insereListaGen(lg, lp[l]);
   }
-
-    return resultado;
-
+  return lg;
 }
