@@ -6,12 +6,6 @@
 #define TAMCAT 26 /* numero de arvores do catalogo */
 #define MINCLIENTE 1000
 #define MAXCLIENTE 5000
-/*
-typedef struct LClientes{
-  char** lista;
-  int tamanho;
-} *lclientes;
-*/
 /* listaLetra é uma AVL onde constam os   */
 /* clientes iniciados por determinada letra */
 typedef struct StructClientes{

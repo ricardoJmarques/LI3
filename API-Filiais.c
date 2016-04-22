@@ -177,33 +177,26 @@ int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){ /*query x*/
   return resultado;
 }
 
-int clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p){
-  int i,j,k,totalP,totalN,flag;
+void clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p, ListaGenerica genN, ListaGenerica genP){/*query 8*/
+  int i,j,k,flag;
   compra cp;
   ListaClientes ListaC;
   listaMes lstMes;
-
   ListaC = retornaListaClientes(catCli);
   k=totalClientes(catCli);
-  totalN=0;
-  totalP=0;
   flag=0;
   for(j=0;j<k;j++){
     if((lstMes=(listaMes)retornaDadosCliente(catFil->cliente, ListaC[j])) != NULL){
       for(i=0; flag==0 && i<FMTAM; i++){
         if((cp = (compra) retornaDadosProduto(lstMes->catMes[i] , p)) != NULL){
           flag = 1;
-          if(cp->qtdP != 0) totalP++;
-          if(cp->qtdN != 0) totalN++;
-          /*mete na string*/
+          if(cp->qtdP != 0) genP = insereListaGen(genP, ListaC[j]);
+          if(cp->qtdN != 0) genN = insereListaGen(genN, ListaC[j]);
         }
       }
       flag = 0;
     }
   }
-  printf("totalN=%d\n", totalN);
-  printf("totalP=%d\n", totalP);
-  return 0;
 }
 /*
 void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes ,   listaDecrescente* ld , int* j){

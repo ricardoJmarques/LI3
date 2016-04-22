@@ -105,7 +105,7 @@ int totalVendas(CatalogoFaturacao catFact, int nfiliais){
   return total;
 }
 
-int quantidadeVendida (CatalogoFaturacao catFact, int mes , Produto p , int filial , int np){
+int quantidadeVendida (CatalogoFaturacao catFact, int mes , Produto p , int filial , int np){/*query 3*/
 
 /*0=venda normal 1=promocao na variavel np (depois faço parse na main com um menu so para esta query)*/
 

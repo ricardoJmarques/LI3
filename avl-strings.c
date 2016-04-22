@@ -307,7 +307,7 @@ void avlInorder (BTree t, char** str , int *j){
 
   if(t != NULL){
     avlInorder(t->left , str , j);
-    str[*j]=malloc(sizeof(char) * strlen(t->string));
+    str[*j]=malloc(sizeof(char) * (strlen(t->string)+1));
     strcpy(str[(*j)],t->string);
     /*printf("insere %s\n", str[(*j)] );*/
     (*j)++;
@@ -321,7 +321,7 @@ void avlInorder2 (BTree t, char** str , int *j){
   if(t != NULL){
     avlInorder2(t->left , str , j);
     if((t->dados) == NULL){
-	    str[(*j)]=malloc(sizeof(char) * strlen(t->string));
+	    str[(*j)]=malloc(sizeof(char) * (strlen(t->string)+1));
 	    strcpy(str[(*j)],t->string);
 	    (*j)++;
 	}

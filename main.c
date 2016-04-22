@@ -8,8 +8,6 @@
 
 #define nfiliais 3
 
-
-
 int main(){
 
   int i,j;
@@ -20,6 +18,7 @@ int main(){
   int totalvendas;
   float totalfaturado;
   int t1,t2,t3;
+  ListaGenerica genN, genP;
 /*  ListaClientes ListaC;
   listaDecrescente* ld;*/
   totalvendas=0;
@@ -72,7 +71,35 @@ int main(){
   printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
   printf("Clientes gold Filial 3: %d\n" , clientesGold (teste, teste4[2]));
 
-  clientesContemProduto(teste , teste4[1], c);
+/*query 8 inicio */
+
+  genN = initListaGen(totalClientes(teste));
+  genP = initListaGen(totalClientes(teste));
+  clientesContemProduto(teste , teste4[1], c, genN, genP);
+  
+  char **qwe1;
+  char **qwe2;
+  qwe1 = retornaListaGen(genN);
+  qwe2 = retornaListaGen(genP);
+
+  j = retornaPosListaGen(genN);
+  /*imprimeString (qwe1 , j);*/
+  for (i=0; i<j; i++){
+    printf("Cliente: %s\n", qwe1[i]);
+  }
+  printf("total Normal: %d\n", j);
+  
+  
+  j = retornaPosListaGen(genP);
+  /*imprimeString (qwe2 , j);*/
+  for (i=0; i<j; i++){
+    printf("Cliente: %s\n", qwe2[i]);
+  }	x
+  printf("total Promocao: %d\n", j);
+  removeListaGen(genN);
+  removeListaGen(genP);
+
+/* query 8 fim */
 
 /*  iniciaListaDecrescente(ld);
   i=0;

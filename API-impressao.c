@@ -7,8 +7,8 @@
 #define SYSTEM 1
 #elif (_WIN32)                   /* Deteta se o SO é Windows para usar comando de limpar a tela */
 #define SYSTEM 0
-#escolher					     /* Nao limpa a tela de um sistema que não é ou UNIX ou Windows */
-#endif
+#endif					         /* Nao limpa a tela de um sistema que não é ou UNIX ou Windows */
+
 
 #define PageSize 35
 
@@ -16,6 +16,8 @@ void imprimeString (char ** cat , int size){
 	int i, numpagina,j, nump, k , controlo,l,controloDigito;
 	char* cmd;
 
+    controlo = 1;
+    controloDigito = 1;
 	if(size%PageSize != 0)
 		nump = (size/PageSize)+2;
 	else nump = size/PageSize+1;
@@ -36,6 +38,7 @@ void imprimeString (char ** cat , int size){
 		printf("limpar ecra [clear]\n");
 		printf("Sair [exit]\n");
 		scanf("%s" , cmd);
+
 
 
 		for(l=0 , controloDigito =1; cmd[l]!='\0' && controloDigito ;l++){
@@ -91,7 +94,7 @@ void imprimeString (char ** cat , int size){
 		printf("numpagina = %d\n", numpagina );
 
 		for(i=(numpagina-1)*PageSize , j=0; controlo && i<size && j<PageSize ; i++ , j++)
-			puts(cat[i]);
+			printf("%s\n",cat[i]);
 
 	}
 
