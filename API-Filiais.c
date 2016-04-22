@@ -254,3 +254,64 @@ void quick_sort (int *a, int n) {
     quick_sort(a, i);
     quick_sort(a + i, n - i);
 }*/
+
+/*
+void maisDinheiroGasto (CatalogoFilial catFil , Cliente c, float* dinheiro, char** prods){
+
+  int i,j,k,max, aux,aux2;
+  CatalogoProdutos* catProd;
+  char** listP;
+  char* caux;
+  char* caux2;
+  compra cp;
+
+  catProd = iniciaArrayCatalogoProdutos();
+
+  for(i=0;i<FMTAM;i++){
+    catProd[i] = (CatalogoProdutos)retornaDadosCliente(catFil->cliente, c);
+    listP = calloc(totalProdutos(catProd[i]) , sizeof(char*));
+    listP = retornaListaProdutos(catProd[i]);
+    for(j=0;j<totalProdutos(catProd[i]);j++){
+      for(k=0;k<3;k++){
+        cp=retornaDadosProduto(catProd[i] , listP[j]);
+        if((cp->qtdP * cp->precoP) > (cp->qtdN * cp->precoN)){
+          max = (cp->qtdP) * (cp->precoP);
+        }
+        else max = (cp->qtdN) * (cp->precoN);
+
+        if(dinheiro[k] < max){
+          if(k==2){
+            dinheiro[k]=max;
+            strcpy(prods[k] , listP[j]);
+          }
+          else {
+            if(k==1){
+              aux = dinheiro[k];
+              strcpy (caux , prods[k]);
+              dinheiro[k] = max;
+              strcpy(prods[k] , listP[j]);
+              dinheiro[k++] = aux;
+              strcpy(prods[k++] , caux);
+            }
+            else {
+              if (k==0){
+                aux = dinheiro[k];
+                strcpy (caux , prods[k]);
+                dinheiro[k] = max;
+                strcpy(prods[k] , listP[j]);
+                aux2=dinheiro[k++];
+                strcpy(caux2 , prods[k++]);
+                dinheiro[k++] = aux;
+                strcpy(prods[k++] , caux);
+                dinheiro[3]=aux2;
+                strcpy(prods[3] , caux);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+*/

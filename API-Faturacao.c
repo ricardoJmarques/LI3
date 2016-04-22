@@ -105,75 +105,41 @@ int totalVendas(CatalogoFaturacao catFact, int nfiliais){
   return total;
 }
 
-int quantidadeVendida (CatalogoFaturacao catFact, int mes , Produto p , int filial , int np){/*query 3*/
+int quantidadeVendida (CatalogoFaturacao catFact, int mes , Produto p , int filial , int np){
 
 /*0=venda normal 1=promocao na variavel np (depois faço parse na main com um menu so para esta query)*/
 
-int resultado;
-venda vd;
-resultado = 0;
+  int resultado;
+  venda vd;
+  resultado = 0;
   
-  switch(filial){
-    case 1:
+  vd = (venda)retornaDadosProduto(catFact[filial-1].catMes[mes-1] , p);
+    if(vd != NULL){
+      if(np == 0){
+        resultado = (vd->qtdN);
+      }
+        else resultado = (vd->qtdP);
+      }
 
-      vd = (venda)retornaDadosProduto(catFact[0].catMes[mes-1] , p);
-      if(vd != NULL){
-        if(np == 0){
-          resultado = (vd->qtdN);
-        }
-        else resultado = (vd->qtdP);
+  return resultado;
+
+}
+
+float quantidadeFaturada (CatalogoFaturacao catFact, int mes , Produto p , int filial , int np){
+
+/*0=venda normal 1=promocao na variavel np (depois faço parse na main com um menu so para esta query)*/
+
+  float resultado;
+  venda vd;
+  resultado = 0.0;
+  
+  vd = (venda)retornaDadosProduto(catFact[filial-1].catMes[mes-1] , p);
+    if(vd != NULL){
+      if(np == 0){
+        resultado = (vd->qtdN) * (vd->precoN);
       }
-      break;
-    
-    case 2:
-      
-      vd = (venda)retornaDadosProduto(catFact[1].catMes[mes-1] , p);
-      if(vd != NULL){
-        if(np == 0){
-          resultado = (vd->qtdN);
-        }
-        else resultado = (vd->qtdP);
+        else resultado = (vd->qtdP) * (vd->precoP);
       }
-      break;
-    
-    case 3:
-      
-      vd = (venda)retornaDadosProduto(catFact[2].catMes[mes-1] , p);
-      if(vd != NULL){
-        if(np == 0){
-          resultado = (vd->qtdN);
-        }
-        else resultado = (vd->qtdP);
-      }
-      break;
-    
-    default:
-      
-      vd = (venda)retornaDadosProduto(catFact[0].catMes[mes-1] , p);
-      if(vd != NULL){
-        if(np == 0 ){
-          resultado += (vd->qtdN);
-        }
-        else resultado += (vd->qtdP);
-      }
-      
-      vd = (venda)retornaDadosProduto(catFact[1].catMes[mes-1] , p);
-      if(vd != NULL){
-        if(np == 0){
-          resultado += (vd->qtdN);
-        }
-        else resultado += (vd->qtdP);
-      }
-      
-      vd = (venda)retornaDadosProduto(catFact[2].catMes[mes-1] , p);
-      if(vd != NULL){
-        if(np == 0){
-          resultado += (vd->qtdN);
-        }
-        else resultado += (vd->qtdP);
-      }
-      break;
-  }
 
   return resultado;
 

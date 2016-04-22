@@ -26,7 +26,7 @@ void imprimeString (char ** cat , int size){
 
 	for(numpagina=1; numpagina < nump ; numpagina++){
 
-		if(controlo == 0)
+		if(controlo == 0 || controloDigito == 0)
 			numpagina--;
 
 
