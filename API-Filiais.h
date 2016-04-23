@@ -19,7 +19,7 @@ void removeCatFilial(CatalogoFilial catFil);
 
 int totalCompras(CatalogoFilial catFil);
 
-int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil); /*query 7*/
+BTree clientesGold (CatalogoClientes catCli, CatalogoFilial catFil, int* j, BTree bt); /*query 7*/
 
 void clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p, ListaGenerica genN, ListaGenerica genP); /*query 8*/
 /*

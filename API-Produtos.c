@@ -101,19 +101,17 @@ void insereDadosProduto(CatalogoProdutos catProd, Produto p, void* dados){
     insereDados(catProd->lista[p[0]-'A'], p, dados);
 }
 
-int imprimeProdutosLetra (CatalogoProdutos catProd , char letra){ /*mudar o nome query2*/
-  int i,size,j;
+char** imprimeProdutosLetra (CatalogoProdutos catProd , char letra , int* j){ /*mudar o nome query2*/
+  int i,size;
   char** str;
   i = letra-'A';
   size = catProd->tamanho[i];
   str = malloc(sizeof(char*) * size);
-  j=0;
+  (*j)=0;
 
-  avlInorder(catProd->lista[i] , str , &j);
+  avlInorder(catProd->lista[i] , str , j);
 
-  imprimeString(str , size);
-
-  return size;
+  return str;
 }
 
 void retornaProdutos(CatalogoProdutos catProd , char** str, int* j){

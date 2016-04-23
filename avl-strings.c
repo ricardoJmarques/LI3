@@ -78,7 +78,7 @@ BTree balanceRight(BTree t) {
 	t->right = rotateRight(t->right);
 	t = rotateLeft(t);
 	if(t->right && t->left){ 
-	switch (t->balance && t->left && t->right) { 
+	switch (t->balance) { 
 		case 0: 
 			t->left->balance = 0;
 			t->right->balance = 0;
@@ -156,27 +156,7 @@ BTree rotateLeft(BTree t) {
 	}														
 return t;
 }
-/*
 
-BTree rotateLeft (BTree a) {
-	if(a->left){
-		BTree b  = a->right;
-		a->right = b->left;
-		b->left  = a;
-		return b;
-	}
-}
-
-BTree rotateRight (BTree a) {
-	if(a->right){
-		BTree b  = a->left;
-		a->left  = b->right;
-		b->right = a;
-		return b;
-	}
-
-}
-*/
 
 
 int exists (BTree t, char *str) {
@@ -329,20 +309,3 @@ void avlInorder2 (BTree t, char** str , int *j){
   }
 
 }
-/*
-BTree retornaPosicao (BTree t, char* str){
-	int n;
-	BTree aux;
-	aux = t;
-	while(aux!=NULL){
-		n = strcmp(aux->string , str);
-		if(n == 0)
-			return aux;
-		else{
-			if (n > 0)
-				aux = aux->left;
-			else aux = aux->right;
-		}
-	}
-	return 0;
-}*/

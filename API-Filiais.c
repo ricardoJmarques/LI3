@@ -2,6 +2,7 @@
 #include "API-Clientes.h"
 #include "API-Produtos.h"
 #include "API-Filiais.h"
+#include "avl-strings.h"
 
 #define FMTAM 12
 #define FCTAM 26
@@ -160,21 +161,24 @@ void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes , int totalP
 */
 
 
-int clientesGold (CatalogoClientes catCli, CatalogoFilial catFil){ /*query x*/
-  int i,j,k,resultado,controlo, tt;
+BTree clientesGold (CatalogoClientes catCli, CatalogoFilial catFil, int* l, BTree bt){ /*query x*/
+  int i,j,k,controlo, grow;
   CatalogoProdutos catProd;
   ListaClientes ListaC;
   ListaC = retornaListaClientes(catCli);
-  resultado = 0;
   k=totalClientes(catCli);
+  grow=0;
+  bt = NULL;
   for(i=0;i<k;i++){
     if(retornaDadosCliente(catFil->cliente, ListaC[i]) != NULL){
-      resultado++;
-      /*escreve para lista*/
+      if(exists(bt , ListaC[i]) == 0){
+        (*l)++;
+        bt = insertAVL(bt, ListaC[i] , &grow, NULL);
+      }
     }
   }
   removeListaClientes(ListaC, k);
-  return resultado;
+  return bt;
 }
 
 void clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Produto p, ListaGenerica genN, ListaGenerica genP){/*query 8*/
@@ -199,7 +203,7 @@ void clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Pro
   }
 }
 
-void comprasMes (CatalogoFilial catFil, Cliente c, int filial, int totalNP[filial][FMTAM]){
+void comprasMes (CatalogoFilial catFil, Cliente c, int filial, int** totalNP){
 
 	int i,j,k;
 	listaMes lstMes;
@@ -211,7 +215,6 @@ void comprasMes (CatalogoFilial catFil, Cliente c, int filial, int totalNP[filia
 
 	catProd = iniciaCatProdutos();
 
-
 	/*lstMes=(listaMes)retornaDadosCliente(catFil->cliente, c);*/
 
 	if((lstMes=(listaMes)retornaDadosCliente(catFil->cliente, c)) != NULL){
@@ -219,10 +222,8 @@ void comprasMes (CatalogoFilial catFil, Cliente c, int filial, int totalNP[filia
 		for(i=0;i<FMTAM;i++){
 			k=0;
 			catProd = lstMes->catMes[i];
-			lstProds = malloc(sizeof(char) * totalProdutos(catProd) *FMTAM );
+			lstProds = malloc(sizeof(char) * totalProdutos(catProd) * FMTAM );
 			retornaProdutos (catProd , lstProds, &k);
-
-			/*totalNP[filial][i]=(int**)calloc( k, sizeof(int*));*/
 
 			for(j=0; j<k && k!=0; j++){
 				cp = (compra)retornaDadosProduto(catProd , lstProds[j]);
@@ -235,120 +236,3 @@ void comprasMes (CatalogoFilial catFil, Cliente c, int filial, int totalNP[filia
 
 
 
-/*
-void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes ,   listaDecrescente* ld , int* j){
-  *//*listaDecrescente* listd;
-  listd = malloc(sizeof(struct ListaDecrescente) * totalProdutos);*/
-/*  int i;
-  CatalogoProdutos catProd;
-  ListaProdutos listP;
-  compra cp;
-
-  
-  catProd = (CatalogoProdutos)retornaDadosCliente(catFil->catMes[mes-1], c);
-  listP = retornaListaProdutos(catProd);
-
-  ld = (listaDecrescente*)realloc(ld ,totalProdutos(catProd) );
-
-  for(i=0;listP[i]!=NULL;i++){
-    printf("for%s\n",listP[i] );
-  }
-
-  for(i=0;listP[i]!=NULL;i++){
-    ld[*j]=malloc(sizeof(struct ListaDecrescente));
-    ld[*j]->string =(char*)malloc(sizeof(char) * strlen(listP[i]));
-    strcpy(ld[*j]->string , listP[i]);
-    cp = (compra)retornaDadosProduto(catProd , listP[i]);
-    ld[*j]->qtd = ((cp->qtdN) + (cp->qtdP));
-    printf("string = %s\n", ld[*j]->string );
-    printf("qtd = %d\n", ld[*j]->qtd );
-    (*j)++;
-  }
-
-}
-
-void iniciaListaDecrescente (listaDecrescente* ld){
-  ld = malloc ((sizeof(struct ListaDecrescente)));
-  ld->tamanho = 0; *//*<----- faço o primeiro malloc ; é preciso */
-/*}
-
-void quick_sort (int *a, int n) {
-    int i, j, p, t;
-    if (n < 2)
-        return;
-    p = a[n / 2];
-    for (i = 0, j = n - 1;; i++, j--) {
-        while (a[i] < p)
-            i++;
-        while (p < a[j])
-            j--;
-        if (i >= j)
-            break;
-        t = a[i];
-        a[i] = a[j];
-        a[j] = t;
-    }
-    quick_sort(a, i);
-    quick_sort(a + i, n - i);
-}*/
-
-/*
-void maisDinheiroGasto (CatalogoFilial catFil , Cliente c, float* dinheiro, char** prods){
-
-  int i,j,k,max, aux,aux2;
-  CatalogoProdutos* catProd;
-  char** listP;
-  char* caux;
-  char* caux2;
-  compra cp;
-
-  catProd = iniciaArrayCatalogoProdutos();
-
-  for(i=0;i<FMTAM;i++){
-    catProd[i] = (CatalogoProdutos)retornaDadosCliente(catFil->cliente, c);
-    listP = calloc(totalProdutos(catProd[i]) , sizeof(char*));
-    listP = retornaListaProdutos(catProd[i]);
-    for(j=0;j<totalProdutos(catProd[i]);j++){
-      for(k=0;k<3;k++){
-        cp=retornaDadosProduto(catProd[i] , listP[j]);
-        if((cp->qtdP * cp->precoP) > (cp->qtdN * cp->precoN)){
-          max = (cp->qtdP) * (cp->precoP);
-        }
-        else max = (cp->qtdN) * (cp->precoN);
-
-        if(dinheiro[k] < max){
-          if(k==2){
-            dinheiro[k]=max;
-            strcpy(prods[k] , listP[j]);
-          }
-          else {
-            if(k==1){
-              aux = dinheiro[k];
-              strcpy (caux , prods[k]);
-              dinheiro[k] = max;
-              strcpy(prods[k] , listP[j]);
-              dinheiro[k++] = aux;
-              strcpy(prods[k++] , caux);
-            }
-            else {
-              if (k==0){
-                aux = dinheiro[k];
-                strcpy (caux , prods[k]);
-                dinheiro[k] = max;
-                strcpy(prods[k] , listP[j]);
-                aux2=dinheiro[k++];
-                strcpy(caux2 , prods[k++]);
-                dinheiro[k++] = aux;
-                strcpy(prods[k++] , caux);
-                dinheiro[3]=aux2;
-                strcpy(prods[3] , caux);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-*/

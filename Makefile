@@ -18,7 +18,7 @@ CCC = gcc
 #LIBS = -lm -lpapi
 
 # dependencias
-DEPS = API-Utils.h avl-strings.h API-Produtos.h API-Clientes.h API-Faturacao.h API-Filiais.h API-Ficheiros.c API-impressao.h
+DEPS = API-Utils.h avl-strings.h API-Produtos.h API-Clientes.h API-Faturacao.h API-Filiais.h API-Ficheiros.c API-impressao.h 
 
 .SUFFIXES: .cpp .c 
 
