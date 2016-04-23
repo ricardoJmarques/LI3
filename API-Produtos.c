@@ -121,8 +121,6 @@ void retornaProdutos(CatalogoProdutos catProd , char** str, int* j){
   for(i=0;i<TAMCAT;i++){
     avlInorder(catProd->lista[i] , str , j);
   }
-
-  printf("%s\n", str[0]);
 }
 
 ListaProdutos retornaListaProdutos (CatalogoProdutos catProd){

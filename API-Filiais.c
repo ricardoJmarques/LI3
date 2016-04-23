@@ -198,6 +198,43 @@ void clientesContemProduto (CatalogoClientes catCli, CatalogoFilial catFil , Pro
     }
   }
 }
+
+void comprasMes (CatalogoFilial catFil, Cliente c, int filial, int totalNP[filial][FMTAM]){
+
+	int i,j,k;
+	listaMes lstMes;
+	CatalogoProdutos catProd;
+	ListaProdutos lstProds;
+	compra cp;
+
+	k=0;
+
+	catProd = iniciaCatProdutos();
+
+
+	/*lstMes=(listaMes)retornaDadosCliente(catFil->cliente, c);*/
+
+	if((lstMes=(listaMes)retornaDadosCliente(catFil->cliente, c)) != NULL){
+
+		for(i=0;i<FMTAM;i++){
+			k=0;
+			catProd = lstMes->catMes[i];
+			lstProds = malloc(sizeof(char) * totalProdutos(catProd) *FMTAM );
+			retornaProdutos (catProd , lstProds, &k);
+
+			/*totalNP[filial][i]=(int**)calloc( k, sizeof(int*));*/
+
+			for(j=0; j<k && k!=0; j++){
+				cp = (compra)retornaDadosProduto(catProd , lstProds[j]);
+				totalNP[filial][i] += ((cp->qtdN) + (cp->qtdP));
+			}
+			removeListaProdutos(lstProds , k);
+		}
+	}
+}
+
+
+
 /*
 void comprasDecrescente (CatalogoFilial catFil , Cliente c, int mes ,   listaDecrescente* ld , int* j){
   *//*listaDecrescente* listd;

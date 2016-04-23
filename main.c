@@ -25,7 +25,7 @@ int main(){
   totalfaturado=0;
   char **qwe1;
   char **qwe2;
-  char* c = "AF1184";
+  char* c = "Z5000";
 /*  char* cli = "Z5000";*/
 
   teste = iniciaCatClientes();
@@ -68,7 +68,7 @@ int main(){
   printf("%f\n", totalfaturado );*/
 
 /* inicio da query 4 */
-  genN = initListaGen(totalProdutos(teste2));
+  /*genN = initListaGen(totalProdutos(teste2));
    
   genN = produtosNinguemComprou (teste2, teste3, nfiliais, genN);
   qwe1 = retornaListaGen(genN);
@@ -81,13 +81,13 @@ int main(){
   /* fim da query 4 */
 
 
-  printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));
+  /*printf("Clientes gold Filial 1: %d\n" , clientesGold (teste, teste4[0]));
   printf("Clientes gold Filial 2: %d\n" , clientesGold (teste, teste4[1]));
   printf("Clientes gold Filial 3: %d\n" , clientesGold (teste, teste4[2]));
 
 /*query 8 inicio */
 
-  genN = initListaGen(totalClientes(teste));
+  /*genN = initListaGen(totalClientes(teste));
   genP = initListaGen(totalClientes(teste));
   clientesContemProduto(teste , teste4[1], c, genN, genP);
   
@@ -97,7 +97,7 @@ int main(){
 
   j = retornaPosListaGen(genN);
   /*imprimeString (qwe1 , j);*/
-  for (i=0; i<j; i++){
+  /*for (i=0; i<j; i++){
     printf("Cliente: %s\n", qwe1[i]);
   }
   printf("total Normal: %d\n", j);
@@ -105,12 +105,42 @@ int main(){
   
   j = retornaPosListaGen(genP);
   /*imprimeString (qwe2 , j);*/
-  for (i=0; i<j; i++){
+  /*for (i=0; i<j; i++){
     printf("Cliente: %s\n", qwe2[i]);
   }
   printf("total Promocao: %d\n", j);
   removeListaGen(genN);
   removeListaGen(genP);
+
+
+  /*query 5*/
+
+  int totalNP[nfiliais][12];
+  memset(totalNP, 0, sizeof(totalNP[0][0]) * nfiliais * 12);
+
+
+  for(i=0;i<nfiliais;i++){
+  	comprasMes (teste4[i], c, i,totalNP);
+  	printf("----------------------------\n");
+  }
+
+  for(i=0 ; i<nfiliais ; i++){
+  	if(i==0)
+  		printf("      ");
+  	printf("filial %d  ", i+1);
+  }
+
+  printf("\n");
+
+  for(i=0 , j=1 ;i<12;i++){
+  	printf("mes=%d   ", i+1 );
+  	for(j=0;j<nfiliais;j++){
+  		printf("%d         ", totalNP[j][i]);
+  	}
+  	printf("\n");
+
+  }
+
 
 /* query 8 fim */
 
