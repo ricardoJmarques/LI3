@@ -1,0 +1,2 @@
+A vermelho está aquilo que o João deve rever
+Falta fazer os graficos sobre as estruturas de dados
