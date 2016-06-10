@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=
+comment0.target=CatalogoFaturacao()
+comment1.params=
+comment1.target=int\ getTamanho()
+comment2.params=v
+comment2.target=void\ adicionaVenda(Venda)
+comment3.params=catProd
+comment3.target=java.util.ArrayList\ produtosNuncaComprados(Produtos)
+comment3.text=\n\ \ \ \ public\ ArrayList<String>\ produtosNuncaComprados\ ()\ {\n\ \ \ \ \ \ \ \ ArrayList<String>\ lista\ \=\ new\ ArrayList<String>();\n\ \ \ \ \ \ \ \ int\ i;\n\n\ \ \ \ \ \ \ \ for(Map.Entry<String,TreeMap<Integer,\ Fatura>>\ entry\ \:\ catFaturacao.entrySet()){\n\n\ \ \ \ \ \ \ \ \ \ \ \ for(i\=0;\ i<12;\ i++){\n\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if(entry.getValue().containsKey(i)){\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(entry.getKey());\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (entry.getValue().get(i).getUnidadesVendidas()\ \=\=\ 0){\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lista.add(entry.getKey());\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\n\n\ \ \ \ \ \ \ \ }\n\n\ \ \ \ \ \ \ \ return\ lista;\n\ \ \ \ }\n
+numComments=4

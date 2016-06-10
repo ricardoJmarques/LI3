@@ -1,2 +1,2 @@
-# LI3
-Trabalho de Grupo de Disciplina de LI3 (2016)
+# LI3-JAVA
+Trabalho de Java da Disciplina de Laboratórios de Informática 3
